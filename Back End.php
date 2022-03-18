@@ -23,9 +23,21 @@ function UserNameIsThere(string $FileName,string $Value){
 	$File = fopen("Files/".$FileName, 'r');
 	while($Line = fgets($File))	{
 		$Array = explode('~',$Line);
-		if($Array[2] == $Value) return 1;
+		if($Array[2] == $Value) 
+		{
+			return $Array;
+		}
 	}
-	return 0;
+	return null;
+}
+function GetAllContent(string $FileName)
+{
+	$File = fopen("Files/".$FileName, 'r');
+	$List = [];
+	while ($Line = fgets($File)) {
+		array_push($List, $Line);
+	}
+	return $List;
 }
 function FileAdd(string $FileName,string $Line){
 	$File = fopen("Files/".$FileName,'a');
@@ -71,7 +83,7 @@ trait Person{
 		return 1;
 	}
 }
-trait User{
+trait InheritUser{
 	use Person;
     protected string $Password;
 	/**
@@ -85,7 +97,7 @@ trait User{
 	/**
 	 * 
 	 * @param string $Password 
-	 * @return User
+	 * @return InheritUser
 	 */
 	function setPassword(string $Password):int {
 		if(str_contains($Password,'~')) return 0;
@@ -94,7 +106,10 @@ trait User{
 	}
 
 }
-trait  InOrphanage{
+class User{
+	Use InheritUser;
+}
+trait  InheritInOrphanage{
 	use Person;
     protected string $DateOfBirth;
 	/**
@@ -108,7 +123,7 @@ trait  InOrphanage{
 	/**
 	 * 
 	 * @param string $DateOfBirth 
-	 * @return InOrphanage
+	 * @return InheritInOrphanage
 	 */
 	function setDateOfBirth(string $DateOfBirth): self {
 		$this->DateOfBirth = $DateOfBirth;
@@ -116,7 +131,11 @@ trait  InOrphanage{
 	}
 
 }
-trait Adult{
+class InOrphanage
+{
+	use InheritInOrphanage;
+}
+trait InheritAdult{
 	use Person;
 	protected string $Phone;
 	protected int $NationalId;
@@ -133,7 +152,7 @@ trait Adult{
 	/**
 	 * 
 	 * @param string $Phone 
-	 * @return Adult
+	 * @return InheritAdult
 	 */
 	function setPhone(string $Phone): self {
 		$this->Phone = $Phone;
@@ -150,7 +169,7 @@ trait Adult{
 	/**
 	 * 
 	 * @param int $NationalId 
-	 * @return Adult
+	 * @return InheritAdult
 	 */
 	function setNationalId(int $NationalId): self {
 		$this->NationalId = $NationalId;
@@ -167,17 +186,20 @@ trait Adult{
 	/**
 	 * 
 	 * @param string $Address 
-	 * @return Adult
+	 * @return InheritAdult
 	 */
 	function setAddress(string $Address): self {
 		$this->Address = $Address;
 		return $this;
 	}
 }
+class Adult{
+	use InheritAdult;
+}
 class Worker{
-	use Adult;
-	use InOrphanage;
-	use User;
+	use InheritAdult;
+	use InheritInOrphanage;
+	use InheritUser;
 	protected float $Salary;
 	protected int $NumberDaysWorking;
 	protected int $NumberHoursWorking;
@@ -312,7 +334,7 @@ class Learning_Information{
 	}
 }
 class Children{
-	use InOrphanage;
+	use InheritInOrphanage;
 	protected string $Gender;
 	protected Food_Information $Food;
 	protected string $Date_Sign_In;
@@ -407,7 +429,7 @@ class Nursemaid extends Worker{
 	}
 }
 class Admin {
-	use User;
+	use InheritUser;
 	public function __construct(int $Id = null, string $Name = null, string $Password = null) {
 		if($Id != null) {
 			$this->setId($Id);
@@ -424,6 +446,12 @@ class Admin {
 	public function ToString(): string {
 		$Line = $this->Id . '~' . "Admin" . '~' . $this->Name . '~' . $this->Password . "~\r\n";
 		return $Line;
+	}
+	public static function StringToAdmin(string $Line)
+	{
+		$Array = explode('~',$Line);
+		$Admin = new Admin(intval($Array[0]),$Array[2],$Array[3]);
+		return $Admin;
 	}
 }
 

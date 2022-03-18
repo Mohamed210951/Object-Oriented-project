@@ -30,19 +30,19 @@
 </body>
 </html>
 <?php
+include_once "Back End.php";
 if(isset($_POST["submit"]))
 {
     $UserName = $_POST["UserName"];
     $Password = $_POST["Password"];
     $ConPass = $_POST["ConPass"];
     if($ConPass == $Password) {
-        $newAdmin = new Admin();
-        $newAdmin->SetId(GetLastId("User.txt") + 1);
-        $newAdmin->setName($UserName);
-        $newAdmin->setPassword($Password);
+        $newAdmin = new Admin(GetLastId("User.txt") + 1,$UserName,$Password);
         if($newAdmin->AllIsSet()) {
             if(!UserNameIsThere("User.txt",$newAdmin->getName())) {
                 FileAdd("User.txt",$newAdmin->ToString());
+                $File = fopen("Files/UserNow.txt",'w');
+                fwrite($File,"Admin");
                 header("Location:MainMenu.php");
             }
             else {
