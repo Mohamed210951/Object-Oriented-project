@@ -24,6 +24,20 @@
         </div>
         <br>
         <div class = "row">
+            <label for="SelectType">Select Your Type</label>
+            <select name="Type">
+                <?php 
+                include_once "Back End.php";
+                    $List = GetAllContent("User Type.txt");
+                    for ($i=0; $i < count($List); $i++) { 
+                        $Array = explode('~',$List[$i]);
+                        $Type = $Array[1];
+                        echo "<option value='$Type'>$Type</option>";
+                    }
+                ?>
+            </select>
+        </div>
+        <div class = "row">
             <input type="submit" value="Sign In" name = "submit">
         </div>
     </form>
@@ -36,22 +50,9 @@ if(isset($_POST["submit"]))
     $UserName = $_POST["UserName"];
     $Password = $_POST["Password"];
     $ConPass = $_POST["ConPass"];
+    $Type = $_POST["Type"];
     if($ConPass == $Password) {
-        $newAdmin = new Admin(GetLastId("User.txt") + 1,$UserName,$Password);
-        if($newAdmin->AllIsSet()) {
-            if(!UserNameIsThere("User.txt",$newAdmin->getName())) {
-                FileAdd("User.txt",$newAdmin->ToString());
-                $File = fopen("Files/UserNow.txt",'w');
-                fwrite($File,"Admin");
-                header("Location:MainMenu.php");
-            }
-            else {
-                echo "This UserName is alrady exists!!";
-            }
-        }
-        else {
-            echo "Please Try again but prevent using '~'!!";
-        }
+        SignIn($UserName,$Password,$Type);
     }
     else {
         echo "Must be the same Password!!";

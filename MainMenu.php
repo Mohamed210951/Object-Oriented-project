@@ -8,5 +8,11 @@
 </head>
 <body>
     <h1>MainMenu.php</h1>
+    <?php
+        include_once "Back End.php";
+        $Array = GetAllContent("UserNow.txt");
+        $Type = $Array[0];
+        echo $Type;
+    ?>
 </body>
 </html>

@@ -19,7 +19,12 @@
             <input type="Password" name = "Password" required>
         </div>
         <div class="row">
-            <input type="submit" value="Login" name = "submit">
+            <input type="submit" value="Login" name = "Login">
+        </div>
+    </form>
+    <form action="#" method="post">
+        <div class = 'row'> 
+            <input type="submit" value ="SignIn" name = "SignIn">
         </div>
     </form>
 </body>
@@ -27,26 +32,13 @@
 
 <?php
 include_once "Back End.php";
-if(isset( $_POST["submit"]))
+if(isset( $_POST["Login"]))
 {
     $UserName = $_POST["UserName"];
     $Password = $_POST["Password"];
-    if($Array = UserNameIsThere("User.txt",$UserName))
-    {
-        if($Array[3] == $Password)
-        {
-            $Type = $Array[1];
-            $File = fopen("Files/UserNow.txt",'w');
-            fwrite($File,$Type);
-            header("Location:Menu.php");
-        }
-        else
-        {
-            echo "Wrong UserName or Password!!";
-        }
-    }
-    else
-    {
-        echo "Wrong UserName or Password!!";
-    }
+    Login($UserName,$Password);
+}
+if(isset($_POST["SignIn"]))
+{
+    header("Location:SignIn.php");
 }
