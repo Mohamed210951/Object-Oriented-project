@@ -37,6 +37,7 @@
                 ?>
             </select>
         </div>
+        <br>
         <div class = "row">
             <input type="submit" value="Sign In" name = "submit">
         </div>
