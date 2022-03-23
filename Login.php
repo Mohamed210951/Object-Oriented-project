@@ -29,15 +29,13 @@
 </body>
 </html>
 
-<?php
+<?php 
 include_once "Back End.php";
-if(isset( $_POST["Login"]))
-{
+if(isset($_POST["Login"])) {
     $UserName = $_POST["UserName"];
     $Password = $_POST["Password"];
     Login($UserName,$Password);
 }
-if(isset($_POST["SignIn"]))
-{
+if(isset($_POST["SignIn"])) {
     header("Location:SignIn.php");
 }

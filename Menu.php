@@ -8,11 +8,10 @@
 </head>
 <body>
     <h1>Meun.php</h1>
-
-    <?php 
-        include_once "Back End.php";
-        $List = GetAllContent("UserNow.txt");
-        $Type = $List[0];
-    ?>
+    {
+        <h1>Admin Menu</h1>
+        
+    }
 </body>
 </html>
+
