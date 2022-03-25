@@ -44,7 +44,5 @@
     </form>
 </body>
 </html>
-
-
 <?php
 include_once "Back End.php";
