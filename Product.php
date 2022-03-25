@@ -44,13 +44,28 @@
 include_once "Back End.php";
 if(isset($_POST["Add"]))
 {
-    $New_Product_Name = $_POST["ProductName"];
-    echo $New_Product_Name;
-    FileAdd("Product.txt",$google);
+
+ $New_Product_Name = new Product();
+
+    $New_Product_Name->setName($_POST["ProductName"]) ;
+    $Last_Id_In_file =GetLastId("Product.txt");
+    $New_Product_Name->setId($Last_Id_In_file+1);
+    $isexist;
+   $isexist= UserNameIsThere("Product",$New_Product_Name);
+   if($isexist==Null)
+   {
+    FileAdd("Product.txt",$New_Product_Name );
+   }
+   else
+   {
+    
+   }
+   
+
+    
 }
 else if(isset($_POST["Update"]))
 {
-        
 
 }
 else if(isset($_POST["Search"]))
