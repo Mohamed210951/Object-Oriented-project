@@ -229,8 +229,6 @@ class Product extends Person{
 	 * @param $Cost float 
 	 */
 	
-	/**
-	 */
 	function __construct(int $Id = null,string $Name = null,float $Cost = null) {
 		if($Id!=null)
 		{
@@ -239,17 +237,9 @@ class Product extends Person{
 			$this->setCost($Cost);
 		}
 	}
-	/**
-	 * 
-	 * @return int
-	 */
-	function getBtngaN(): int {
-		return $this->btngaN;
+	public function ToString()
+	{
+		$String = $this->Id + "~" + $this->Name + "~" + $this->Price + "~";
+		return $String;
 	}
-	
-	/**
-	 * 
-	 * @param int $btngaN 
-	 * @return Product
-	 */
 }
