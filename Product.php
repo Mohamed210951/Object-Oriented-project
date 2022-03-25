@@ -57,7 +57,7 @@ if(isset($_POST["Add"]))
     }
    else
     {
-    $echo=("the product is already exist");
+    echo "the product is already exist";
     }
 }
 else if(isset($_POST["Update"]))
