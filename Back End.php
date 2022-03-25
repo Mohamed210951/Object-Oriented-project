@@ -46,6 +46,16 @@ function FileWrite(string $FileName,string $Line){
 	$File = fopen("Files/".$FileName,'w');
 	fwrite($File,$Line);
 }
+function FileUpdate(string $FileName, string $Old, string $New){
+	$contents = file_get_contents("Files/".$FileName);
+    $contents = str_replace($Old, $New, $contents);
+    file_put_contents("Files/".$FileName, $contents);
+}
+function FileDelete(string $FileName, string $Data){
+	$contents = file_get_contents("Files/".$FileName);
+    $contents = str_replace($Data, "", $contents);
+    file_put_contents("Files/".$FileName, $contents);
+}
 function Login(string $UserName,string $Password){
 	if($Array = UserNameIsThere("User.txt",$UserName))
     {
@@ -116,16 +126,6 @@ function Decrypt($Word, $Key){
         $Result .= $c;
     }
     return $Result;
-}
-function FileUpdate(string $FileName, string $Old, string $New){
-	$contents = file_get_contents("Files/".$FileName);
-    $contents = str_replace($Old, $New, $contents);
-    file_put_contents("Files/".$FileName, $contents);
-}
-function FileDelete(string $FileName, string $Data){
-	$contents = file_get_contents("Files/".$FileName);
-    $contents = str_replace($Data, "", $contents);
-    file_put_contents("Files/".$FileName, $contents);
 }
 class Person{
     protected int $Id;
