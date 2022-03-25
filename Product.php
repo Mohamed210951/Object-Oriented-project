@@ -44,11 +44,13 @@
 include_once "Back End.php";
 if(isset($_POST["Add"]))
 {
-    $google = $_POST["ProductName"];
-    echo $google;
+    $New_Product_Name = $_POST["ProductName"];
+    echo $New_Product_Name;
+    FileAdd("Product.txt",$google);
 }
 else if(isset($_POST["Update"]))
 {
+        
 
 }
 else if(isset($_POST["Search"]))
