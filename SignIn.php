@@ -7,6 +7,7 @@
     <title>Sign In</title>
 </head>
 <body>
+    <h1>Sign In</h1>
     <form action="#" method="post">
         <div class = "row">
             <label for="UserName">UserName</label>

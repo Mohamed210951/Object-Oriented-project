@@ -12,27 +12,23 @@
         include_once "Back End.php";
         $Array = GetAllContent("UserNow.txt");
         $Type = $Array[0];
-        $List = GetAllContent("User Type.txt");
-        $IdType = "-1";
-        for ($i=0; $i < count($List); $i++) { 
-            $array = explode('~',$List[$i]);
-            if($array[1] == $Type) $IdType = $array[0];
-        }
-        $Servis = [];
-        $List = GetAllContent("User Type Menu.txt");
-        for ($i=0; $i < count($List); $i++) { 
-            $array = explode('~',$List[$i]);
-            if($array[0] == $IdType)
-            {
-                for ($j=1; $j < count($array); $j++) { 
-                    array_push($Servis,$array[$j]);
-                }
-            }
-        }
+        $Servis = FromTypeGetServis($Type);
     ?>
     <form action="#" method="post">
         <input type="submit" value="Product" name = "GotoProduct"<?php 
-            if(!in_array("Product",$Servis)) echo "hidden";
+            $flag = 0;
+            for ($i=0; $i < count($Servis); $i++) { 
+                if(str_contains($Servis[$i],"Product")) $flag = 1;
+            }
+            if($flag == 0) echo "hidden";
+        ?>>
+        <input type="submit" value="Order" name = "GoToOrder"<?php 
+            $flag = 0;
+            for ($i=0; $i < count($Servis); $i++) { 
+                if(str_contains($Servis[$i],"Order"))
+                     $flag = 1;
+            }
+            if($flag == 0) echo "hidden";
         ?>>
     </form>
 </body> 
@@ -42,4 +38,8 @@
 if(isset($_POST["GotoProduct"]))
 {
     header("Location:Product.php");
+}
+if(isset($_POST["GoToOrder"]))
+{
+    header("Location:Order.php");
 }

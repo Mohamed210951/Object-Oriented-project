@@ -8,6 +8,12 @@
 </head>
 <body>
     <h1>Product Menu</h1>
+    <?php 
+    include_once "Back End.php";
+        $Array = GetAllContent("UserNow.txt");
+        $Type = $Array[0];
+        $Servis = FromTypeGetServis($Type);
+    ?>
     <form action="#" method="post">
         <div class = "row">
             <label for="Product Id">Product Id</label>
@@ -25,10 +31,10 @@
         </div>
         <br>
         <div class = "row">
-            <input type="button" value="Add" name = "Add">
-            <input type="button" value="Update" name = "Update">
-            <input type="button" value="Search" name = "Search">
-            <input type="button" value="Delete" name = "Delete">
+            <input type="button" value="Add" name = "Add" <?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
+            <input type="button" value="Update" name = "Update"<?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
+            <input type="button" value="Search" name = "Search"<?php if(!in_array("Product-Searsh",$Servis)) echo "hidden";?>>
+            <input type="button" value="Delete" name = "Delete"<?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
         </div>
     </form>
 </body>

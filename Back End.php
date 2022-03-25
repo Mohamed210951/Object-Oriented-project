@@ -65,6 +65,27 @@ function Login(string $UserName,string $Password){
         echo "Wrong UserName or Password!!";
     }
 }
+function FromTypeGetServis(string $Type)
+{
+	$List = GetAllContent("User Type.txt");
+	$IdType = "-1";
+	for ($i=0; $i < count($List); $i++) { 
+		$array = explode('~',$List[$i]);
+		if($array[1] == $Type) $IdType = $array[0];
+	}
+	$Servis = [];
+	$List = GetAllContent("User Type Menu.txt");
+	for ($i=0; $i < count($List); $i++) { 
+		$array = explode('~',$List[$i]);
+		if($array[0] == $IdType)
+		{
+			for ($j=1; $j < count($array); $j++) { 
+				array_push($Servis,$array[$j]);
+			}
+		}
+	}
+	return $Servis;
+}
 function SignIn(string $UserName,string $Password,string $Type){
 	$newUser = new User(GetLastId("User.txt") + 1,$Type,$UserName,$Password);
 	if($newUser->AllIsSet()) {
@@ -182,5 +203,40 @@ class User extends Person{
 		if($flag == 0) return 0;
 		$this->Type = $Type;
 		return 1;
+	}
+}
+class Product extends Person{
+	private float $Cost;
+	
+	/**
+	 * 
+	 * @return float
+	 */
+	function getCost(): float {
+		return $this->Cost;
+	}
+	
+	/**
+	 * 
+	 * @param float $Cost 
+	 * @return Product
+	 */
+	function setCost(float $Cost): self {
+		$this->Cost = $Cost;
+		return $this;
+	}
+	/**
+	 * @param $Cost float 
+	 */
+	
+	/**
+	 */
+	function __construct(int $Id = null,string $Name = null,float $Cost = null) {
+		if($Id!=null)
+		{
+			$this->setId($Id);
+			$this->setName($Name);
+			$this->setCost($Cost);
+		}
 	}
 }
