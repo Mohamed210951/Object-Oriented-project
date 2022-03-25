@@ -31,19 +31,20 @@
         </div>
         <br>
         <div class = "row">
-            <input type="button" value="Add" name = "Add" <?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
-            <input type="button" value="Update" name = "Update"<?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
-            <input type="button" value="Search" name = "Search"<?php if(!in_array("Product-Searsh",$Servis)) echo "hidden";?>>
-            <input type="button" value="Delete" name = "Delete"<?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
+            <input type="submit" value="Add" name = "Add" <?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
+            <input type="submit" value="Update" name = "Update"<?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
+            <input type="submit" value="Search" name = "Search"<?php if(!in_array("Product-Searsh",$Servis)) echo "hidden";?>>
+            <input type="submit" value="Delete" name = "Delete"<?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
         </div>
     </form>
 </body>
 </html>
 
 <?php
+include_once "Back End.php";
 if(isset($_POST["Add"]))
 {
-    $google =$_POST["ProductName"];
+    $google = $_POST["ProductName"];
     echo $google;
 }
 else if(isset($_POST["Update"]))
