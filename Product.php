@@ -44,25 +44,21 @@
 include_once "Back End.php";
 if(isset($_POST["Add"]))
 {
-
- $New_Product_Name = new Product();
-
-    $New_Product_Name->setName($_POST["ProductName"]) ;
+    $New_Product_Name = new Product();
+    $New_Product_Name->setName($_POST["ProductName"]);
+    $New_Product_Name->setCost($_POST["ProductPrice"]);
     $Last_Id_In_file =GetLastId("Product.txt");
     $New_Product_Name->setId($Last_Id_In_file+1);
-    $isexist;
-   $isexist= UserNameIsThere("Product",$New_Product_Name);
-   if($isexist==Null)
-   {
-    FileAdd("Product.txt",$New_Product_Name );
-   }
+    $isexist= UserNameIsThere("Product.txt",$New_Product_Name->getName());
+    if($isexist==null)
+    {
+    FileAdd("Product.txt",$New_Product_Name->ToString());
+    
+    }
    else
-   {
-    
-   }
-   
-
-    
+    {
+    $echo=("the product is already exist");
+    }
 }
 else if(isset($_POST["Update"]))
 {

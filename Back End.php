@@ -239,7 +239,7 @@ class Product extends Person{
 	}
 	public function ToString()
 	{
-		$String = $this->Id + "~" + $this->Name + "~" + $this->Price + "~";
-		return $String;
+		$String = $this->Id . "~" . $this->Cost  . "~" . $this->Name . "~\r\n ";
+		return $String;	
 	}
 }
