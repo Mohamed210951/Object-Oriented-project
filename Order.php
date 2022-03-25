@@ -11,22 +11,22 @@
     <form action="#" method="post">
         <div class = "row">
             <label for="Order Id">Order Id</label>
-            <input type="number" name="OrderId">
+            <input type="number" name="OrderId" step = ".001">
         </div>
         <br>
         <div class = "row">
             <label for="Clint Id">Clint Id</label>
-            <input type="number" name="ClintId">
+            <input type="number" name="ClintId" step = ".001">
         </div>
         <br>
         <div class = "row">
             <label for="Product Id">Product Id</label>
-            <input type="number" name="ProductId">
+            <input type="number" name="ProductId" step = ".001">
         </div>
         <br>
         <div class = "row">
             <label for="Number Of Product">Number Of Product</label>
-            <input type="number" name="NumberOfProduct">
+            <input type="number" name="NumberOfProduct" step = ".001">
         </div>
         <br>
         <div class = "row">

@@ -17,7 +17,7 @@
     <form action="#" method="post">
         <div class = "row">
             <label for="Product Id">Product Id</label>
-            <input type="number" name="Id">
+            <input type="number" name="Id" step = ".001">
         </div>
         <br>
         <div class = "row">
@@ -27,7 +27,7 @@
         <br>
         <div class = "row">
             <label for="Product Price">Product Price</label>
-            <input type="number" name="ProductPrice">
+            <input type="number" name="ProductPrice" step = ".001">
         </div>
         <br>
         <div class = "row">
