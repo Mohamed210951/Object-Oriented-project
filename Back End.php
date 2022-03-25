@@ -239,4 +239,17 @@ class Product extends Person{
 			$this->setCost($Cost);
 		}
 	}
+	/**
+	 * 
+	 * @return int
+	 */
+	function getBtngaN(): int {
+		return $this->btngaN;
+	}
+	
+	/**
+	 * 
+	 * @param int $btngaN 
+	 * @return Product
+	 */
 }

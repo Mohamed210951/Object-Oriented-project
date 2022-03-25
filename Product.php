@@ -22,12 +22,12 @@
         <br>
         <div class = "row">
             <label for="Product Name">Product Name</label>
-            <input type="text" name="Product Name">
+            <input type="text" name="ProductName">
         </div>
         <br>
         <div class = "row">
             <label for="Product Price">Product Price</label>
-            <input type="number" name="Product Price">
+            <input type="number" name="ProductPrice">
         </div>
         <br>
         <div class = "row">
@@ -43,7 +43,8 @@
 <?php
 if(isset($_POST["Add"]))
 {
-
+    $google =$_POST["ProductName"];
+    echo $google;
 }
 else if(isset($_POST["Update"]))
 {
