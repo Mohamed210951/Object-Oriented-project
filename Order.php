@@ -48,5 +48,4 @@
 
 <?php
 include_once "Back End.php";
-zeft w 5ara;
 
