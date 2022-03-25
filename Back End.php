@@ -65,8 +65,7 @@ function Login(string $UserName,string $Password){
         echo "Wrong UserName or Password!!";
     }
 }
-function FromTypeGetServis(string $Type)
-{
+function FromTypeGetServis(string $Type){
 	$List = GetAllContent("User Type.txt");
 	$IdType = "-1";
 	for ($i=0; $i < count($List); $i++) { 
@@ -101,6 +100,32 @@ function SignIn(string $UserName,string $Password,string $Type){
 	else {
 		echo "Please Try again but prevent using '~'!!";
 	}
+}
+function Encrypt($Word, $Key){
+    $Result = "";
+    for ($i = 0; $i < strlen($Word); $i++) {
+        $c = chr(ord($Word[$i]) + $Key + $i);
+        $Result .= $c;
+    }
+    return $Result;
+}
+function Decrypt($Word, $Key){
+    $Result = "";
+    for ($i = 0; $i < strlen($Word); $i++) {
+        $c = chr(ord($Word[$i]) - $Key - $i);
+        $Result .= $c;
+    }
+    return $Result;
+}
+function FileUpdate(string $FileName, string $Old, string $New){
+	$contents = file_get_contents("Files/".$FileName);
+    $contents = str_replace($Old, $New, $contents);
+    file_put_contents("Files/".$FileName, $contents);
+}
+function FileDelete(string $FileName, string $Data){
+	$contents = file_get_contents("Files/".$FileName);
+    $contents = str_replace($Data, "", $contents);
+    file_put_contents("Files/".$FileName, $contents);
 }
 class Person{
     protected int $Id;
