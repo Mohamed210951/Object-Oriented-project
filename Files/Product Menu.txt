@@ -1,3 +1,0 @@
-<form action="#" method="post">
-    <input type="button" value="Product Menu" name = "Go to Product">
-</form>
