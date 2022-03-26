@@ -44,16 +44,15 @@
 include_once "Back End.php";
 if(isset($_POST["Add"]))
 {
-    $New_Product_Name = new Product();
-    $New_Product_Name->setName($_POST["ProductName"]);
-    $New_Product_Name->setCost($_POST["ProductPrice"]);
+    $New_Product = new Product();
+    $New_Product->setName($_POST["ProductName"]);
+    $New_Product->setCost($_POST["ProductPrice"]);
     $Last_Id_In_file =GetLastId("Product.txt");
-    $New_Product_Name->setId($Last_Id_In_file+1);
-    $isexist= UserNameIsThere("Product.txt",$New_Product_Name->getName());
+    $New_Product->setId($Last_Id_In_file+1);
+    $isexist= UserNameIsThere("Product.txt",$New_Product->getName());
     if($isexist==null)
     {
-    FileAdd("Product.txt",$New_Product_Name->ToString());
-    
+    FileAdd("Product.txt",$New_Product->ToString());
     }
    else
     {
@@ -62,7 +61,13 @@ if(isset($_POST["Add"]))
 }
 else if(isset($_POST["Update"]))
 {
-
+   $Product_to_change = new Product();
+   $Product_to_change->setName($_POST["ProductName"]);
+   $isexist= UserNameIsThere("Product.txt",$Product_to_change->getName());
+   if($isexist!=null)
+   { 
+   $Product_to_change->setCost($_POST["ProductPrice"]);
+   }
 }
 else if(isset($_POST["Search"]))
 {
@@ -72,3 +77,4 @@ else if(isset($_POST["Delete"]))
 {
     
 }
+?>
