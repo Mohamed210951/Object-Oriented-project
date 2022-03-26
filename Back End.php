@@ -182,7 +182,7 @@ class User extends Person{
 		if(is_null($this->Type)) return 0;
 		return 1;
 	}
-	public function ToString(): string {
+		public function ToString(): string {
 		$Line = $this->Id . '~' . $this->Type . '~' . $this->Name . '~' . $this->Password . "~\r\n";
 		return $Line;
 	}
@@ -191,33 +191,17 @@ class User extends Person{
 		$user = new User(intval($Array[0]),$Array[1],$Array[2],$Array[3]);
 		return $user;
 	}
-	/**
-	 * 
-	 * @return mixed
-	 */
 	function getPassword() {
 		return $this->Password;
 	}
-	/**
-	 * 
-	 * @param mixed $Password 
-	 */
 	function setPassword($Password) {
 		if(str_contains($Password,'~')) return 0;
 		$this->Password = $Password;
 		return 1;
 	}
-	/**
-	 * 
-	 * @return mixed
-	 */
 	function getType() {
 		return $this->Type;
 	}
-	/**
-	 * 
-	 * @param mixed $Type 
-	 */
 	function setType($Type) {
 		$List = GetAllContent("User Type.txt");
 		$flag = 0;
@@ -232,28 +216,14 @@ class User extends Person{
 }
 class Product extends Person{
 	private float $Cost;
-	
-	/**
-	 * 
-	 * @return float
-	 */
 	function getCost(): float {
 		return $this->Cost;
 	}
-	
-	/**
-	 * 
-	 * @param float $Cost 
-	 * @return Product
-	 */
-	function setCost(float $Cost): self {
+	function setCost(float $Cost): int {
+		if($Cost < 0) return 0;
 		$this->Cost = $Cost;
-		return $this;
+		return 1;
 	}
-	/**
-	 * @param $Cost float 
-	 */
-	
 	function __construct(int $Id = null,string $Name = null,float $Cost = null) {
 		if($Id!=null)
 		{
@@ -262,9 +232,8 @@ class Product extends Person{
 			$this->setCost($Cost);
 		}
 	}
-	public function ToString()
-	{
-		$String = $this->Id . "~" . $this->Cost  . "~" . $this->Name . "~\r\n ";
+	public function ToString() {
+		$String = $this->Id . "~" . $this->Cost  . "~" . $this->Name . "~\r\n";
 		return $String;	
 	}
 }
