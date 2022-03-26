@@ -1,6 +1,3 @@
 1~10000~iphone~
- 2~2000000~Samsung~
- 3~500000~xiomi~
- 4~4444.5~Iphonei~
- 5~55555555555~saifhjjhhj~
- 
+2~2000000~Samsung~
+3~500000~xiomi~

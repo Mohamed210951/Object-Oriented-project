@@ -97,19 +97,7 @@ function FromTypeGetServis(string $Type){
 }
 function SignIn(string $UserName,string $Password,string $Type){
 	$newUser = new User(GetLastId("User.txt") + 1,$Type,$UserName,$Password);
-	if($newUser->AllIsSet()) {
-		if(!UserNameIsThere("User.txt",$newUser->getName())) {
-			FileAdd("User.txt",$newUser->ToString());
-			FileWrite("UserNow.txt",$newUser->getType());
-			header("Location:MainMenu.php");
-		}
-		else {
-			echo "This UserName is alrady exists!!";
-		}
-	}
-	else {
-		echo "Please Try again but prevent using '~'!!";
-	}
+	$newUser->Add();
 }
 function Encrypt($Word, $Key){
     $Result = "";
@@ -130,41 +118,29 @@ function Decrypt($Word, $Key){
 class Person{
     protected int $Id;
     protected string $Name;
-	/**
-	 * 
-	 * @return int
-	 */
 	function getId(): int {
 		return $this->Id;
 	}
-	/**
-	 * 
-	 * @param int $Id 
-	 * @return Person
-	 */
 	function setId(int $Id): self {
 		$this->Id = $Id;
 		return $this;
 	}
-	/**
-	 * 
-	 * @return string
-	 */
 	function getName(): string {
 		return $this->Name;
 	}
-	/**
-	 * 
-	 * @param string $Name 
-	 * @return Person
-	 */
 	function setName(string $Name): int {
 		if(str_contains($Name,'~')) return 0;
 		$this->Name = $Name;
 		return 1;
 	}
 }
-class User extends Person{
+interface File{
+	public function Add($input1 = null,$input2 = null,$input3 = null,$input4 = null);
+	public function Update($input1 = null,$input2 = null,$input3 = null,$input4 = null);
+	public function Searsh($input1 = null,$input2 = null,$input3 = null,$input4 = null);
+	public function Delete($input1 = null,$input2 = null,$input3 = null,$input4 = null);
+}
+class User extends Person implements File{
 	private $Password;
 	private $Type;
 	public function __construct(int $Id = null,string $Type = null, string $Name = null, string $Password = null) {
@@ -182,7 +158,7 @@ class User extends Person{
 		if(is_null($this->Type)) return 0;
 		return 1;
 	}
-		public function ToString(): string {
+	public function ToString(): string {
 		$Line = $this->Id . '~' . $this->Type . '~' . $this->Name . '~' . $this->Password . "~\r\n";
 		return $Line;
 	}
@@ -213,8 +189,32 @@ class User extends Person{
 		$this->Type = $Type;
 		return 1;
 	}
+	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		if($this->AllIsSet()) {
+			if(!UserNameIsThere("User.txt",$this->Name)) {
+				FileAdd("User.txt",$this->ToString());
+				FileWrite("UserNow.txt",$this->Type);
+				header("Location:MainMenu.php");
+			}
+			else {
+				echo "This UserName is alrady exists!!";
+			}
+		}
+		else {
+			echo "Please Try again but prevent using '~'!!";
+		}
+	}
+	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		// Code
+	}
+	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		// Code
+	}
+	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		// Code
+	}
 }
-class Product extends Person{
+class Product extends Person implements File{
 	private float $Cost;
 	function getCost(): float {
 		return $this->Cost;
@@ -224,7 +224,7 @@ class Product extends Person{
 		$this->Cost = $Cost;
 		return 1;
 	}
-	function __construct(int $Id = null,string $Name = null,float $Cost = null) {
+	function __construct(int $Id = null,float $Cost = null,string $Name = null) {
 		if($Id!=null)
 		{
 			$this->setId($Id);
@@ -235,5 +235,29 @@ class Product extends Person{
 	public function ToString() {
 		$String = $this->Id . "~" . $this->Cost  . "~" . $this->Name . "~\r\n";
 		return $String;	
+	}
+	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		if($this->Name == null) return 0;
+		if($this->Cost == null) return 0;
+		$Last_Id_In_file = GetLastId("Product.txt");
+    	$this->setId($Last_Id_In_file+1);
+    	$isexist= UserNameIsThere("Product.txt",$this->Name);
+    	if($isexist==null) FileAdd("Product.txt",$this->ToString());
+    	else {
+			echo "the product is already exist";
+			return 0;
+		}
+		return 1;
+	}
+	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		//Code
+	}
+	
+	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		//Code
+	}
+	
+	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		//Code
 	}
 }
