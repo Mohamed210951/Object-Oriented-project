@@ -76,7 +76,7 @@ function Login(string $FileName,string $UserName,string $Password) {
         echo "Wrong UserName or Password!!";
     }
 }
-function FromTypeGetServis(string $Type){
+function FromTypeGetServis(string $Type) {
 	$List = GetAllContent("User Type.txt");
 	$IdType = "-1";
 	for ($i=0; $i < count($List); $i++) { 
@@ -116,7 +116,7 @@ function Decrypt($Word, $Key){
     }
     return $Result;
 }
-class Person{
+class Person {
     protected ?int $Id;
     protected ?string $Name;
 	function getId(): int {
@@ -136,13 +136,13 @@ class Person{
 		return 1;
 	}
 }
-interface File{
+interface File {
 	public function Add($input1 = null,$input2 = null,$input3 = null,$input4 = null);
 	public function Update($input1 = null,$input2 = null,$input3 = null,$input4 = null);
 	public function Searsh($input1 = null,$input2 = null,$input3 = null,$input4 = null);
 	public function Delete($input1 = null,$input2 = null,$input3 = null,$input4 = null);
 }
-class User extends Person implements File{
+class User extends Person implements File {
 	private $Password;
 	private $Type;
 	public function __construct(int $Id = null,string $Type = null, string $Name = null, string $Password = null) {
@@ -216,7 +216,7 @@ class User extends Person implements File{
 		// Code
 	}
 }
-class Product extends Person implements File{
+class Product extends Person implements File {
 	private ?float $Cost;
 	function getCost(): float {
 		return $this->Cost;
@@ -260,11 +260,9 @@ class Product extends Person implements File{
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		//Code
 	}
-	
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		//Code
 	}
-	
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		//Code
 	}
