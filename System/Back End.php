@@ -324,3 +324,118 @@ class Child extends Person implements File {
 		return $String;
 	}
 }
+class order extends Person implements File {
+	private float $Total;
+	private int $ClientId;
+	private string $date;
+	public function AllIsSet() {
+		if($this->Id == null) return 0;
+		if($this->Name == null) return 0;
+		if($this->Total == null) return 0;
+		if($this->ClientId == null) return 0;
+		if($this->Date == null) return 0;
+		return 1;
+	}
+	/**
+	 *
+	 * @param mixed $input1
+	 * @param mixed $input2
+	 * @param mixed $input3
+	 * @param mixed $input4
+	 *
+	 * @return mixed
+	 */
+	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+	}
+	
+	/**
+	 *
+	 * @param mixed $input1
+	 * @param mixed $input2
+	 * @param mixed $input3
+	 * @param mixed $input4
+	 *
+	 * @return mixed
+	 */
+	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+	}
+	
+	/**
+	 *
+	 * @param mixed $input1
+	 * @param mixed $input2
+	 * @param mixed $input3
+	 * @param mixed $input4
+	 *
+	 * @return mixed
+	 */
+	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+	}
+	
+	/**
+	 *
+	 * @param mixed $input1
+	 * @param mixed $input2
+	 * @param mixed $input3
+	 * @param mixed $input4
+	 *
+	 * @return mixed
+	 */
+	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+	}
+	/**
+	 * 
+	 * @return string
+	 */
+	function getDate(): string {
+		return $this->date;
+	}
+	
+	/**
+	 * 
+	 * @param string $date 
+	 * @return order
+	 */
+	function setDate(string $date): self {
+		$this->date = $date;
+		return $this;
+	}
+	/**
+	 * 
+	 * @return float
+	 */
+	function getTotal(): float {
+		return $this->total;
+	}
+	
+	/**
+	 * 
+	 * @param float $total 
+	 * @return order
+	 */
+	function setTotal(float $total): self {
+		$this->total = $total;
+		return $this;
+	}
+	/**
+	 * 
+	 * @return int
+	 */
+	function getClientId(): int {
+		return $this->ClientId;
+	}
+	
+	/**
+	 * 
+	 * @param int $ClientId 
+	 * @return order
+	 */
+	function setClientId(int $ClientId): self {
+		$this->ClientId = $ClientId;
+		return $this;
+	}
+	/**
+	 * 
+	 * @return string
+	 */
+}
