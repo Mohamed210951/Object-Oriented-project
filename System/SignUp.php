@@ -59,4 +59,12 @@ if(isset($_POST["submit"]))
     else {
         echo "Must be the same Password!!";
     }
+
+
+
+
+
+
+
+    
 }
