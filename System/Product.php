@@ -53,6 +53,16 @@ if(isset($_POST["Add"]))
 }
 else if(isset($_POST["Update"]))
 {
+   $Product_to_change = new Product();
+      $id=($_POST[""]);
+   $Product_to_change->setName($_POST["ProductName"]);
+   $Product_to_change->setCost($_POST["ProductPrice"]);
+   $isexist= UserNameIsThere("Product.txt",$Product_to_change->getName());
+   if($isexist!=null)
+   { 
+    $old_Product=new Product(intval ($isexist[0]),$isexist[2],floatval ($isexist[1]));
+  FileUpdate("Product.txt",$old_Product->ToString(),$Product_to_change->ToString());
+   }
     $Product_to_change = new Product();
     $Product_to_change->setName($_POST["ProductName"]);
     $isexist= UserNameIsThere("Product.txt",$Product_to_change->getName());
