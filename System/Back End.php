@@ -100,7 +100,7 @@ function SignUp(string $UserName,string $Password,string $Type){
 	$newUser = new User(GetLastId("User.txt") + 1,$Type,$UserName,$Password);
 	$newUser->Add();
 }
-function Encrypt($Word, $Key){
+function Encrypt($Word, $Key) {
     $Result = "";
     for ($i = 0; $i < strlen($Word); $i++) {
         $c = chr(ord($Word[$i]) + $Key + $i);
@@ -108,7 +108,7 @@ function Encrypt($Word, $Key){
     }
     return $Result;
 }
-function Decrypt($Word, $Key){
+function Decrypt($Word, $Key) {
     $Result = "";
     for ($i = 0; $i < strlen($Word); $i++) {
         $c = chr(ord($Word[$i]) - $Key - $i);
@@ -206,6 +206,12 @@ class User extends Person implements File {
 			echo "Please Try again but prevent using '~'!!";
 		}
 	}
+	
+	/**
+	 * 
+	 * @param string $input1 Note1
+	 * @param float $input2 Note2
+	 */
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		// Code
 	}
