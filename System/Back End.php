@@ -325,13 +325,13 @@ class Child extends Person implements File {
 	}
 }
 class order extends Person implements File {
-	private float $Total;
+	private float $total;
 	private int $ClientId;
 	private string $date;
 	public function AllIsSet() {
 		if($this->Id == null) return 0;
 		if($this->Name == null) return 0;
-		if($this->Total == null) return 0;
+		if($this->total == null) return 0;
 		if($this->ClientId == null) return 0;
 		if($this->Date == null) return 0;
 		return 1;
@@ -346,17 +346,14 @@ class order extends Person implements File {
 	 * @return mixed
 	 */
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		if($this->Name==null) return 0;
+		if($this->Id==null) return 0;
+		if($this->total==null) return 0;
+		if($this->ClientId==null) return 0;
+		if($this->date==null) return 0;
+		
 	}
 	
-	/**
-	 *
-	 * @param mixed $input1
-	 * @param mixed $input2
-	 * @param mixed $input3
-	 * @param mixed $input4
-	 *
-	 * @return mixed
-	 */
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 	}
 	
@@ -391,58 +388,36 @@ class order extends Person implements File {
 		return $this->date;
 	}
 	
-	/**
-	 * 
-	 * @param string $date 
-	 * @return order
-	 */
-	function setDate(string $date): self {
+	function setDate(string $date): int  {
+		if($date <= 0) return 0;
 		$this->date = $date;
-		return $this;
+		return 1;
 	}
-	/**
-	 * 
-	 * @return float
-	 */
-	function getTotal(): float {
+
+	function gettotal(): float {
 		return $this->total;
 	}
-	
-	/**
-	 * 
-	 * @param float $total 
-	 * @return order
-	 */
-	function setTotal(float $total): self {
+
+
+	function settotal(float $total): int {
+		if($total <= 0) return 0;
 		$this->total = $total;
-		return $this;
+		return 1;
 	}
-	/**
-	 * 
-	 * @return int
-	 */
+
 	function getClientId(): int {
 		return $this->ClientId;
 	}
 	
-	/**
-	 * 
-	 * @param int $ClientId 
-	 * @return order
-	 */
-	function setClientId(int $ClientId): self {
+
+	function setClientId(int $ClientId): int  {
+		if($ClientId <= 0) return 0;
 		$this->ClientId = $ClientId;
-		return $this;
+		return 1;
 	}
-	/**
-	 * 
-	 * @return string
-	 */
 
+	public static function StringToObject(string $String) {
 
+	}
 
-
-
-
-	 
 }
