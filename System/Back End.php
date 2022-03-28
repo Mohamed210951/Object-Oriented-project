@@ -13,7 +13,7 @@ function GetLastId(string $fileName) {
 }
 
 function DisplayTable(array $List) {
-	echo "<table>";
+	echo "<table style = 'border: 1px solid black'>";
 	for ($i=0; $i < count($List); $i++) { 
 		echo "<tr>";
 		for ($j=0; $j < count($List[$i]); $j++) { 

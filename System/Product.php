@@ -63,7 +63,11 @@ else if(isset($_POST["Update"]))
 }
 else if(isset($_POST["Search"]))
 {
-
+    $Product = new Product();
+    $Product->SetId(intval($_POST["Id"]));
+    $Product->setName($_POST["ProductName"]);
+    $Product->setCost(floatval($_POST["ProductPrice"]));
+    $Product->Searsh();
 }
 else if(isset($_POST["Delete"]))
 {

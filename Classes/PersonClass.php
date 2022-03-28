@@ -8,7 +8,7 @@ class Person {
 		return $this->Id;
 	}
 	function setId(?int $Id): int {
-		if($Id <= 0) return 0;
+		if($Id < 0) return 0;
 		$this->Id = $Id;
 		return 1;
 	}

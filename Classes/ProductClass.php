@@ -70,8 +70,53 @@ class Product extends Person implements File {
 		}
 		FileUpdate("Product.txt",$product->ToString(),$this->ToString());
 	}
-	function Search($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-		//Code
+	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		
+		$list=[];
+		$array_of_lines=GetAllContent("../Files/"."Product.txt");
+		if($this->getCost()==0&&$this->getName()==""&&$this->getId()==0)
+		{
+		 for($i=0;$i<count($array_of_lines);$i++)
+		  {
+		   $convert=explode("~",$array_of_lines[$i]);
+		   array_push($list,$convert);
+		  }
+		}
+		if($this->getId()!=0)
+		{
+			for($i=0;$i<count($array_of_lines);$i++)
+			 {
+			 $isexist=ValueIsThere("Product.txt",$this->Id,0);
+			 $array=explode("~",$isexist);
+			 array_push($list,$array);
+			 }
+		}
+		else if($this->getName()!="")
+		{
+			for($i=0;$i<count($array_of_lines);$i++)
+	    {
+			$array=explode("~",$array_of_lines[$i]);
+			if(str_contains($array[2],$this->Name))
+			{
+				array_push($list,$array);
+			}
+		}
+		}
+		else if($this->getCost()!=0)
+		{
+			for($i=0;$i<count($array_of_lines);$i++)
+	   		{
+				$array=explode("~",$array_of_lines[$i]);
+				if(floatval($array[1])==$this->Cost)
+				{
+					array_push($list,$array);
+				}
+			}
+		}
+			
+		
+		DisplayTable($list);
+		
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		//Code
@@ -85,6 +130,4 @@ class Product extends Person implements File {
 	 *
 	 * @return mixed
 	 */
-	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-	}
 }
