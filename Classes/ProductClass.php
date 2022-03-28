@@ -44,10 +44,33 @@ class Product extends Person implements File {
 		}
 		return 1;
 	}
-	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-		//Code
+	static function FromStringToObject($string)
+	{
+       $Array_Of_String=explode("~",$string);
+	   $product=new Product(intval($Array_Of_String[0]),floatval($Array_Of_String[1]),$Array_Of_String[2]);
+	   return $product;
 	}
-	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+	/*
+	/
+	/
+	/
+	/
+	*/
+	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+		$Search_for_Id=$this->Id;
+		$isexist=ValueIsThere("Product.txt",$Search_for_Id,$input1);
+		$product=Product::FromStringToObject($isexist);
+        if($this->getCost()==0)
+		{
+             $this->Cost=$product->getCost();
+		}
+		if($this->getName()=="")
+		{
+             $this->Name=$product->getName();
+		}
+		FileUpdate("Product.txt",$product->ToString(),$this->ToString());
+	}
+	function Search($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		//Code
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
