@@ -51,11 +51,30 @@ class User extends Person implements File {
 		$this->Type = $Type;
 		return 1;
 	}
+	function Login() {
+		if($Line = ValueIsThere("User.txt",$this->Name,2))
+		{
+			$Array = explode('~',$Line);
+			if($Array[3] == $this->Password)
+			{
+				$Type = $Array[1];
+				FileWrite("UserNow.txt",$Type);
+				header("Location:MainMenu.php");
+			}
+			else
+			{
+				echo "Wrong UserName or Password!!";
+			}
+		}
+		else
+		{
+			echo "Wrong UserName or Password!!";
+		}
+	}
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		if($this->AllIsSet()) {
 			if(!ValueIsThere("User.txt",$this->Name,2)) {
 				FileAdd("User.txt",$this->ToString());
-				FileWrite("UserNow.txt",$this->Type);
 				header("Location:MainMenu.php");
 			}
 			else {

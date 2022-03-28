@@ -12,7 +12,17 @@ function GetLastId(string $fileName) {
 	return $max;
 }
 
-
+function DisplayTable(array $List) {
+	echo "<table>";
+	for ($i=0; $i < count($List); $i++) { 
+		echo "<tr>";
+		for ($j=0; $j < count($List[$i]); $j++) { 
+			echo "<th>".$List[$i][$j]."</th>";
+		}
+		echo "</tr>";
+	}
+	echo "</table>";
+}
 /**
  * 
  * @param string $FileName the Name of the file
@@ -53,26 +63,6 @@ function FileDelete(string $FileName, string $Data){
 	$contents = file_get_contents("../Files/".$FileName);
     $contents = str_replace($Data, "", $contents);
     file_put_contents("../Files/".$FileName, $contents);
-}
-
-function Login(string $FileName,string $UserName,string $Password) {
-	if($Array = ValueIsThere($FileName,$UserName,2))
-    {
-        if($Array[3] == $Password)
-        {
-            $Type = $Array[1];
-            FileWrite("UserNow.txt",$Type);
-            header("Location:MainMenu.php");
-        }
-        else
-        {
-            echo "Wrong UserName or Password!!";
-        }
-    }
-    else
-    {
-        echo "Wrong UserName or Password!!";
-    }
 }
 function FromTypeGetServis(string $Type) {
 	$List = GetAllContent("User Type.txt");
