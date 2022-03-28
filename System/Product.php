@@ -42,6 +42,7 @@
 
 <?php
 include_once "Back End.php";
+include_once "../Classes/ProductClass.php";
 if(isset($_POST["Add"]))
 {
     if($_POST["ProductName"] == "") exit("Product Name unset!!");
@@ -57,7 +58,7 @@ else if(isset($_POST["Update"]))
       $id=($_POST[""]);
    $Product_to_change->setName($_POST["ProductName"]);
    $Product_to_change->setCost($_POST["ProductPrice"]);
-   $isexist= UserNameIsThere("Product.txt",$Product_to_change->getName());
+   $isexist= ValueIsThere("Product.txt",$Product_to_change->getName(),2);
    if($isexist!=null)
    { 
     $old_Product=new Product(intval ($isexist[0]),$isexist[2],floatval ($isexist[1]));
@@ -65,7 +66,7 @@ else if(isset($_POST["Update"]))
    }
     $Product_to_change = new Product();
     $Product_to_change->setName($_POST["ProductName"]);
-    $isexist= UserNameIsThere("Product.txt",$Product_to_change->getName());
+    $isexist= ValueIsThere("Product.txt",$Product_to_change->getName(),2);
     if($isexist!=null)
     { 
         $Product_to_change->setCost($_POST["ProductPrice"]);

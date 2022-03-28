@@ -47,6 +47,7 @@
 </html>
 <?php
 include_once "Back End.php";
+include_once "../Classes/UserClass.php";
 if(isset($_POST["submit"]))
 {
     $UserName = $_POST["UserName"];
@@ -54,7 +55,8 @@ if(isset($_POST["submit"]))
     $ConPass = $_POST["ConPass"];
     $Type = $_POST["Type"];
     if($ConPass == $Password) {
-        SignUp($UserName,$Password,$Type);
+        $newUser = new User(GetLastId("User.txt") + 1, $Type, $UserName, $Password);
+	    $newUser->Add();
     }
     else {
         echo "Must be the same Password!!";
