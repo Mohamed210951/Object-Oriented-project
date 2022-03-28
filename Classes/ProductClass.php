@@ -58,7 +58,7 @@ class Product extends Person implements File {
 	*/
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		$Search_for_Id=$this->Id;
-		$isexist=ValueIsThere("Product.txt",$Search_for_Id,$input1);
+		$isexist=ValueIsThere("Product.txt",$Search_for_Id,0);
 		$product=Product::FromStringToObject($isexist);
         if($this->getCost()==0)
 		{
@@ -75,5 +75,16 @@ class Product extends Person implements File {
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		//Code
+	}
+	/**
+	 *
+	 * @param mixed $input1
+	 * @param mixed $input2
+	 * @param mixed $input3
+	 * @param mixed $input4
+	 *
+	 * @return mixed
+	 */
+	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 	}
 }
