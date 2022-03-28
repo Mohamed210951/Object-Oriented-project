@@ -54,27 +54,12 @@ if(isset($_POST["Add"]))
 }
 else if(isset($_POST["Update"]))
 {
-   $Product_to_change = new Product();
-      $id=($_POST[""]);
-   $Product_to_change->setName($_POST["ProductName"]);
-   $Product_to_change->setCost($_POST["ProductPrice"]);
-   $isexist= ValueIsThere("Product.txt",$Product_to_change->getName(),2);
-   if($isexist!=null)
-   { 
-    $old_Product=new Product(intval ($isexist[0]),$isexist[2],floatval ($isexist[1]));
-  FileUpdate("Product.txt",$old_Product->ToString(),$Product_to_change->ToString());
-   }
-    $Product_to_change = new Product();
-    $Product_to_change->setName($_POST["ProductName"]);
-    $isexist= ValueIsThere("Product.txt",$Product_to_change->getName(),2);
-    if($isexist!=null)
-    { 
-        $Product_to_change->setCost($_POST["ProductPrice"]);
-    }
-
-    // Hat8yr da oe tktb kolo fe back end 
-    // Class Product feh function Update
-    // 2ktb feh 27sn
+    if($_POST["Id"] == "") exit("Product Id unset!!");
+    $Product = new Product();
+    $Product->SetId($_POST["Id"]);
+    $Product->setName($_POST["ProductName"]);
+    $Product->setCost(floatval($_POST["ProductPrice"]));
+    $Product->Update();
 }
 else if(isset($_POST["Search"]))
 {

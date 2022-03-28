@@ -57,6 +57,7 @@ if(isset($_POST["submit"]))
     if($ConPass == $Password) {
         $newUser = new User(GetLastId("User.txt") + 1, $Type, $UserName, $Password);
 	    $newUser->Add();
+        FileWrite("UserNow.txt",$newUser->getType());
     }
     else {
         echo "Must be the same Password!!";
