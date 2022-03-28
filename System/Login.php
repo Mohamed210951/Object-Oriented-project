@@ -31,10 +31,14 @@
 
 <?php 
 include_once "Back End.php";
+include_once "../Classes/UserClass.php";
 if(isset($_POST["Login"])) {
     $UserName = $_POST["UserName"];
     $Password = $_POST["Password"];
-    Login("User.txt",$UserName,$Password);
+    $User = new User();
+    $User->setName($UserName);
+    $User->setPassword($Password);
+    $User->Login();
 }
 if(isset($_POST["SignUp"])) {
     header("Location:SignUp.php");

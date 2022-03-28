@@ -1,3 +1,12 @@
-1~10000~iphone~
-2~2000000~Samsung~
-3~500000~xiomi~4~1234~gerwv~
+1~55555~Samusng~
+2~90000000000.5~Samsung~
+3~500000~xiomi~
+4~777777~saif~
+5~300000~Samsung ~
+6~555555~Iphone~
+7~90000~huwaiw~
+8~300000~ffddfsfsdfsdf~
+9~300000~sdfsfdsfsdfsdfsdfsd~
+10~300000~sdfsdfsdfsdfsdfsdfs~
+11~300000~lgujbifgoudbgfoudfgnjdgdfgdf~
+12~300000~alladog~
