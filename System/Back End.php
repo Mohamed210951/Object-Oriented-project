@@ -99,4 +99,7 @@ function Decrypt($Word, $Key) {
         $Result .= $c;
     }
     return $Result;
+	/***
+	 * 
+	 */
 }
