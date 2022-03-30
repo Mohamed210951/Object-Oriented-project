@@ -43,9 +43,18 @@
 </html>
 
 <?php
-
+include_once "../Classes/OrderDetails.php";
 if(isset($_POST["Logout"]))
 {
     session_destroy();
     header("Location:Login.php");
+}
+if(isset($_POST["AddItem"]))
+{
+    $Product_Id=$_POST["ProductId"];
+    $Product_Number=$_POST["NumberOfProduct"];
+    $Object_of_order_details=new  Order_Details();
+    $Object_of_order_details->Add(intval($Product_Id),intval($Product_Number));
+
+
 }

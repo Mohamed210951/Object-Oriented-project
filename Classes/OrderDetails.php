@@ -4,9 +4,9 @@ include_once "PersonClass.php";
 include_once "ProductClass.php";
 class Order_Details extends Person implements File 
 {
-private? array $Products;
-private? array $Numbers;
-private? array $Prices;
+private? array $Products=[];
+private? array $Numbers=[];
+private? array $Prices=[];
 
 private? int $OrderId;
 /**
@@ -16,21 +16,23 @@ private? int $OrderId;
 * @return mixed
 */
 function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-    if($this->Numbers==null)
+    if($input2<0)
+    {
+        return 0;
+    }
+    if(!ValueIsThere("Product.txt",$input1,0))
     {
         return 0;
     }
     $Last_Id_In_file = GetLastId("Order Details.txt");
     $Order_Details_Id=$this->setId($Last_Id_In_file+1);
     $Product = new Product();
-    $Product->Get_Info_Of_Product($input1);
+    $Product=$Product->Get_Info_Of_Product($input1);
     $NumberOfProduct = $input2;
     array_push($this->Products,$Product->getId());
     array_push($this->Numbers,$NumberOfProduct);
     $Product_Pricess= array_push($this->Prices,($Product->getCost() * $NumberOfProduct ));
-    $file=fopen("Order Details.txt","a");
-
-    fwrite($file,$Order_Details_Id."~".$input1."~".$NumberOfProduct."~".$Product_Pricess."~"."~\r\n");
+    FileAdd("Order Details.txt",$Order_Details_Id."~".$input1."~".$NumberOfProduct."~".$Product_Pricess."~\r\n");
 
 
 }
