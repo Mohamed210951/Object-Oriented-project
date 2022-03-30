@@ -16,8 +16,17 @@
     <form action="#" method="post">
 
     <div class = "row">
-            <label for="Product Id">Product Id</label>
-            <input type="number" name="ProductId" step = ".001">
+            <label for="Product Name">Product Name</label>
+            <select name="ProductName">
+                <?php  
+                include_once "Back End.php";
+                    $List = GetAllContent("Product.txt");
+                    for ($i=0; $i < count($List); $i++) { 
+                        $Line = explode('~',$List[$i]);
+                        echo "<option>". $Line[2]."</option>";
+                    }
+                ?>
+            </select>
         </div>
         <br>
         <div class = "row">
@@ -51,7 +60,10 @@ if(isset($_POST["Logout"]))
 }
 if(isset($_POST["AddItem"]))
 {
-    $Product_Id=$_POST["ProductId"];
+    $Product_Name = $_POST["ProductName"];
+    $IsExist = ValueIsThere("Product.txt",$Product_Name,2);
+    $Line = explode('~',$IsExist);
+    $Product_Id=$Line[0];
     $Product_Number=$_POST["NumberOfProduct"];
     $Object_of_order_details=new  Order_Details();
     $Object_of_order_details->Add(intval($Product_Id),intval($Product_Number));
