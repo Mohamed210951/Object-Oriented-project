@@ -1,7 +1,8 @@
 <?php
 include_once "../System/Back End.php";
 include_once "PersonClass.php";
-include_once "ProductClass";
+include_once "ProductClass.php";
+
 class Order_Details extends Person implements File 
 {
 private? array $Products;
@@ -20,12 +21,19 @@ private? int $OrderId;
         {
             return 0;
         }
+        $Last_Id_In_file = GetLastId("Order Details.txt");
+    	$Order_Details_Id=$this->setId($Last_Id_In_file+1);
         $Product = new Product();
         $Product->Get_Info_Of_Product($input1);
         $NumberOfProduct = $input2;
         array_push($this->Products,$Product->getId());
         array_push($this->Numbers,$NumberOfProduct);
-        array_push($this->Prices,($Product->getCost() * $NumberOfProduct ));
+        $Product_Pricess= array_push($this->Prices,($Product->getCost() * $NumberOfProduct ));
+        $file=fopen("Order Details.txt","a");
+
+        fwrite($file,$Order_Details_Id."~".$input1."~".$NumberOfProduct."~".$Product_Pricess."~"."~\r\n");
+
+
     }
 
 
@@ -36,6 +44,8 @@ private? int $OrderId;
             $String .= $this->OrderId . '~' . $this->Products[$i] . '~' . $this->Numbers[$i] . '~' . $this->Prices[$i]."~\r\n";
         }
     }
+
+
     /**
     *
     * @param mixed $input1
