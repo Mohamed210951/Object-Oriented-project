@@ -71,5 +71,7 @@ else if(isset($_POST["Search"]))
 }
 else if(isset($_POST["Delete"]))
 {
-    
+    $Product = new Product();
+    $Product->SetId(intval($_POST["Id"]));
+    $Product->Delete();
 }

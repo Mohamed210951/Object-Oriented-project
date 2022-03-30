@@ -50,12 +50,6 @@ class Product extends Person implements File {
 	   $product=new Product(intval($Array_Of_String[0]),floatval($Array_Of_String[1]),$Array_Of_String[2]);
 	   return $product;
 	}
-	/*
-	/
-	/
-	/
-	/
-	*/
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		$Search_for_Id=$this->Id;
 		$isexist=ValueIsThere("Product.txt",$Search_for_Id,0);
@@ -93,14 +87,14 @@ class Product extends Person implements File {
 		}
 		else if($this->getName()!="")
 		{
-			for($i=0;$i<count($array_of_lines);$i++)
-	    {
-			$array=explode("~",$array_of_lines[$i]);
-			if(str_contains($array[2],$this->Name))
-			{
+		 for($i=0;$i<count($array_of_lines);$i++)
+	   	    {
+				$array=explode("~",$array_of_lines[$i]);
+				if(str_contains($array[2],$this->Name))
+				{
 				array_push($list,$array);
+				}
 			}
-		}
 		}
 		else if($this->getCost()!=0)
 		{
@@ -113,13 +107,14 @@ class Product extends Person implements File {
 				}
 			}
 		}
-			
-		
-		DisplayTable($list);
-		
+		DisplayTable($list);	
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-		//Code
+		if($this->getId()!=0)
+		{
+            $isexist=ValueIsThere("Product.txt",$this->getId(),0);
+		    FileDelete("Product.txt", $isexist);
+		}
 	}
 	/**
 	 *
