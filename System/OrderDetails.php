@@ -39,7 +39,7 @@
             <input type="submit" value="Delete Item" name = "DeleteItem">
             <input type="submit" value="Update Item" name = "UpdateItem">
             <input type="submit" value="Searsh For An iTem" name = "Searsh">
-            <input type="submit" value="See Order Details" name = "ViewOrderDetails">
+            <input type="submit" value="Print Order Invoice" name = "PrintOrderInvoice">
         </div>
     </form>
 
