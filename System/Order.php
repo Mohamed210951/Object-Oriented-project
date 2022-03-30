@@ -47,6 +47,11 @@
 
 include_once "../Classes/OrderClass.php";
 include_once "Back End.php";
-if(isset($_POST["Add"]))
-
+if(isset($_POST["Finish"]))
+{
+  $Order = new Order();
+  $Order-> setId(intval($_POST["OrderId"]));
+  $Order-> setClientId(intval($_POST["ClintId"]));
+  $Order->Add();
+}
 ?>
