@@ -20,38 +20,70 @@
         </div>
         <br>
         <div class = "row">
-            <label for="Product Id">Product Id</label>
-            <input type="number" name="ProductId" step = ".001">
+            <label for="Day">Day</label>
+            <select name="Day">
+                <?php 
+                    for ($i=0; $i < 31; $i++) { 
+                        echo "<option>".$i + 1 ."</option>";
+                    }
+                ?>
+            </select>
+            <label for="Month">Month</label>
+            <select name="Month">
+                <?php 
+                    for ($i=0; $i < 12; $i++) { 
+                        echo "<option>".$i + 1 ."</option>";
+                    }
+                ?>
+            </select>
+            <label for="Year">Year</label>
+            <select name="Year">
+                <?php 
+                    for ($i=2000; $i < 2050; $i++) { 
+                        echo "<option>".$i + 1 ."</option>";
+                    }
+                ?>
+            </select>
         </div>
-        <br>
         <div class = "row">
-            <label for="Number Of Product">Number Of Product</label>
-            <input type="number" name="NumberOfProduct" step = ".001">
-        </div>
-        <br>
-        <div class = "row">
-            <input type="submit" value="Add Item" name = "AddItem">
-            <input type="submit" value="Delete Item" name = "DeleteItem">
-            <input type="submit" value="Update Item" name = "UpdateItem">
-        </div>
-        <div class = "row">
-            <input type="submit" value="Finish Order" name = "Finish">
+            <input type="submit" value="Add Order" name = "AddOrder">
             <input type="submit" value="Delete Order" name = "DeleteOrder">
             <input type="submit" value="Search for Order" name = "SearchForOrder">
-            <input type="submit" value="View Order Details" name = "ViewOrderDetails">
+            <input type="submit" value="See Order Details" name = "ViewOrderDetails">
         </div>
     </form>
+    <footer>
+        <form action="#" method="post">
+            <input type="submit" value="Logout" name="Logout">
+        </form>
+    </footer>
 </body>
 </html>
 <?php
 
 include_once "../Classes/OrderClass.php";
 include_once "Back End.php";
-if(isset($_POST["Finish"]))
+if(isset($_POST["AddOrder"]))
 {
   $Order = new Order();
-  $Order-> setId(intval($_POST["OrderId"]));
   $Order-> setClientId(intval($_POST["ClintId"]));
   $Order->Add();
+  
+}
+
+if(isset($_POST["ViewOrderDetails"]))
+{
+    if($_POST["OrderId"] == "") exit("Must Write Order Id");
+    if(ValueIsThere("Order.txt",$_POST["OrderId"],0))
+    {
+        $_SESSION["OrderId"] = $_POST["OrderId"];
+        header("Location:OrderDetails.php");
+    }
+}
+
+if(isset($_POST["Logout"]))
+{
+    session_destroy();
+    header("Location:Login.php");
 }
 ?>

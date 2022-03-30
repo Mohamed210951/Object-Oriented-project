@@ -38,6 +38,32 @@
                 ?>
             </select>
         </div>
+        <div class = "row">
+            <label for="Day">Day</label>
+            <select name="Day">
+                <?php 
+                    for ($i=0; $i < 31; $i++) { 
+                        echo "<option>".$i + 1 ."</option>";
+                    }
+                ?>
+            </select>
+            <label for="Month">Month</label>
+            <select name="Month">
+                <?php 
+                    for ($i=0; $i < 12; $i++) { 
+                        echo "<option>".$i + 1 ."</option>";
+                    }
+                ?>
+            </select>
+            <label for="Year">Year</label>
+            <select name="Year">
+                <?php 
+                    for ($i=2000; $i < 2050; $i++) { 
+                        echo "<option>".$i + 1 ."</option>";
+                    }
+                ?>
+            </select>
+        </div>
         <br>
         <div class = "row">
             <input type="submit" value="Sign Up" name = "submit">
@@ -57,7 +83,8 @@ if(isset($_POST["submit"]))
     if($ConPass == $Password) {
         $newUser = new User(GetLastId("User.txt") + 1, $Type, $UserName, $Password);
 	    $newUser->Add();
-        FileWrite("UserNow.txt",$newUser->getType());
+        session_start();
+        $_SESSION["Type"] = $newUser->getType();
     }
     else {
         echo "Must be the same Password!!";

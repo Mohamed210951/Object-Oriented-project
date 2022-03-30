@@ -3,9 +3,9 @@ include_once "../System/Back End.php";
 include_once "PersonClass.php";
 include_once "OrderDetails.php";
 class order extends Person implements File {
-	private float $total;
-	private int $ClientId;
-	private string $date;
+	private ?float $total;
+	private ?int $ClientId;
+	private ?string $date;
 	public function AllIsSet() {
 		if($this->Id==null) return 0;
 		if($this->ClientId==null) return 0;
@@ -34,6 +34,9 @@ class order extends Person implements File {
             if($IsOrderExist==null)
             {
                 FileAdd("Order.txt",$this->ToString());
+				session_start();
+				$_SESSION["OrderId"] = $this->getId();
+  				header("Location:OrderDetails.php");
             }
             else{
                 echo"the order is exist";
@@ -116,4 +119,13 @@ class order extends Person implements File {
 	 * @return string
 	 */
 
+	/**
+	 */
+	function __construct() {
+		$this->ClientId = null;
+		$this->date = null;
+		$this->Id = null;
+		$this->total = null;
+		$this->Name = null;
+	}
 }

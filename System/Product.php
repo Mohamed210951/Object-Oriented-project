@@ -37,6 +37,12 @@
             <input type="submit" value="Delete" name = "Delete"<?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
         </div>
     </form>
+
+    <footer>
+        <form action="#" method="post">
+            <input type="submit" value="Logout" name="Logout">
+        </form>
+    </footer>
 </body>
 </html>
 
@@ -74,4 +80,10 @@ else if(isset($_POST["Delete"]))
     $Product = new Product();
     $Product->SetId(intval($_POST["Id"]));
     $Product->Delete();
+}
+
+if(isset($_POST["Logout"]))
+{
+    session_destroy();
+    header("Location:Login.php");
 }

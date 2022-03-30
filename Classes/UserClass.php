@@ -57,8 +57,9 @@ class User extends Person implements File {
 			$Array = explode('~',$Line);
 			if($Array[3] == $this->Password)
 			{
-				$Type = $Array[1];
-				FileWrite("UserNow.txt",$Type);
+				$this->Type = $Array[1];
+				session_start();
+    			$_SESSION["Type"] = $this->getType();
 				header("Location:MainMenu.php");
 			}
 			else

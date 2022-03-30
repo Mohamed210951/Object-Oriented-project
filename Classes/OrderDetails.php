@@ -1,7 +1,7 @@
 <?php
 include_once "../System/Back End.php";
 include_once "PersonClass.php";
-include_once "ProductClass";
+include_once "ProductClass.php";
 class Order_Details extends Person implements File 
 {
 private? array $Products;

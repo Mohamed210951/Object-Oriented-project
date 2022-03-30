@@ -9,9 +9,9 @@
 <body>
     <h1>MainMenu.php</h1>
     <?php
+        session_start();
         include_once "Back End.php";
-        $Array = GetAllContent("UserNow.txt");
-        $Type = $Array[0];
+        $Type = $_SESSION["Type"];
         $Servis = FromTypeGetServis($Type);
     ?>
     <form action="#" method="post">
@@ -37,6 +37,12 @@
              if($flag == 0) echo "hidden";
         ?>>
     </form>
+
+    <footer>
+        <form action="#" method="post">
+            <input type="submit" value="Logout" name="Logout">
+        </form>
+    </footer>
 </body> 
 </html>
 <?php
@@ -52,4 +58,10 @@ if(isset($_POST["GoToOrder"]))
 if(isset($_POST["GoToUser"]))
 {
     header("Location:User.php");
+}
+
+if(isset($_POST["Logout"]))
+{
+    session_destroy();
+    header("Location:Login.php");
 }
