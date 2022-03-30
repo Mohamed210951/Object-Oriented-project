@@ -43,6 +43,19 @@ class Product extends Person implements File {
 			return 0;
 		}
 		return 1;
+	
+	}
+	function Get_Info_Of_Product($ID_Nom)
+	{
+	$isexist =ValueIsthere("product.txt",$ID_Nom,0);
+	if($isexist)
+	{
+		$product=product::FromStringToObject($ID_Nom);
+		return $product;
+	}
+    return null;
+
+
 	}
 	static function FromStringToObject($string)
 	{
