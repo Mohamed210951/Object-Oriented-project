@@ -15,19 +15,25 @@ private? int $OrderId;
 * @param int $input2 Number Of Product
 * @return mixed
 */
-    function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-        if($this->Numbers==null)
-        {
-            return 0;
-        }
-        $Product = new Product();
-        $Product->Get_Info_Of_Product($input1);
-        $NumberOfProduct = $input2;
-        array_push($this->Products,$Product->getId());
-        array_push($this->Numbers,$NumberOfProduct);
-        array_push($this->Prices,($Product->getCost() * $NumberOfProduct ));
+function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+    if($this->Numbers==null)
+    {
+        return 0;
     }
+    $Last_Id_In_file = GetLastId("Order Details.txt");
+    $Order_Details_Id=$this->setId($Last_Id_In_file+1);
+    $Product = new Product();
+    $Product->Get_Info_Of_Product($input1);
+    $NumberOfProduct = $input2;
+    array_push($this->Products,$Product->getId());
+    array_push($this->Numbers,$NumberOfProduct);
+    $Product_Pricess= array_push($this->Prices,($Product->getCost() * $NumberOfProduct ));
+    $file=fopen("Order Details.txt","a");
 
+    fwrite($file,$Order_Details_Id."~".$input1."~".$NumberOfProduct."~".$Product_Pricess."~"."~\r\n");
+
+
+}
 
     public function ToString()
     {
