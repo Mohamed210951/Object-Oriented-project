@@ -10,8 +10,8 @@
     <h1>Product Menu</h1>
     <?php 
     include_once "Back End.php";
-        $Array = GetAllContent("UserNow.txt");
-        $Type = $Array[0];
+        session_start();
+        $Type = $_SESSION["Type"];
         $Servis = FromTypeGetServis($Type);
     ?>
     <form action="#" method="post">
