@@ -1,144 +1,84 @@
 <?php
 include_once "../System/Back End.php";
 include_once "PersonClass.php";
-return string;
+include_once "ProductClass";
 class Order_Details extends Person implements File 
 {
-private? array $Product;
+private? array $Products;
 private? array $Numbers;
 private? array $Prices;
 
-
+private? int $OrderId;
 /**
 *
-* @param mixed $input1
-* @param mixed $input2
-* @param mixed $input3
-* @param mixed $input4
-*
+* @param int $input1 ProductId
+* @param int $input2 Number Of Product
 * @return mixed
 */
-function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-    if($this->Numbers==null)
-    {
-        return 0;
+    function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+        if($this->Numbers==null)
+        {
+            return 0;
+        }
+        $Product = new Product();
+        $Product->Get_Info_Of_Product($input1);
+        $NumberOfProduct = $input2;
+        array_push($this->Products,$Product->getId());
+        array_push($this->Numbers,$NumberOfProduct);
+        array_push($this->Prices,($Product->getCost() * $NumberOfProduct ));
     }
-    $last_p_id=getlast("Order Details.txt");
 
 
+    public function ToString()
+    {
+        $String = "";
+        for ($i=0; $i < count($this->Products); $i++) { 
+            $String .= $this->OrderId . '~' . $this->Products[$i] . '~' . $this->Numbers[$i] . '~' . $this->Prices[$i]."~\r\n";
+        }
+    }
+    /**
+    *
+    * @param mixed $input1
+    * @param mixed $input2
+    * @param mixed $input3
+    * @param mixed $input4
+    *
+    * @return mixed
+    */
+    function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 
+    }
 
-    
+    /**
+    *
+    * @param mixed $input1
+    * @param mixed $input2
+    * @param mixed $input3
+    * @param mixed $input4
+    *
+    * @return mixed
+    */
+    function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+
+    }
+
+    /**
+    *
+    * @param mixed $input1
+    * @param mixed $input2
+    * @param mixed $input3
+    * @param mixed $input4
+    *
+    * @return mixed
+    */
+    function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+
+    }
 }
-
-/**
-*
-* @param mixed $input1
-* @param mixed $input2
-* @param mixed $input3
-* @param mixed $input4
-*
-* @return mixed
-*/
-function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-}
-
-/**
-*
-* @param mixed $input1
-* @param mixed $input2
-* @param mixed $input3
-* @param mixed $input4
-*
-* @return mixed
-*/
-function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-}
-
-/**
-*
-* @param mixed $input1
-* @param mixed $input2
-* @param mixed $input3
-* @param mixed $input4
-*
-* @return mixed
-*/
-function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-}
-/**
-* 
-* @return ?array
-*/
-function getProduct(): ?array {
-   return $this->Product;
-}
-
-/**
-* 
-* @param ?array $Product 
-* @return Order_Details
-*/
-function setProduct(?array $Product): int {
-   for($i=0;$i<<count($Product);$i++)
-   {
-       if($Product[$i]<0)
-       {
-           return 0;
-       }
-   }
-   $this->Product = $Product;
-   return 1;
-}
-/**
-* 
-* @return ?array
-*/
-function getNumbers(): ?array {
-   return $this->Numbers;
-}
-
-/**
-* 
-* @param ?array $Numbers 
-* @return Order_Details
-*/
-function setNumbers(?array $Numbers): int {
-   for($i=0;$i<<count($Numbers);$i++)
-   {
-       if($Numbers[$i]<0)
-       {
-           return 0;
-       }
-   }
-   $this->Numbers = $Numbers;
-   return 1;
-}
-/**
-* 
-* @return ?array
-*/
-function getPrices(): ?array {
-   return $this->Prices;
-}
-
-/**
-* 
-* @param ?array $Prices 
-* @return Order_Details
-*/
-function setPrices(?array $Prices): int {
-   for($i=0;$i<<count($Prices);$i++)
-   {
-       if($Prices[$i]<0)
-       {
-           return 0;
-       }
-   }
-   $this->Prices = $Prices;
-   return 1;
-}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 50d0bc3a7a7ed5bdcf0cf72f783290c0325b47b3
 // order_id~product_id[0]~number[0]~price[0]~\r\n   -> 2esmaha to string
 // lazem kolohom yeb2o mesh f null b function 2esmaha All is set 
