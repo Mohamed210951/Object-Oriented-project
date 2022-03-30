@@ -75,10 +75,5 @@ private? int $OrderId;
 
     }
 }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 50d0bc3a7a7ed5bdcf0cf72f783290c0325b47b3
 // order_id~product_id[0]~number[0]~price[0]~\r\n   -> 2esmaha to string
 // lazem kolohom yeb2o mesh f null b function 2esmaha All is set 
