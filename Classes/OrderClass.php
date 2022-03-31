@@ -1,7 +1,7 @@
 <?php
 include_once "../System/Back End.php";
 include_once "PersonClass.php";
-include_once "OrderDetails.php";
+include_once "OrderDetailsClass.php";
 class order extends Person implements File {
 	private ?float $total;
 	private ?int $ClientId;
