@@ -33,7 +33,8 @@
                     for ($i=0; $i < count($List); $i++) { 
                         $Array = explode('~',$List[$i]);
                         $Type = $Array[1];
-                        echo "<option value='$Type'>$Type</option>";
+                        $TypeId = $Array[0];
+                        echo "<option value='$TypeId'>$Type</option>";
                     }
                 ?>
             </select>
@@ -82,9 +83,12 @@ if(isset($_POST["submit"]))
     $Type = $_POST["Type"];
     if($ConPass == $Password) {
         $newUser = new User(GetLastId("User.txt") + 1, $Type, $UserName, $Password);
+        Decrypt("User.txt");
 	    $newUser->Add();
+        Encrypt("User.txt");
         session_start();
         $_SESSION["Type"] = $newUser->getType();
+        header("Location:MainMenu.php");
     }
     else {
         echo "Must be the same Password!!";

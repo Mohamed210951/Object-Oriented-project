@@ -33,6 +33,7 @@ function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
     array_push($this->Numbers,$NumberOfProduct);
     $Product_Pricess= array_push($this->Prices,($Product->getCost() * $NumberOfProduct ));
     FileAdd("Order Details.txt",$Order_Details_Id."~".$input1."~".$NumberOfProduct."~".$Product_Pricess."~\r\n");
+    
 
 
 }

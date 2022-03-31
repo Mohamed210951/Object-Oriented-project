@@ -38,7 +38,9 @@ if(isset($_POST["Login"])) {
     $User = new User();
     $User->setName($UserName);
     $User->setPassword($Password);
+    Decrypt("User.txt");
     $User->Login();
+    Encrypt("User.txt");
 }
 if(isset($_POST["SignUp"])) {
     header("Location:SignUp.php");

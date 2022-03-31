@@ -64,13 +64,7 @@ function FileDelete(string $FileName, string $Data){
     $contents = str_replace($Data, "", $contents);
     file_put_contents("../Files/".$FileName, $contents);
 }
-function FromTypeGetServis(string $Type) {
-	$List = GetAllContent("User Type.txt");
-	$IdType = "-1";
-	for ($i=0; $i < count($List); $i++) { 
-		$array = explode('~',$List[$i]);
-		if($array[1] == $Type) $IdType = $array[0];
-	}
+function FromTypeGetServis(string $IdType) {
 	$Servis = [];
 	$List = GetAllContent("User Type Menu.txt");
 	for ($i=0; $i < count($List); $i++) { 
@@ -84,19 +78,23 @@ function FromTypeGetServis(string $Type) {
 	}
 	return $Servis;
 }
-function Encrypt($Word, $Key) {
+function Encrypt($FileName) {
+	$contents = file_get_contents("../Files/".$FileName);
+	$Key = 15;
     $Result = "";
-    for ($i = 0; $i < strlen($Word); $i++) {
-        $c = chr(ord($Word[$i]) + $Key + $i);
+    for ($i = 0; $i < strlen($contents); $i++) {
+        $c = chr(ord($contents[$i]) + $Key + $i);
         $Result .= $c;
     }
-    return $Result;
+    file_put_contents("../Files/".$FileName, $Result);
 }
-function Decrypt($Word, $Key) {
+function Decrypt($FileName) {
+	$contents = file_get_contents("../Files/".$FileName);
+	$Key = 15;
     $Result = "";
-    for ($i = 0; $i < strlen($Word); $i++) {
-        $c = chr(ord($Word[$i]) - $Key - $i);
+    for ($i = 0; $i < strlen($contents); $i++) {
+        $c = chr(ord($contents[$i]) - $Key - $i);
         $Result .= $c;
     }
-    return $Result;
+    file_put_contents("../Files/".$FileName, $Result);
 }
