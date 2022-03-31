@@ -59,7 +59,7 @@ class User extends Person implements File {
 			{
 				$this->TypeId = $Array[1];
 				session_start();
-    			$_SESSION["Type"] = $this->getType();
+    			$_SESSION["UserId"] = $Array[0];
 				header("Location:MainMenu.php");
 			}
 			else

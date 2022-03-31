@@ -28,7 +28,7 @@
             <label for="SelectType">Select Your Type</label>
             <select name="Type">
                 <?php 
-                include_once "Back End.php";
+                    include_once "Back End.php";
                     $List = GetAllContent("User Type.txt");
                     for ($i=0; $i < count($List); $i++) { 
                         $Array = explode('~',$List[$i]);
@@ -83,11 +83,9 @@ if(isset($_POST["submit"]))
     $Type = $_POST["Type"];
     if($ConPass == $Password) {
         $newUser = new User(GetLastId("User.txt") + 1, $Type, $UserName, $Password);
-        Decrypt("User.txt");
 	    $newUser->Add();
-        Encrypt("User.txt");
         session_start();
-        $_SESSION["Type"] = $newUser->getType();
+        $_SESSION["UserId"] = $newUser->getId();
         header("Location:MainMenu.php");
     }
     else {

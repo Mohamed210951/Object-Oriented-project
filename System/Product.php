@@ -9,10 +9,13 @@
 <body>
     <h1>Product Menu</h1>
     <?php 
-    include_once "Back End.php";
+        include_once "Back End.php";
         session_start();
-        $Type = $_SESSION["Type"];
-        $Servis = FromTypeGetServis($Type);
+        include_once "../Classes/UserClass.php";
+        $Id = $_SESSION["UserId"];
+        $Line = ValueIsThere("User.txt",$Id,0);
+        $User = User::StringToUser($Line);
+        $Servis = FromTypeGetServis($User->getType());
     ?>
     <form action="#" method="post">
         <div class = "row">
@@ -41,6 +44,7 @@
     <footer>
         <form action="#" method="post">
             <input type="submit" value="Logout" name="Logout">
+            <input type="submit" value="Profile" name = "Profile">
         </form>
     </footer>
 </body>
@@ -56,9 +60,7 @@ if(isset($_POST["Add"]))
     $New_Product = new Product();
     $New_Product->setName($_POST["ProductName"]);
     $New_Product->setCost($_POST["ProductPrice"]);
-    Decrypt("User.txt");
     $New_Product->Add();
-    Encrypt("User.txt");
 }
 else if(isset($_POST["Update"]))
 {
@@ -67,9 +69,7 @@ else if(isset($_POST["Update"]))
     $Product->SetId($_POST["Id"]);
     $Product->setName($_POST["ProductName"]);
     $Product->setCost(floatval($_POST["ProductPrice"]));
-    Decrypt("User.txt");
     $Product->Update();
-    Encrypt("User.txt");
 }
 else if(isset($_POST["Search"]))
 {
@@ -77,21 +77,22 @@ else if(isset($_POST["Search"]))
     $Product->SetId(intval($_POST["Id"]));
     $Product->setName($_POST["ProductName"]);
     $Product->setCost(floatval($_POST["ProductPrice"]));
-    Decrypt("User.txt");
     $Product->Searsh();
-    Encrypt("User.txt");
 }
 else if(isset($_POST["Delete"]))
 {
     $Product = new Product();
     $Product->SetId(intval($_POST["Id"]));
-    Decrypt("User.txt");
     $Product->Delete();
-    Encrypt("User.txt");
 }
 
 if(isset($_POST["Logout"]))
 {
     session_destroy();
     header("Location:Login.php");
+}
+
+if(isset($_POST["Profile"]))
+{
+    header("Location:Profile.php");
 }

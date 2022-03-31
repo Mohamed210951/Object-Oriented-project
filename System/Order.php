@@ -59,6 +59,7 @@
     <footer>
         <form action="#" method="post">
             <input type="submit" value="Logout" name="Logout">
+            <input type="submit" value="Profile" name = "Profile">
         </form>
     </footer>
 </body>
@@ -71,22 +72,18 @@ if(isset($_POST["AddOrder"]))
 {
   $Order = new Order();
   $Order-> setClientId(intval($_POST["ClintId"]));
-  Decrypt("User.txt");
   $Order->Add();
-  Encrypt("User.txt");
 }
 
 if(isset($_POST["ViewOrderDetails"]))
 {
     if($_POST["OrderId"] == "") exit("Must Write Order Id");
-    Decrypt("User.txt");
     if(ValueIsThere("Order.txt",$_POST["OrderId"],0))
     {
         session_start();
         $_SESSION["OrderId"] = $_POST["OrderId"];
         header("Location:OrderDetails.php");
     }
-    Encrypt("User.txt");
 }
 
 if(isset($_POST["Logout"]))
@@ -98,5 +95,9 @@ if(isset($_POST["Logout"]))
 if(isset($_POST["UpdateOrder"]))
 {
     
+}
+if(isset($_POST["Profile"]))
+{
+    header("Location:Profile.php");
 }
 ?>

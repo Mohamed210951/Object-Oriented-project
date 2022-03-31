@@ -11,8 +11,11 @@
     <?php
         session_start();
         include_once "Back End.php";
-        $Type = $_SESSION["Type"];
-        $Servis = FromTypeGetServis($Type);
+        include_once "../Classes/UserClass.php";
+        $Id = $_SESSION["UserId"];
+        $Line = ValueIsThere("User.txt",$Id,0);
+        $User = User::StringToUser($Line);
+        $Servis = FromTypeGetServis($User->getType());
     ?>
     <form action="#" method="post">
         <input type="submit" value="Product" name = "GotoProduct"<?php 
@@ -41,6 +44,7 @@
     <footer>
         <form action="#" method="post">
             <input type="submit" value="Logout" name="Logout">
+            <input type="submit" value="Profile" name = "Profile">
         </form>
     </footer>
 </body> 
@@ -64,4 +68,8 @@ if(isset($_POST["Logout"]))
 {
     session_destroy();
     header("Location:Login.php");
+}
+if(isset($_POST["Profile"]))
+{
+    header("Location:Profile.php");
 }

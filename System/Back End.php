@@ -1,5 +1,6 @@
 <?php
 function GetLastId(string $fileName) {
+	Decrypt($fileName);
 	$File = fopen("../Files/".$fileName, 'r');
 	$max = 0;
 	while($Line = fgets($File))	{
@@ -9,6 +10,7 @@ function GetLastId(string $fileName) {
 			$max = $Id;
 		}
 	}
+	Encrypt($fileName);
 	return $max;
 }
 
@@ -31,38 +33,54 @@ function DisplayTable(array $List) {
  * @return mixed Return the line if value founded else return NULL
  */
 function ValueIsThere(string $FileName,string $Value,int $Index){
+	Decrypt($FileName);
 	$File = fopen("../Files/".$FileName, 'r');
 	while($Line = fgets($File))	{
 		$Array = explode('~',$Line);
-		if($Array[$Index] == $Value) return $Line;
+		if($Array[$Index] == $Value) 
+		{	
+			Encrypt($FileName);
+			return $Line;
+		}
 	}
+	Encrypt($FileName);
 	return null;
 }
 function GetAllContent(string $FileName){
+	Decrypt($FileName);
 	$File = fopen("../Files/".$FileName, 'r');
 	$List = [];
 	while ($Line = fgets($File)) {
 		array_push($List, $Line);
 	}
+	Encrypt($FileName);
 	return $List;
 }
 function FileAdd(string $FileName,string $Line){
+	Decrypt($FileName);
 	$File = fopen("../Files/".$FileName,'a');
 	fwrite($File,$Line);
+	Encrypt($FileName);
 }
 function FileWrite(string $FileName,string $Line){
+	Decrypt($FileName);
 	$File = fopen("../Files/".$FileName,'w');
 	fwrite($File,$Line);
+	Encrypt($FileName);
 }
 function FileUpdate(string $FileName, string $Old, string $New){
+	Decrypt($FileName);
 	$contents = file_get_contents("../Files/".$FileName);
     $contents = str_replace($Old, $New, $contents);
     file_put_contents("../Files/".$FileName, $contents);
+	Encrypt($FileName);
 }
 function FileDelete(string $FileName, string $Data){
+	Decrypt($FileName);
 	$contents = file_get_contents("../Files/".$FileName);
     $contents = str_replace($Data, "", $contents);
     file_put_contents("../Files/".$FileName, $contents);
+	Encrypt($FileName);
 }
 function FromTypeGetServis(string $IdType) {
 	$Servis = [];
