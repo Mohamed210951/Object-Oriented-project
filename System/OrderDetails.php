@@ -66,7 +66,8 @@ if(isset($_POST["AddItem"]))
     $Product_Id=$Line[0];
     $Product_Number=$_POST["NumberOfProduct"];
     $Object_of_order_details=new  Order_Details();
+    Decrypt("User.txt");
     $Object_of_order_details->Add(intval($Product_Id),intval($Product_Number));
-
+    Encrypt("User.txt");
 
 }

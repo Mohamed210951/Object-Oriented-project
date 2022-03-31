@@ -4,24 +4,24 @@ include_once "../System/Back End.php";
 include_once "PersonClass.php";
 class User extends Person implements File {
 	private $Password;
-	private $Type;
-	public function __construct(int $Id = null,string $Type = null, string $Name = null, string $Password = null) {
+	private $TypeId;
+	public function __construct(int $Id = null,string $TypeId = null, string $Name = null, string $Password = null) {
 		if($Id != null) {
 			$this->setId($Id);
 			$this->setName($Name);
 			$this->setPassword($Password);
-			$this->setType($Type);
+			$this->setType($TypeId);
 		}
 	}
 	public function AllIsSet(): int {
 		if(is_null($this->Id)) return 0;
 		if(is_null($this->Name)) return 0;
 		if(is_null($this->Password)) return 0;
-		if(is_null($this->Type)) return 0;
+		if(is_null($this->TypeId)) return 0;
 		return 1;
 	}
 	public function ToString(): string {
-		$Line = $this->Id . '~' . $this->Type . '~' . $this->Name . '~' . $this->Password . "~\r\n";
+		$Line = $this->Id . '~' . $this->TypeId . '~' . $this->Name . '~' . sha1($this->Password) . "~\r\n";
 		return $Line;
 	}
 	public static function StringToUser(string $Line){
@@ -38,26 +38,26 @@ class User extends Person implements File {
 		return 1;
 	}
 	function getType() {
-		return $this->Type;
+		return $this->TypeId;
 	}
 	function setType($Type) {
 		$List = GetAllContent("User Type.txt");
 		$flag = 0;
 		for ($i=0; $i < count($List); $i++) { 
 			$Array = explode('~',$List[$i]);
-			if($Array[1] == $Type) $flag = 1;
+			if($Array[0] == $Type) $flag = 1;
 		}
 		if($flag == 0) return 0;
-		$this->Type = $Type;
+		$this->TypeId = $Type;
 		return 1;
 	}
 	function Login() {
 		if($Line = ValueIsThere("User.txt",$this->Name,2))
 		{
 			$Array = explode('~',$Line);
-			if($Array[3] == $this->Password)
+			if($Array[3] == sha1($this->Password))
 			{
-				$this->Type = $Array[1];
+				$this->TypeId = $Array[1];
 				session_start();
     			$_SESSION["Type"] = $this->getType();
 				header("Location:MainMenu.php");
@@ -76,7 +76,6 @@ class User extends Person implements File {
 		if($this->AllIsSet()) {
 			if(!ValueIsThere("User.txt",$this->Name,2)) {
 				FileAdd("User.txt",$this->ToString());
-				header("Location:MainMenu.php");
 			}
 			else {
 				echo "This UserName is alrady exists!!";
