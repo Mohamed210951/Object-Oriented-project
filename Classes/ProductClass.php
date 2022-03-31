@@ -47,7 +47,7 @@ class Product extends Person implements File {
 	}
 	function Get_Info_Of_Product($ID_Nom)
 	{
-		$isexist =ValueIsthere("product.txt",$ID_Nom,0);
+		$isexist =ValueIsthere("Product.txt",$ID_Nom,0);
 		if($isexist)
 		{
 			$product=product::FromStringToObject($ID_Nom);
@@ -124,7 +124,8 @@ class Product extends Person implements File {
 		if($this->getId()!=0)
 		{
             $isexist=ValueIsThere("Product.txt",$this->getId(),0);
-		    FileDelete("Product.txt", $isexist);
+			FileDelete("Product.txt", $isexist);
+		
 		}
 	}
 	/**

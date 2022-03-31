@@ -22,6 +22,7 @@
         <div class = "row">
             <label for="Day">Day</label>
             <select name="Day">
+                <option>null</option>
                 <?php 
                     for ($i=0; $i < 31; $i++) { 
                         echo "<option>".$i + 1 ."</option>";
@@ -30,6 +31,7 @@
             </select>
             <label for="Month">Month</label>
             <select name="Month">
+                <option>null</option>
                 <?php 
                     for ($i=0; $i < 12; $i++) { 
                         echo "<option>".$i + 1 ."</option>";
@@ -38,6 +40,7 @@
             </select>
             <label for="Year">Year</label>
             <select name="Year">
+                <option>null</option>
                 <?php 
                     for ($i=2000; $i < 2050; $i++) { 
                         echo "<option>".$i + 1 ."</option>";
@@ -47,6 +50,7 @@
         </div>
         <div class = "row">
             <input type="submit" value="Add Order" name = "AddOrder">
+            <input type="submit" value="Update Order" name  = "UpdateOrder">
             <input type="submit" value="Delete Order" name = "DeleteOrder">
             <input type="submit" value="Search for Order" name = "SearchForOrder">
             <input type="submit" value="See Order Details" name = "ViewOrderDetails">
@@ -76,6 +80,7 @@ if(isset($_POST["ViewOrderDetails"]))
     if($_POST["OrderId"] == "") exit("Must Write Order Id");
     if(ValueIsThere("Order.txt",$_POST["OrderId"],0))
     {
+        session_start();
         $_SESSION["OrderId"] = $_POST["OrderId"];
         header("Location:OrderDetails.php");
     }
@@ -85,5 +90,10 @@ if(isset($_POST["Logout"]))
 {
     session_destroy();
     header("Location:Login.php");
+}
+
+if(isset($_POST["UpdateOrder"]))
+{
+    
 }
 ?>
