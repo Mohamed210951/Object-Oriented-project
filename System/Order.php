@@ -97,10 +97,13 @@ if(isset($_POST["AddOrder"]))
 
 if(isset($_POST["ViewOrderDetails"]))
 {
+    Decrypt("Order.txt");
     if($_POST["OrderId"] == "") exit("Must Write Order Id");
+    
     if(ValueIsThere("Order.txt",$_POST["OrderId"],0))
     {
         session_start();
+        
         $_SESSION["OrderId"] = $_POST["OrderId"];
         header("Location:OrderDetails.php");
     }

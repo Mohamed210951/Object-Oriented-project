@@ -127,7 +127,7 @@ class Product extends Person implements File {
 		{
             $isexist=ValueIsThere("Product.txt",$this->getId(),0);
 			FileDelete("Product.txt", $isexist);
-		
+
 		}
 	}
 	/**
