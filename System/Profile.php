@@ -127,6 +127,7 @@ if(isset($_POST["UpdatePassword"]))
 }
 if(isset($_POST["Logout"]))
 {
+    session_destroy();
     header("Location:Login.php");
 }
 
