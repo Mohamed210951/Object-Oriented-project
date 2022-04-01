@@ -100,7 +100,7 @@ class User extends Person implements File {
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		// Code
 	}
-<<<<<<< HEAD
+
 	/**
 	 * 
 	 * @return mixed
@@ -119,7 +119,3 @@ class User extends Person implements File {
 		return 1;
 	}
 }
-
-=======
-}
->>>>>>> parent of 29c7375 (Merge branch 'main' of https://github.com/Mohamed210951/Object-Oriented-project)
