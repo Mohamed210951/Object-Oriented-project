@@ -33,10 +33,8 @@ function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
     array_push($this->Numbers,$NumberOfProduct);
     $Product_Pricess= array_push($this->Prices,($Product->getCost() * $NumberOfProduct ));
     FileAdd("Order Details.txt",$Order_Details_Id."~".$input1."~".$NumberOfProduct."~".$Product_Pricess."~\r\n");
-    
-
-
 }
+
 
     public function ToString()
     {
@@ -54,7 +52,9 @@ function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
     *
     * @return mixed
     */
-    function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+    function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) 
+    {
+
 
     }
 
@@ -67,7 +67,8 @@ function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
     *
     * @return mixed
     */
-    function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+    function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) 
+    {
         
     }
 
@@ -80,8 +81,18 @@ function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
     *
     * @return mixed
     */
-    function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+    function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null)
+     {
+        if($this->getId()<0)
+        {
+            return 0;
+        }
+        if(ValueIsThere("Order Details.txt",$this->getId(),0)
+        {
+            $h=ValueIsThere("Order Details.txt",$this->getId(),0);
+            FileDelete("Order Details.txt",$h);
 
+        }
     }
 }
 // order_id~product_id[0]~number[0]~price[0]~\r\n   -> 2esmaha to string
