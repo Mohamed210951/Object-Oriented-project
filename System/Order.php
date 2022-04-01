@@ -8,17 +8,28 @@
 </head>
 <body>
     <h1>Order Menu</h1>
+    <?php 
+        include_once "Back End.php";
+        session_start();
+        include_once "../Classes/UserClass.php";
+        $Id = $_SESSION["UserId"];
+        $Line = ValueIsThere("User.txt",$Id,0);
+        $User = User::StringToUser($Line);
+        $Servis = FromTypeGetServis($User->getType());
+    ?>
     <form action="#" method="post">
         <div class = "row">
             <label for="Order Id">Order Id</label>
             <input type="number" name="OrderId" step = ".001">
         </div>
         <br>
-        <div class = "row">
-            <label for="Clint Id">Clint Id</label>
-            <input type="number" name="ClintId" step = ".001">
-        </div>
-        <br>
+        <?php if($User->getType() != "3") : ?>
+            <div class = "row">
+                <label for="Clint Id">Clint Id</label>
+                <input type="number" name="ClintId" step = ".001">
+            </div>
+            <br>
+        <?php endif; ?>
         <div class = "row">
             <label for="Day">Day</label>
             <select name="Day">
@@ -49,10 +60,16 @@
             </select>
         </div>
         <div class = "row">
-            <input type="submit" value="Add Order" name = "AddOrder">
-            <input type="submit" value="Update Order" name  = "UpdateOrder">
-            <input type="submit" value="Delete Order" name = "DeleteOrder">
-            <input type="submit" value="Search for Order" name = "SearchForOrder">
+            <?php if(in_array("Order-All",$Servis) || in_array("Order-Add",$Servis)) : ?>
+                <input type="submit" value="Add Order" name = "AddOrder">
+            <?php endif; ?>
+            <?php if(in_array("Order-All",$Servis)) : ?>
+                <input type="submit" value="Update Order" name  = "UpdateOrder">
+                <input type="submit" value="Delete Order" name = "DeleteOrder">
+            <?php endif; ?>
+            <?php if(in_array("Order-All",$Servis) || in_array("Order-Searsh",$Servis)) : ?>
+                <input type="submit" value="Search for Order" name = "SearchForOrder">
+            <?php endif; ?>
             <input type="submit" value="See Order Details" name = "ViewOrderDetails">
         </div>
     </form>
@@ -70,9 +87,10 @@ include_once "../Classes/OrderClass.php";
 include_once "Back End.php";
 if(isset($_POST["AddOrder"]))
 {
-  $Order = new Order();
-  $Order-> setClientId(intval($_POST["ClintId"]));
-  $Order->Add();
+    $Order = new Order();
+    if($User->getType() == "3") $Order->setClientId($User->getId());
+    else $Order-> setClientId(intval($_POST["ClintId"]));
+    $Order->Add();
 }
 
 if(isset($_POST["ViewOrderDetails"]))
@@ -103,4 +121,4 @@ if(isset($_POST["Profile"]))
 {
     header("Location:Profile.php");
 }
-?>
+
