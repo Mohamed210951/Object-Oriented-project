@@ -84,4 +84,3 @@ if (isset($_POST["Logout"])) {
 if (isset($_POST["Profile"])) {
     header("Location:Profile.php");
 }
-?>
