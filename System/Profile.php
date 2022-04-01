@@ -17,10 +17,12 @@
         $Line = ValueIsThere("User Type.txt",$User->getType(),0);
         $Array = explode('~',$Line);
         $Type = $Array[1];
+
     ?>
     <h1>User Profile</h1>
     <h3>Id: <?php echo $User->getId()?></h3>
-    <h3>The <?php echo $Type." ".$User->getName()?></h3> <br>
+    <h3>The <?php echo $Type." ".$User->getName()?></h3>
+    <h3>Date of Birth <?php echo $User->getDateOfBirth()?></h3><br>
     <form action="#" method="post">
         <div class = "row">
             <label for="UserName">Name</label>
@@ -39,10 +41,47 @@
             <input type="password" name="ConfirmPassword">
         </div>
         <div class = "row">
+            <label for="Date of Birth">Date of Birth  </label><br>
+            <label for="Day">Day: </label>
+            <select name="Day">
+                <option value="">Null</option>
+                <?php 
+                    for ($i=0; $i < 31; $i++) { 
+                        echo "<option>".$i + 1 ."</option>";
+                    }
+                ?>
+            </select>
+            <label for="Month">Month: </label>
+            <select name="Month">
+                <option value="">Null</option>
+                <?php 
+                    for ($i=0; $i < 12; $i++) { 
+                        echo "<option>".$i + 1 ."</option>";
+                    }
+                ?>
+            </select>
+            <label for="Year">Year: </label>
+            <select name="Year">
+                <option value="">Null</option>
+                <?php 
+                    for ($i=2000; $i < 2050; $i++) { 
+                        echo "<option>".$i + 1 ."</option>";
+                    }
+                ?>
+            </select>
+        </div>
+        <br>
+        <div class = "row">
             <input type="submit" value="Update Name" name = "UpdateName">
             <input type="submit" value="Update Password" name = "UpdatePassword">
+            <input type="submit" value="Update Date of Birth" name = "UpdateDateOfBirth">
         </div>
     </form>
+    <footer>
+        <form action="#" method="post">
+            <input type="submit" value="Logout" name="Logout">
+        </form>
+    </footer>
 </body>
 </html>
 
@@ -58,6 +97,20 @@ if(isset($_POST["UpdateName"]))
     $UpdatedUser = new User();
     $UpdatedUser->setId($User->getId());
     $UpdatedUser->setName($_POST["Name"]);
+    $UpdatedUser->Update();
+}
+if(isset($_POST["UpdateDateOfBirth"]))
+{
+    if($_POST["Day"] == "") die("You Must write Day");
+    if($_POST["Month"] == "") die("You Must write Month");
+    if($_POST["Year"] == "") die("You Must write Year");
+    $Day = $_POST["Day"];
+    $Month = $_POST["Month"];
+    $Year = $_POST["Year"];
+    $Date = ToFormatedDate($Day,$Month,$Year);
+    $UpdatedUser = new User();
+    $UpdatedUser->setId($User->getId());
+    $UpdatedUser->setDateOfBirth($Date);
     $UpdatedUser->Update();
 }
 if(isset($_POST["UpdatePassword"]))

@@ -78,7 +78,9 @@ class Product extends Person implements File {
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		
 		$list=[];
-		$array_of_lines=GetAllContent("../Files/"."Product.txt");
+		$Temp = ["Id","Price","Name"];
+		array_push($list,$Temp);
+		$array_of_lines=GetAllContent("Product.txt");
 		if($this->getCost()==0&&$this->getName()==""&&$this->getId()==0)
 		{
 		 for($i=0;$i<count($array_of_lines);$i++)
@@ -103,7 +105,7 @@ class Product extends Person implements File {
 				$array=explode("~",$array_of_lines[$i]);
 				if(str_contains($array[2],$this->Name))
 				{
-				array_push($list,$array);
+					array_push($list,$array);
 				}
 			}
 		}
@@ -118,7 +120,7 @@ class Product extends Person implements File {
 				}
 			}
 		}
-		DisplayTable($list);	
+		DisplayTable($list);
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		if($this->getId()!=0)
