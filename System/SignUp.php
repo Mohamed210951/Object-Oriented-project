@@ -108,3 +108,4 @@ if(isset($_POST["submit"]))
         echo "Must be the same Password!!";
     }
 }
+

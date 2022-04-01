@@ -44,3 +44,4 @@ if(isset($_POST["Login"])) {
 if(isset($_POST["SignUp"])) {
     header("Location:SignUp.php");
 }
+

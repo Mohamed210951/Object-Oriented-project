@@ -115,3 +115,5 @@ class Order_Details extends Person implements File
 }
 // order_id~product_id[0]~number[0]~price[0]~\r\n   -> 2esmaha to string
 // lazem kolohom yeb2o mesh f null b function 2esmaha All is set 
+
+

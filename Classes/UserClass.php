@@ -121,3 +121,4 @@ class User extends Person implements File {
 		return 1;
 	}
 }
+

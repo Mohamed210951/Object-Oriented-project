@@ -54,3 +54,4 @@ class Clint extends Person implements File {
 		return $String;
 	}
 }
+

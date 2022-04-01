@@ -27,3 +27,4 @@ interface File {
 	public function Searsh($input1 = null,$input2 = null,$input3 = null,$input4 = null);
 	public function Delete($input1 = null,$input2 = null,$input3 = null,$input4 = null);
 }
+

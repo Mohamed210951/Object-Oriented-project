@@ -98,3 +98,4 @@ if(isset($_POST["Profile"]))
 {
     header("Location:Profile.php");
 }
+
