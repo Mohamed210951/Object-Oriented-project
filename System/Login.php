@@ -33,7 +33,10 @@
 include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 if(isset($_POST["Login"])) {
+<<<<<<< HEAD
     
+=======
+>>>>>>> parent of 29c7375 (Merge branch 'main' of https://github.com/Mohamed210951/Object-Oriented-project)
     $UserName = $_POST["UserName"];
     $Password = $_POST["Password"];
     $User = new User();

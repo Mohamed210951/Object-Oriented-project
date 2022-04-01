@@ -15,7 +15,7 @@ function GetLastId(string $fileName) {
 }
 
 function DisplayTable(array $List) {
-	echo "<table border=1>";
+	echo "<table>";
 	for ($i=0; $i < count($List); $i++) { 
 		echo "<tr>";
 		for ($j=0; $j < count($List[$i]); $j++) { 
@@ -95,26 +95,6 @@ function FromTypeGetServis(string $IdType) {
 		}
 	}
 	return $Servis;
-}
-function ToFormatedDate(string $Day,string $Month,string $Year)
-{
-	$String = $Day."/".$Month."/".$Year;
-	return $String;
-}
-function GetDayFromString(string $String)
-{
-	$Temp = explode('/',$String);
-	return intval($Temp[0]);
-}
-function GetMonthFromString(string $String)
-{
-	$Temp = explode('/',$String);
-	return intval($Temp[1]);
-}
-function GetYearFromString(string $String)
-{
-	$Temp = explode('/',$String);
-	return intval($Temp[2]);
 }
 function Encrypt($FileName) {
 	$contents = file_get_contents("../Files/".$FileName);

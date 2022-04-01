@@ -27,7 +27,6 @@
         <div class = "row">
             <label for="SelectType">Select Your Type</label>
             <select name="Type">
-                <option value="Null">Null</option>
                 <?php 
                     include_once "Back End.php";
                     $List = GetAllContent("User Type.txt");
@@ -41,30 +40,26 @@
             </select>
         </div>
         <div class = "row">
-            <label for="DateOfBirth">Date of Birth  </label> <br>
-            <label for="Day">Day: </label>
+            <label for="Day">Day</label>
             <select name="Day">
-                <option value="">Null</option>
                 <?php 
                     for ($i=0; $i < 31; $i++) { 
                         echo "<option>".$i + 1 ."</option>";
                     }
                 ?>
             </select>
-            <label for="Month">Month: </label>
+            <label for="Month">Month</label>
             <select name="Month">
-                <option value="">Null</option>
                 <?php 
                     for ($i=0; $i < 12; $i++) { 
                         echo "<option>".$i + 1 ."</option>";
                     }
                 ?>
             </select>
-            <label for="Year">Year: </label>
+            <label for="Year">Year</label>
             <select name="Year">
-                <option value="">Null</option>
                 <?php 
-                    for ($i=1950; $i < 2050; $i++) { 
+                    for ($i=2000; $i < 2050; $i++) { 
                         echo "<option>".$i + 1 ."</option>";
                     }
                 ?>
@@ -82,24 +77,13 @@ include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 if(isset($_POST["submit"]))
 {
-    if($_POST["UserName"] == "") die("Name is Unset");
     $UserName = $_POST["UserName"];
-    if($_POST["Password"] == "") die("Password is Unset");
     $Password = $_POST["Password"];
-    if($_POST["Type"] == "") die("Type is Unset");
-    $Type = $_POST["Type"];
-    if($_POST["Day"] == "") die("Day is Unset");
-    $Day = $_POST["Day"];
-    if($_POST["Month"] == "") die("Month is Unset");
-    $Month = $_POST["Month"];
-    if($_POST["Year"] == "") die("Year is Unset");
-    $Year = $_POST["Year"];
     $ConPass = $_POST["ConPass"];
+    $Type = $_POST["Type"];
     if($ConPass == $Password) {
-        $DateOfBirth = ToFormatedDate($Day,$Month,$Year);
-        $newUser = new User(GetLastId("User.txt") + 1, $Type, $UserName, $Password,$DateOfBirth);
+        $newUser = new User(GetLastId("User.txt") + 1, $Type, $UserName, $Password);
 	    $newUser->Add();
-        session_destroy();
         session_start();
         $_SESSION["UserId"] = $newUser->getId();
         header("Location:MainMenu.php");
@@ -107,5 +91,17 @@ if(isset($_POST["submit"]))
     else {
         echo "Must be the same Password!!";
     }
+<<<<<<< HEAD
 }
 
+=======
+
+
+
+
+
+
+
+    
+}
+>>>>>>> parent of 29c7375 (Merge branch 'main' of https://github.com/Mohamed210951/Object-Oriented-project)
