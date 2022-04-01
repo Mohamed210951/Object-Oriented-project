@@ -71,7 +71,6 @@ if(isset($_POST["UpdatePassword"]))
     $UpdatedUser->setId($User->getId());
     $UpdatedUser->setName($_POST["NewPassword"]);
     $UpdatedUser->Update();
-<<<<<<< HEAD
 }
 if(isset($_POST["Logout"]))
 {
@@ -79,6 +78,3 @@ if(isset($_POST["Logout"]))
     header("Location:Login.php");
 }
 
-=======
-}
->>>>>>> parent of 29c7375 (Merge branch 'main' of https://github.com/Mohamed210951/Object-Oriented-project)
