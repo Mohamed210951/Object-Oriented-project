@@ -36,6 +36,8 @@
 include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 if (isset($_POST["Login"])) {
+    if($_POST["UserName"] == "") die("UserName is required");
+    if($_POST["Password"] == "") die("Password is required");
     $UserName = $_POST["UserName"];
     $Password = $_POST["Password"];
     $User = new User();
