@@ -34,10 +34,12 @@
         </div>
         <br>
         <div class = "row">
-            <input type="submit" value="Add" name = "Add" <?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
-            <input type="submit" value="Update" name = "Update"<?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
-            <input type="submit" value="Search" name = "Search"<?php if(!in_array("Product-Searsh",$Servis) && !in_array("Product",$Servis)) echo "hidden";?>>
-            <input type="submit" value="Delete" name = "Delete"<?php if(in_array("Product-Searsh",$Servis)) echo "hidden";?>>
+            <?php if(in_array("Product-All",$Servis)) : ?>
+                <input type="submit" value="Add" name = "Add">
+                <input type="submit" value="Update" name = "Update">
+                <input type="submit" value="Delete" name = "Delete">
+            <?php endif; ?>
+            <input type="submit" value="Search" name = "Search">
         </div>
     </form>
 

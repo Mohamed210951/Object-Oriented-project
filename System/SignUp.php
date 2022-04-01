@@ -64,7 +64,7 @@
             <select name="Year">
                 <option value="">Null</option>
                 <?php 
-                    for ($i=1950; $i < 2050; $i++) { 
+                    for ($i=2000; $i < 2050; $i++) { 
                         echo "<option>".$i + 1 ."</option>";
                     }
                 ?>
@@ -99,7 +99,6 @@ if(isset($_POST["submit"]))
         $DateOfBirth = ToFormatedDate($Day,$Month,$Year);
         $newUser = new User(GetLastId("User.txt") + 1, $Type, $UserName, $Password,$DateOfBirth);
 	    $newUser->Add();
-        session_destroy();
         session_start();
         $_SESSION["UserId"] = $newUser->getId();
         header("Location:MainMenu.php");
@@ -108,4 +107,3 @@ if(isset($_POST["submit"]))
         echo "Must be the same Password!!";
     }
 }
-

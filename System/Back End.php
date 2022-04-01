@@ -13,7 +13,6 @@ function GetLastId(string $fileName) {
 	Encrypt($fileName);
 	return $max;
 }
-
 function DisplayTable(array $List) {
 	echo "<table border=1>";
 	for ($i=0; $i < count($List); $i++) { 
@@ -32,7 +31,7 @@ function DisplayTable(array $List) {
  * @param int $Index the index { in the file format } of the value you want to search for
  * @return mixed Return the line if value founded else return NULL
  */
-function ValueIsThere(string $FileName,string $Value,int $Index){
+function ValueIsThere(string $FileName,string $Value,int $Index) {
 	Decrypt($FileName);
 	$File = fopen("../Files/".$FileName, 'r');
 	while($Line = fgets($File))	{

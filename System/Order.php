@@ -83,30 +83,31 @@
 </html>
 <?php
 
-
-
 include_once "../Classes/OrderClass.php";
 include_once "Back End.php";
 if(isset($_POST["AddOrder"]))
 {
+
     $Order = new Order();
     if($User->getType() == "3") $Order->setClientId($User->getId());
-    else $Order-> setClientId(intval($_POST["ClintId"]));
+    else 
+    {
+        if($_POST["ClintId"] == "") die("Clint Id is unset!!");
+        $Order->setClientId(intval($_POST["ClintId"]));
+    }
     $Order->Add();
 }
 
 if(isset($_POST["ViewOrderDetails"]))
 {
-    Decrypt("Order.txt");
     if($_POST["OrderId"] == "") exit("Must Write Order Id");
-    
     if(ValueIsThere("Order.txt",$_POST["OrderId"],0))
     {
         session_start();
-        
         $_SESSION["OrderId"] = $_POST["OrderId"];
         header("Location:OrderDetails.php");
     }
+    else exit("No Order with this Id");
 }
 
 if(isset($_POST["Logout"]))
@@ -123,4 +124,3 @@ if(isset($_POST["Profile"]))
 {
     header("Location:Profile.php");
 }
-

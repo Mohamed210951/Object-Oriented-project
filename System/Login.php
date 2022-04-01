@@ -33,7 +33,6 @@
 include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 if(isset($_POST["Login"])) {
-    
     $UserName = $_POST["UserName"];
     $Password = $_POST["Password"];
     $User = new User();

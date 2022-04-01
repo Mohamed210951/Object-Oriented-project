@@ -100,7 +100,7 @@ class Product extends Person implements File {
 		}
 		else if($this->getName()!="")
 		{
-		 for($i=0;$i<count($array_of_lines);$i++)
+		 	for($i=0;$i<count($array_of_lines);$i++)
 	   	    {
 				$array=explode("~",$array_of_lines[$i]);
 				if(str_contains($array[2],$this->Name))
@@ -127,17 +127,7 @@ class Product extends Person implements File {
 		{
             $isexist=ValueIsThere("Product.txt",$this->getId(),0);
 			FileDelete("Product.txt", $isexist);
-
 		}
 	}
-	/**
-	 *
-	 * @param mixed $input1
-	 * @param mixed $input2
-	 * @param mixed $input3
-	 * @param mixed $input4
-	 *
-	 * @return mixed
-	 */
 }
 

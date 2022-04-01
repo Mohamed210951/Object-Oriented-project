@@ -2,14 +2,19 @@
 include_once "../System/Back End.php";
 include_once "PersonClass.php";
 include_once "ProductClass.php";
+
+/*
+    Product m4 hatb2a array hya oe number oe prices
+*/
+
 class Order_Details extends Person implements File 
 {
+    
     private? array $Products=[];
     private? array $Numbers=[];
     private? array $Prices=[];
     private? int $OrderId;
     /**
-    *
     * @param int $input1 ProductId
     * @param int $input2 Number Of Product
     * @return mixed

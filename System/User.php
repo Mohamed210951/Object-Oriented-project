@@ -42,11 +42,11 @@
     <footer>
         <form action="#" method="post">
             <input type="submit" value="Logout" name="Logout">
+            <input type="submit" value="Profile" name = "Profile">
         </form>
     </footer>
 </body>
 </html>
-
 <?php  
     include_once "Back End.php";
     include_once "../Classes/UserClass.php";
@@ -58,6 +58,7 @@
     {
         $User = new User();
         if($_POST["UserId"] == "") die("User Id is unset!!");
+        if($_POST["UserType"] == "") die("User type unset!!");
         $User->setId(intval($_POST["UserId"]));
         $User->setType(intval($_POST["UserType"]));
         $User->Update();
@@ -72,6 +73,7 @@
     }
     if(isset($_POST["DeleteUser"]))
     {
+        if($_POST["UserId"] == "") die("User Id unset!!");
         $User = new User();
         $User->setId(intval($_POST["UserId"]));
         $User->Delete();
@@ -80,6 +82,10 @@
     {
         session_destroy();
         header("Location:Login.php");
+    }
+    if(isset($_POST["Profile"]))
+    {
+        header("Location:Profile.php");
     }
 ?>
 
