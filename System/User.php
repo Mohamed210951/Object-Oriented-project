@@ -48,7 +48,7 @@
 </html>
 
 <?php  
-    include "Back End.php";
+    include_once "Back End.php";
     include_once "../Classes/UserClass.php";
     if(isset($_POST["AddUser"]))
     {

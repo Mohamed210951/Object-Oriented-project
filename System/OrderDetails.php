@@ -13,6 +13,14 @@
             <?php session_start(); 
             echo "OrderId: " .$_SESSION["OrderId"];?>
     </h2>
+    <?php 
+        include_once "Back End.php";
+        include_once "../Classes/UserClass.php";
+        $Id = $_SESSION["UserId"];
+        $Line = ValueIsThere("User.txt",$Id,0);
+        $User = User::StringToUser($Line);
+        $Servis = FromTypeGetServis($User->getType());
+    ?>
     <form action="#" method="post">
 
     <div class = "row">
@@ -35,9 +43,11 @@
         </div>
         <br>
         <div class = "row">
-            <input type="submit" value="Add Item" name = "AddItem">
-            <input type="submit" value="Delete Item" name = "DeleteItem">
-            <input type="submit" value="Update Item" name = "UpdateItem">
+            <?php if(in_array("Order-All",$Servis)) : ?>
+                <input type="submit" value="Add Item" name = "AddItem">
+                <input type="submit" value="Delete Item" name = "DeleteItem">
+                <input type="submit" value="Update Item" name = "UpdateItem">
+            <?php endif; ?>
             <input type="submit" value="Searsh For An iTem" name = "Searsh">
             <input type="submit" value="Print Order Invoice" name = "PrintOrderInvoice">
         </div>
@@ -53,7 +63,7 @@
 </html>
 
 <?php
-include_once "../Classes/OrderDetails.php";
+include_once "../Classes/OrderDetailsClass.php";
 if(isset($_POST["Logout"]))
 {
     session_destroy();
@@ -61,14 +71,28 @@ if(isset($_POST["Logout"]))
 }
 if(isset($_POST["AddItem"]))
 {
+    if($_POST["ProductName"] == "") die("name is unset!!");
+    if($_POST["NumberOfProduct"] == "") die("Number of product is unset!!");
     $Product_Name = $_POST["ProductName"];
     $IsExist = ValueIsThere("Product.txt",$Product_Name,2);
     $Line = explode('~',$IsExist);
     $Product_Id=$Line[0];
     $Product_Number=$_POST["NumberOfProduct"];
     $Object_of_order_details=new  Order_Details();
+    $Object_of_order_details->setOrderId($_SESSION["OrderId"]);
     $Object_of_order_details->Add(intval($Product_Id),intval($Product_Number));
-
+}
+if(isset($_POST["DeleteItem"]))
+{
+    if($_POST["ProductName"] == "") die("Id is unset!!");
+    $Product_Name = $_POST["ProductName"];
+    $IsExist = ValueIsThere("Product.txt",$Product_Name,2);
+    $Line = explode('~',$IsExist);
+    $Product_Id=$Line[0];
+    $OrderDetails = new Order_Details();
+    $OrderDetails->setOrderId($_SESSION["OrderId"]);
+    $OrderDetails->setId(intval($Product_Id));
+    $OrderDetails->Delete();
 }
 if(isset($_POST["Profile"]))
 {
