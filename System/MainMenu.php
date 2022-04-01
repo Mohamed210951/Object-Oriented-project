@@ -19,27 +19,33 @@
 
     ?>
     <form action="#" method="post">
-        <input type="submit" value="Product" name = "GotoProduct"<?php 
-            $flag = 0;
-            for ($i=0; $i < count($Servis); $i++) { 
-                if(str_contains($Servis[$i],"Product")) $flag = 1;
-            }
-            if($flag == 0) echo "hidden";
-        ?>>
-        <input type="submit" value="Order" name = "GoToOrder"<?php 
-            $flag = 0;
-            for ($i=0; $i < count($Servis); $i++) { 
-                if(str_contains($Servis[$i],"Order")) $flag = 1;
-            }
-            if($flag == 0) echo "hidden";
-        ?>>
-        <input type="submit" value="User" name="GoToUser"<?php 
-             $flag = 0;
-             for ($i=0; $i < count($Servis); $i++) { 
-                 if(str_contains($Servis[$i],"User")) $flag = 1;
-             }
-             if($flag == 0) echo "hidden";
-        ?>>
+        <input type="submit" value="Product" name = "GotoProduct"
+            <?php 
+                $flag = 0;
+                for ($i=0; $i < count($Servis); $i++) { 
+                    if(str_contains($Servis[$i],"Product")) $flag = 1;
+                }
+                if($flag == 0) echo "hidden";
+            ?>
+        >
+        <input type="submit" value="Order" name = "GoToOrder"
+            <?php 
+                $flag = 0;
+                for ($i=0; $i < count($Servis); $i++) { 
+                    if(str_contains($Servis[$i],"Order")) $flag = 1;
+                }
+                if($flag == 0) echo "hidden";
+            ?>
+        >
+        <input type="submit" value="User" name="GoToUser"
+            <?php 
+                $flag = 0;
+                for ($i=0; $i < count($Servis); $i++) { 
+                    if(str_contains($Servis[$i],"User")) $flag = 1;
+                }
+                if($flag == 0) echo "hidden";
+            ?>
+        >
     </form>
 
     <footer>

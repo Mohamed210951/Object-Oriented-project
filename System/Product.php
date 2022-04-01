@@ -1,101 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product</title>
 </head>
+
 <body>
     <h1>Product Menu</h1>
-    <?php 
-        include_once "Back End.php";
-        session_start();
-        include_once "../Classes/UserClass.php";
-        $Id = $_SESSION["UserId"];
-        $Line = ValueIsThere("User.txt",$Id,0);
-        $User = User::StringToUser($Line);
-        $Servis = FromTypeGetServis($User->getType());
+    <?php
+    include_once "Back End.php";
+    session_start();
+    include_once "../Classes/UserClass.php";
+    $Id = $_SESSION["UserId"];
+    $Line = ValueIsThere("User.txt", $Id, 0);
+    $User = User::StringToUser($Line);
+    $Servis = FromTypeGetServis($User->getType());
     ?>
     <form action="#" method="post">
-        <div class = "row">
+        <div class="row">
             <label for="Product Id">Product Id</label>
-            <input type="number" name="Id" step = ".001">
+            <input type="number" name="Id" step=".001">
         </div>
         <br>
-        <div class = "row">
+        <div class="row">
             <label for="Product Name">Product Name</label>
             <input type="text" name="ProductName">
         </div>
         <br>
-        <div class = "row">
+        <div class="row">
             <label for="Product Price">Product Price</label>
-            <input type="number" name="ProductPrice" step = ".001">
+            <input type="number" name="ProductPrice" step=".001">
         </div>
         <br>
-        <div class = "row">
-            <?php if(in_array("Product-All",$Servis)) : ?>
-                <input type="submit" value="Add" name = "Add">
-                <input type="submit" value="Update" name = "Update">
-                <input type="submit" value="Delete" name = "Delete">
+        <div class="row">
+            <?php if (in_array("Product-All", $Servis)) : ?>
+                <input type="submit" value="Add" name="Add">
+                <input type="submit" value="Update" name="Update">
+                <input type="submit" value="Delete" name="Delete">
             <?php endif; ?>
-            <input type="submit" value="Search" name = "Search">
+            <input type="submit" value="Search" name="Search">
         </div>
     </form>
 
     <footer>
         <form action="#" method="post">
             <input type="submit" value="Logout" name="Logout">
-            <input type="submit" value="Profile" name = "Profile">
+            <input type="submit" value="Profile" name="Profile">
         </form>
     </footer>
 </body>
+
 </html>
 
 <?php
 include_once "Back End.php";
 include_once "../Classes/ProductClass.php";
-if(isset($_POST["Add"]))
-{
-    if($_POST["ProductName"] == "") exit("Product Name unset!!");
-    if($_POST["ProductPrice"] == "") exit("Product Price unset!!");
+if (isset($_POST["Add"])) {
+    if ($_POST["ProductName"] == "") exit("Product Name unset!!");
+    if ($_POST["ProductPrice"] == "") exit("Product Price unset!!");
     $New_Product = new Product();
     $New_Product->setName($_POST["ProductName"]);
     $New_Product->setCost($_POST["ProductPrice"]);
     $New_Product->Add();
-}
-else if(isset($_POST["Update"]))
-{
-    if($_POST["Id"] == "") exit("Product Id unset!!");
+} else if (isset($_POST["Update"])) {
+    if ($_POST["Id"] == "") exit("Product Id unset!!");
     $Product = new Product();
     $Product->SetId($_POST["Id"]);
     $Product->setName($_POST["ProductName"]);
     $Product->setCost(floatval($_POST["ProductPrice"]));
     $Product->Update();
-}
-else if(isset($_POST["Search"]))
-{
+} else if (isset($_POST["Search"])) {
     $Product = new Product();
     $Product->SetId(intval($_POST["Id"]));
     $Product->setName($_POST["ProductName"]);
     $Product->setCost(floatval($_POST["ProductPrice"]));
     $Product->Searsh();
-}
-else if(isset($_POST["Delete"]))
-{
+} else if (isset($_POST["Delete"])) {
     $Product = new Product();
     $Product->SetId(intval($_POST["Id"]));
     $Product->Delete();
 }
 
-if(isset($_POST["Logout"]))
-{
+if (isset($_POST["Logout"])) {
     session_destroy();
     header("Location:Login.php");
 }
 
-if(isset($_POST["Profile"]))
-{
+if (isset($_POST["Profile"])) {
     header("Location:Profile.php");
 }
-
