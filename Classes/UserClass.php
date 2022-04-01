@@ -5,14 +5,12 @@ include_once "PersonClass.php";
 class User extends Person implements File {
 	private $Password;
 	private $TypeId;
-	private $DateOfBirth;
-	public function __construct(int $Id = null,string $TypeId = null, string $Name = null, string $Password = null,string $DateOfBirth = null) {
+	public function __construct(int $Id = null,string $TypeId = null, string $Name = null, string $Password = null) {
 		if($Id != null) {
 			$this->setId($Id);
 			$this->setName($Name);
 			$this->setPassword($Password);
 			$this->setType($TypeId);
-			$this->setDateOfBirth($DateOfBirth);
 		}
 	}
 	public function AllIsSet(): int {
@@ -20,16 +18,15 @@ class User extends Person implements File {
 		if(is_null($this->Name)) return 0;
 		if(is_null($this->Password)) return 0;
 		if(is_null($this->TypeId)) return 0;
-		if(is_null($this->DateOfBirth)) return 0;
 		return 1;
 	}
 	public function ToString(): string {
-		$Line = $this->Id . '~' . $this->TypeId . '~' . $this->Name . '~' . sha1($this->Password) ."~".$this->DateOfBirth . "~\r\n";
+		$Line = $this->Id . '~' . $this->TypeId . '~' . $this->Name . '~' . sha1($this->Password) . "~\r\n";
 		return $Line;
 	}
 	public static function StringToUser(string $Line){
 		$Array = explode('~',$Line);
-		$user = new User(intval($Array[0]),$Array[1],$Array[2],$Array[3],$Array[4]);
+		$user = new User(intval($Array[0]),$Array[1],$Array[2],$Array[3]);
 		return $user;
 	}
 	function getPassword() {
@@ -103,6 +100,7 @@ class User extends Person implements File {
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		// Code
 	}
+<<<<<<< HEAD
 	/**
 	 * 
 	 * @return mixed
@@ -122,3 +120,6 @@ class User extends Person implements File {
 	}
 }
 
+=======
+}
+>>>>>>> parent of 29c7375 (Merge branch 'main' of https://github.com/Mohamed210951/Object-Oriented-project)

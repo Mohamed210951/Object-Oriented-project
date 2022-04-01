@@ -16,7 +16,6 @@
         $Line = ValueIsThere("User.txt",$Id,0);
         $User = User::StringToUser($Line);
         $Servis = FromTypeGetServis($User->getType());
-
     ?>
     <form action="#" method="post">
         <input type="submit" value="Product" name = "GotoProduct"<?php 
@@ -64,6 +63,7 @@ if(isset($_POST["GoToUser"]))
 {
     header("Location:User.php");
 }
+
 if(isset($_POST["Logout"]))
 {
     session_destroy();

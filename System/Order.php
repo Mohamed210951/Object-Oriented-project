@@ -87,7 +87,6 @@ include_once "../Classes/OrderClass.php";
 include_once "Back End.php";
 if(isset($_POST["AddOrder"]))
 {
-
     $Order = new Order();
     if($User->getType() == "3") $Order->setClientId($User->getId());
     else 
