@@ -68,7 +68,6 @@ if(isset($_POST["AddItem"]))
     $Product_Number=$_POST["NumberOfProduct"];
     $Object_of_order_details=new  Order_Details();
     $Object_of_order_details->Add(intval($Product_Id),intval($Product_Number));
-
 }
 if(isset($_POST["Profile"]))
 {
