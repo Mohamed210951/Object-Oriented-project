@@ -23,12 +23,21 @@ class Order_Details extends Person implements File
      */
     function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
-        $Last_Id_In_file = GetLastId("Order Details.txt");
-        $Order_Details_Id = $this->setId($Last_Id_In_file + 1);
-        $Product = new Product();
-        $Product = $Product->Get_Info_Of_Product($ProductId);
-        $Total = ($Product->getCost() * $NumberOfProduct);
-        FileAdd("Order Details.txt", $OrderId . "~" . $Product->getId() . "~" . $NumberOfProduct . "~" . $Total . "~\r\n");
+        if($this->OrderId>0&&$this->Product_Id>0&&$this->Numbers>0)
+        {
+            $Last_Id_In_file = GetLastId("Order Details.txt");
+            $Order_Details_Id = $this->setId($Last_Id_In_file + 1);
+            $Product = new Product();
+            $Product = $Product->Get_Info_Of_Product($this->Product_Id);
+            $this->Prices = ($Product->getCost() * $this->Numbers);
+            FileAdd("Order Details.txt", $this->ToString());
+            return 1;
+        }
+        else
+        {
+            return 0;
+
+        }
     }
 
 
@@ -36,7 +45,7 @@ class Order_Details extends Person implements File
     {
         $String = "";
         $String .= $this->OrderId . '~' . $this->Product_Id . '~' . $this->Numbers . '~' . $this->Prices . "~\r\n";
-        return string;
+        return $String;
     }
     /**
      *
@@ -60,8 +69,44 @@ class Order_Details extends Person implements File
      *
      * @return mixed
      */
+    static function From_String_To_Object($x)
+    {
+        $array=explode("~",$x);
+        $Order_Details= new Order_Details();
+        $Order_Details->setOrderId(intval($array[0]));
+        $Order_Details->setProduct_Id(intval($array[1]));
+        $Order_Details->setNumbers(intval($array[2]));
+        $Order_Details->setPrices(intval($array[3]));
+        return $Order_Details;
+    }
     function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
+        $List=GetAllContent("Order Details.txt");
+        for($i=0;$i< count($List);$i++)
+        {
+            $Order_Details=Order_Details::From_String_To_Object($List[$i]) ;
+            if($Order_Details->getOrderId()!=$this->OrderId)
+            {
+              array_splice($List,$i,1);
+              $i--;
+            }
+        }
+        
+
+        // lesa fyh hena 7abet 2akwad ;
+
+
+
+
+
+         $array=[];
+         $temp=["Order Id","Product_Id","Number of Product","Price"];
+         array_push($array,$temp);
+         for($i=0;$i< count($List);$i++)
+        {
+            array_push(explode("~",$List[$i]));
+        }
+        DisplayTable($array);
     }
 
     /**
