@@ -12,9 +12,9 @@ include_once "ProductClass.php";
 class Order_Details extends Person implements File
 {
 
-    private ?array $Products = [];
-    private ?array $Numbers = [];
-    private ?array $Prices = [];
+    private ?int  $Product_Id;
+    private ?int $Numbers;
+    private ?float $Prices;
     private ?int $OrderId;
     /**
      * @param int $input1 ProductId
@@ -23,32 +23,20 @@ class Order_Details extends Person implements File
      */
     function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
-        if ($input2 < 0) {
-            return 0;
-        }
-        $NumberOfProduct = $input2;
-        if (!ValueIsThere("Product.txt", $input1, 0)) {
-            return 0;
-        }
-        $ProductId = $input1;
         $Last_Id_In_file = GetLastId("Order Details.txt");
         $Order_Details_Id = $this->setId($Last_Id_In_file + 1);
         $Product = new Product();
         $Product = $Product->Get_Info_Of_Product($ProductId);
         $Total = ($Product->getCost() * $NumberOfProduct);
-        array_push($this->Products, $Product->getId());
-        array_push($this->Numbers, $NumberOfProduct);
-        array_push($this->Prices, $Total);
-        FileAdd("Order Details.txt", $Order_Details_Id . "~" . $Product->getId() . "~" . $NumberOfProduct . "~" . $Total . "~\r\n");
+        FileAdd("Order Details.txt", $OrderId . "~" . $Product->getId() . "~" . $NumberOfProduct . "~" . $Total . "~\r\n");
     }
 
 
     public function ToString()
     {
         $String = "";
-        for ($i = 0; $i < count($this->Products); $i++) {
-            $String .= $this->OrderId . '~' . $this->Products[$i] . '~' . $this->Numbers[$i] . '~' . $this->Prices[$i] . "~\r\n";
-        }
+        $String .= $this->OrderId . '~' . $this->Product_Id . '~' . $this->Numbers . '~' . $this->Prices . "~\r\n";
+        return string;
     }
     /**
      *
@@ -109,10 +97,80 @@ class Order_Details extends Person implements File
      * @param ?int $OrderId 
      * @return Order_Details
      */
-    function setOrderId(?int $OrderId): self
+    function setOrderId(?int $OrderId): int
     {
-        $this->OrderId = $OrderId;
-        return $this;
+        if ($OrderId > 0) {
+            $this->OrderId = $OrderId;
+            return 1;
+        }
+        return 0;
+    }
+    /**
+     * 
+     * @return ?int
+     */
+    function getProduct_Id(): ?int
+    {
+        return $this->Product_Id;
+    }
+
+    /**
+     * 
+     * @param ?int $Product_Id 
+     * @return Order_Details
+     */
+    function setProduct_Id(?int $Product_Id): int
+    {
+        if ($Product_Id > 0) {
+            $this->Product_Id = $Product_Id;
+            return 1;
+        }
+        return 0;
+    }
+    /**
+     * 
+     * @return ?int
+     */
+    function getNumbers(): ?int
+    {
+        return $this->Numbers;
+    }
+
+    /**
+     * 
+     * @param ?int $Numbers 
+     * @return Order_Details
+     */
+    function setNumbers(?int $Numbers): int
+    {
+        if ($Numbers > 0) {
+            $this->Numbers = $Numbers;
+            return 1;
+        }
+        return 0;
+    }
+    /**
+     * 
+     * @return ?float
+     */
+    function getPrices(): ?float
+    {
+        return $this->Prices;
+    }
+
+    /**
+     * 
+     * @param ?float $Prices 
+     * @return Order_Details
+     */
+    function setPrices(?float $Prices): int
+    {
+        if($Prices>0)
+        {
+          $this->Prices = $Prices;
+          return 1;
+        }
+        return 0;
     }
 }
 // order_id~product_id[0]~number[0]~price[0]~\r\n   -> 2esmaha to string
