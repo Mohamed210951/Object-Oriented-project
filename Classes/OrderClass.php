@@ -29,7 +29,6 @@ class order extends Person implements File
 	}
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
-
 		$LastId = GetLastId("Order.txt");
 		$this->setId($LastId + 1);
 		if ($this->AllIsSet()) {
@@ -48,7 +47,6 @@ class order extends Person implements File
 			return 0;
 		}
 	}
-
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
 	}
