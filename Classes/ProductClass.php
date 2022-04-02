@@ -54,7 +54,7 @@ class Product extends Person implements File
 	{
 		$isexist = ValueIsthere("Product.txt", $ID_Nom, 0);
 		if ($isexist) {
-			$product = product::FromStringToObject($ID_Nom);
+			$product = product::FromStringToObject($isexist);
 			return $product;
 		}
 		return null;
