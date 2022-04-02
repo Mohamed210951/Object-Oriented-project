@@ -47,8 +47,11 @@
         </div>
         <br>
         <div class="row">
-            <?php if (in_array("Order-All", $Servis)) : ?>
+            <?php if(in_array("Order-Add", $Servis)) : ?>
                 <input type="submit" value="Add Item" name="AddItem">
+            <?php endif; ?>
+            <?php if (in_array("Order-All", $Servis)) : ?>
+                
                 <input type="submit" value="Delete Item" name="DeleteItem">
                 <input type="submit" value="Update Item" name="UpdateItem">
             <?php endif; ?>
