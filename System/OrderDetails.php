@@ -79,8 +79,19 @@ if (isset($_POST["AddItem"])) {
     $Product_Id = $_POST["ProductId"];
     $Product_Number = $_POST["NumberOfProduct"];
     $Object_of_order_details = new  Order_Details();
-    $Object_of_order_details->Add(intval($Product_Id), intval($Product_Number));
+    $Object_of_order_details->setOrderId(intval($_SESSION["OrderId"]));
+    $Object_of_order_details->setProduct_Id(intval($_POST["ProductId"]));
+    $Object_of_order_details->setNumbers(intval($_POST["NumberOfProduct"]));
+    $Object_of_order_details->Add();
 }
 if (isset($_POST["Profile"])) {
     header("Location:Profile.php");
+}
+if(isset($_POST["Searsh"]))
+{
+    $OrderDetails = new Order_Details();
+    $OrderDetails->setOrderId(intval($_SESSION["OrderId"]));
+    $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
+    $OrderDetails->setNumbers(intval($_POST["NumberOfProduct"]));
+    $OrderDetails->Searsh();
 }

@@ -99,12 +99,12 @@ class Order_Details extends Person implements File
 
 
 
-         $array=[];
-         $temp=["Order Id","Product_Id","Number of Product","Price"];
-         array_push($array,$temp);
-         for($i=0;$i< count($List);$i++)
+        $array=[];
+        $temp=["Order Id","Product_Id","Number of Product","Price"];
+        array_push($array,$temp);
+        for($i=0;$i< count($List);$i++)
         {
-            array_push(explode("~",$List[$i]));
+            array_push($array,explode("~",$List[$i]));
         }
         DisplayTable($array);
     }
@@ -217,6 +217,14 @@ class Order_Details extends Person implements File
         }
         return 0;
     }
+	/**
+	 */
+	function __construct() {
+        $this->OrderId = 0;
+        $this->Product_Id = 0;
+        $this->Numbers = 0;
+        $this->Prices = 0;
+	}
 }
 // order_id~product_id[0]~number[0]~price[0]~\r\n   -> 2esmaha to string
 // lazem kolohom yeb2o mesh f null b function 2esmaha All is set 
