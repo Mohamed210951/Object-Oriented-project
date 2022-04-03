@@ -158,6 +158,7 @@ if(isset($_POST["Delete"]))
 {
     if(isset($_POST["Id"]) == "") die("Id is unset!!");
     if($_POST["Id"] == "1") die("You cannot Delete the Admin");
+    if($_POST["Id"] == "3") die("You cannot Delete the Clint");
     if($IsExist = ValueIsThere("User Type.txt", $_POST["Id"], 0))
     {
         $Array = explode('~',$IsExist);
