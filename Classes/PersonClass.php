@@ -3,8 +3,8 @@ include_once "../System/Back End.php";
 
 class Person
 {
-	protected ?int $Id;
-	protected ?string $Name;
+	protected ?int $Id = 0;
+	protected ?string $Name = "";
 	function getId(): int
 	{
 		return $this->Id;

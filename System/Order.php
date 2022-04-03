@@ -102,8 +102,10 @@ if (isset($_POST["AddOrder"])) {
 if (isset($_POST["ViewOrderDetails"])) {
     if ($_POST["OrderId"] == "") exit("Must Write Order Id");
     if ($isexist = ValueIsThere("Order.txt", $_POST["OrderId"], 0)) {
-        $Array = explode('~',$isexist);
-        if($Array[1] != $User->getId() && $User->getType() != "1") exit("You cannot See the details of this order");
+        $Array = explode('~', $isexist);
+        if ($Array[1] != $User->getId() && $User->getType() == "3") {
+            exit("You cannot See the details of this order");
+        }
         session_start();
         $_SESSION["OrderId"] = $_POST["OrderId"];
         header("Location:OrderDetails.php");

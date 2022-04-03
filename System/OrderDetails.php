@@ -51,7 +51,7 @@
                 <input type="submit" value="Add Item" name="AddItem">
             <?php endif; ?>
             <?php if (in_array("Order-All", $Servis)) : ?>
-                
+                <input type="submit" value="Add Item" name="AddItem">
                 <input type="submit" value="Delete Item" name="DeleteItem">
                 <input type="submit" value="Update Item" name="UpdateItem">
             <?php endif; ?>
@@ -97,4 +97,12 @@ if(isset($_POST["Searsh"]))
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->setNumbers(intval($_POST["NumberOfProduct"]));
     $OrderDetails->Searsh();
+}
+
+if(isset($_POST["DeleteItem"]))
+{
+    $OrderDetails = new Order_Details();
+    $OrderDetails->setOrderId(intval($_SESSION["OrderId"]));
+    $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
+    $OrderDetails->Delete();
 }

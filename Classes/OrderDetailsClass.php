@@ -115,16 +115,15 @@ class Order_Details extends Person implements File
      * @param mixed $input2
      * @param mixed $input3
      * @param mixed $input4
-     *
      * @return mixed
      */
     function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
-        if ($this->getId() < 0) {
+        if ($this->OrderId == 0) {
             return 0;
         }
-        if (ValueIsThere("Order Details.txt", $this->getId(), 0)) {
-            $h = ValueIsThere("Order Details.txt", $this->getId(), 0);
+        if (ValueIsThere("Order Details.txt", $this->Product_Id, 0)) {
+            $h = ValueIsThere("Order Details.txt", $this->Product_Id, 0);
             FileDelete("Order Details.txt", $h);
         }
     }
