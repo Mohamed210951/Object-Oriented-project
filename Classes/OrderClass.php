@@ -1,6 +1,7 @@
 <?php
 include_once "../System/Back End.php";
 include_once "PersonClass.php";
+<<<<<<< Updated upstream
 include_once "OrderDetails.php";
 class Product extends Person implements File {
 	private ?float $Cost;
@@ -111,6 +112,17 @@ class order extends Person implements File {
 	public function AllIsSet() {
 		if($this->Id==null) return 0;
 		if($this->ClientId==null) return 0;
+=======
+include_once "OrderDetailsClass.php";
+class order extends Person implements File {
+	private ?float $total = 0;
+	private ?int $ClientId = 0;
+	private ?string $date = "";
+	public function AllIsSet() {
+		if($this->Id==null) return 0;
+		if($this->ClientId==0) return 0;
+		if($this->date=="") return 0;
+>>>>>>> Stashed changes
 		return 1;
 	}
 	/**
@@ -123,7 +135,11 @@ class order extends Person implements File {
 	 * @return mixed
 	 */
     public function ToString() {
+<<<<<<< Updated upstream
 		$String = $this->Id."~".$this->ClientId."~\r\n";
+=======
+		$String = $this->Id."~".$this->ClientId."~".$this->date."~\r\n";
+>>>>>>> Stashed changes
 		return $String;
 	}
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
@@ -150,7 +166,11 @@ class order extends Person implements File {
     static function FromStringToObject($string)
 	{
        $Array_Of_String=explode("~",$string);
+<<<<<<< Updated upstream
 	   $Order=new order(intval($Array_Of_String[0]),intval($Array_Of_String[1]));
+=======
+	   $Order=new order(intval($Array_Of_String[0]),intval($Array_Of_String[1]),($Array_Of_String[2]));
+>>>>>>> Stashed changes
 	   return $Order;
 	}
 	
@@ -162,6 +182,7 @@ class order extends Person implements File {
 		{
 			$this->Id=$Order->getId();
 		}
+<<<<<<< Updated upstream
 		if($this->getClientId()=="")
 		{
 		   $this->ClientId=$Order->getClientId();
@@ -196,6 +217,30 @@ class order extends Person implements File {
 	 * 
 	 * @return string
 	 */
+=======
+		if($this->getClientId()==0)
+		{
+		   $this->ClientId=$Order->getClientId();
+		}
+		if($this->getDate()=="")
+		{
+			$this->date=$Order->getDate();
+		}
+		FileUpdate("Order.txt",$Order->ToString(),$this->ToString());
+	}
+	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+    
+
+	}
+	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
+     if($this->getId()!=0)
+	 {
+		$isexist=ValueIsThere("Order.txt",$this->getId(),0);
+		FileDelete("Order.txt",$isexist);
+	 }
+	}
+	
+>>>>>>> Stashed changes
 	function getDate(): string {
 		return $this->date;
 	}
@@ -217,6 +262,7 @@ class order extends Person implements File {
 		return 1;
 	}
 
+<<<<<<< Updated upstream
     function setProductId(int $ProductId): int  {
 		if($ProductId <= 0) return 0;
 		$this->ProductId = $ProductId;
@@ -236,4 +282,6 @@ class order extends Person implements File {
 	 * @return string
 	 */
 
+=======
+>>>>>>> Stashed changes
 }
