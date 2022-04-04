@@ -9,6 +9,16 @@
 </head>
 
 <body>
+    <h1>User.php</h1>
+    <?php
+    include_once "Back End.php";
+    session_start();
+    include_once "../Classes/UserClass.php";
+    $Id = $_SESSION["UserId"];
+    $Line = ValueIsThere("User.txt", $Id, 0);
+    $User = User::StringToUser($Line);
+    $Servis = FromTypeGetServis($User->getType());
+    ?>
     <form action="#" method="post">
         <div class="row">
             <label for="User Id">User Id</label>
@@ -34,10 +44,15 @@
             </select>
         </div>
         <div class="row">
-            <input type="submit" value="Add User" name="AddUser">
-            <input type="submit" value="Update User Type" name="UpdateUserType">
-            <input type="submit" value="Searsh For User" name="SearshForUser">
-            <input type="submit" value="Delete User" name="DeleteUser">
+            <?php if (in_array("User-All", $Servis)) : ?>
+                <input type="submit" value="Add User" name="AddUser">
+                <input type="submit" value="Update User Type" name="UpdateUserType">
+                <input type="submit" value="Searsh For User" name="SearshForUser">
+                <input type="submit" value="Delete User" name="DeleteUser">
+            <?php endif; ?>
+            <?php if(in_array("User-Searsh", $Servis)) : ?>
+                <input type="submit" value="Searsh For User" name="SearshForUser">
+            <?php endif; ?>
         </div>
     </form>
 

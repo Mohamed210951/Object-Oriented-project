@@ -46,6 +46,9 @@
                 if($flag == 0) echo "hidden";
             ?>
         >
+        <?php if($User->getType() == "1") : ?>
+            <input type="submit" value="Type of Users" name = "GoToType">
+        <?php endif; ?>
     </form>
 
     <footer>
@@ -80,3 +83,7 @@ if(isset($_POST["Profile"]))
     header("Location:Profile.php");
 }
 
+if(isset($_POST["GoToType"]))
+{
+    header("Location:Type.php");
+}
