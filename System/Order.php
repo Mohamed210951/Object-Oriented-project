@@ -95,10 +95,18 @@ if (isset($_POST["AddOrder"])) {
     else {
         if ($_POST["ClintId"] == "") die("Clint Id is unset!!");
         $Order->setClientId(intval($_POST["ClintId"]));
+        $order->setId(ToFormatedDate($_POST["Day"],$_POST["Month"],$_POST["Year"]));
     }
     $Order->Add();
 }
-
+if(isset($_POST["SearchForOrder"]))
+{
+    $order=new order();
+    $order->setId(intval($_POST["OrderId"]));
+    $order->setId(intval($_POST["ClientId"]));
+    $order->setId(ToFormatedDate($_POST["Day"],$_POST["Month"],$_POST["Year"]));
+    $order->Searsh();
+}
 if (isset($_POST["ViewOrderDetails"])) {
     if ($_POST["OrderId"] == "") exit("Must Write Order Id");
     if ($isexist = ValueIsThere("Order.txt", $_POST["OrderId"], 0)) {
