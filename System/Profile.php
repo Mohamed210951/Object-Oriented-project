@@ -28,7 +28,7 @@
     <form action="#" method="post">
         <div class="row">
             <label for="UserName">Name</label>
-            <input type="text" name="Name">
+            <input type="text" name="Name" Value="<?php echo $User->getName(); ?>">
         </div>
         <div class="row">
             <label for="OldPassword">Password</label>
