@@ -22,7 +22,7 @@ class order extends Person implements File {
 	 * @return mixed
 	 */
     public function ToString() {
-		$String = $this->Id."~".$this->ClientId."~".$this->date."~\r\n";
+		$String = $this->Id."~".$this->ClientId."~".$this->date."~".$this->total."~\r\n";
 		return $String;
 	}
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
@@ -34,6 +34,7 @@ class order extends Person implements File {
             $IsOrderExist=ValueIsThere("Order.txt",$this->Id,0);
             if($IsOrderExist==null)
             {
+				$this->total=0;
                 FileAdd("Order.txt",$this->ToString());
             }
             else{
@@ -69,11 +70,44 @@ class order extends Person implements File {
 		{
 			$this->date=$Order->getDate();
 		}
+		if($this->gettotal()=="")
+		{
+			$this->total=$Order->getTotal();
+		}
 		FileUpdate("Order.txt",$Order->ToString(),$this->ToString());
 	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-    
-
+     $ArrayOfLines=GetAllContent("Order.txt");
+	 $ArrayOfOrders=[];
+	 for($i=0;$i<count($ArrayOfLines);$i++)
+	 {
+		$Order=order::FromStringToObject($ArrayOfLines[$i]);
+        array_push($ArrayOfOrders[$i],$Order);
+	 }
+	 for($i=0;$i<count($ArrayOfOrders);$i++)
+	 {
+		 if($ArrayOfOrders[$i]->getDate()!=$this->getDate())
+		 {
+			array_splice($ArrayOfOrders,$i,1);
+			$i--;
+		 }
+		 if($ArrayOfOrders[$i]->getId()!=$this->getId())
+		 {
+			array_splice($ArrayOfOrders,$i,1);
+			$i--;
+		 }
+		 if($ArrayOfOrders[$i]->getTotal()!=$this->getTotal())
+		 {
+			array_splice($ArrayOfOrders,$i,1);
+			$i--;
+		 }
+		 if($ArrayOfOrders[$i]->getClientId()!=$this->getClientId())
+		 {
+			array_splice($ArrayOfOrders,$i,1);
+			$i--;
+		 }
+	 }
+	 DisplayTable($$ArrayOfOrders);
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
      if($this->getId()!=0)
@@ -104,4 +138,12 @@ class order extends Person implements File {
 		return 1;
 	}
 
+	function getTotal(): ?float {
+		return $this->total;
+	}
+	
+	function setTotal(?float $total): self {
+		$this->total = $total;
+		return $this;
+	}
 }
