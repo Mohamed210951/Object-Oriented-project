@@ -60,14 +60,14 @@ function Getfeatures()
     $String = "";
     if($_POST["Product"] == "All")$String.="Product-All~";
     else if($_POST["Product"] == "Search") $String.= "Product-Searsh~";
-    else $String.="Product-Non";
+    else $String.="Product-Non~";
     if($_POST["Order"] == "All")$String.="Order-All~";
     else if($_POST["Order"] == "Search") $String.= "Order-Searsh~";
     else if($_POST["Order"] == "Add") $String.= "Order-Add~";
-    else $String.="Order-Non";
+    else $String.="Order-Non~";
     if($_POST["User"] == "All")$String.="User-All~";
     else if($_POST["User"] == "Search") $String.= "User-Searsh~";
-    else $String.="User-Non";
+    else $String.="User-Non~";
     return $String;
 }
 
