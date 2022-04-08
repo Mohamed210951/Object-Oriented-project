@@ -128,6 +128,7 @@ if(isset($_POST["DeleteOrder"]))
     $order->Delete();
 }
 if (isset($_POST["Logout"])) {
+    session_unset();
     session_destroy();
     header("Location:Login.php");
 }

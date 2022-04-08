@@ -179,6 +179,7 @@ if(isset($_POST["Delete"]))
 }
 if(isset($_POST["Logout"]))
 {
+    session_unset();
     session_destroy();
     header("Location:Login.php");
 }
