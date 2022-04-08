@@ -62,8 +62,8 @@
 
     <footer>
         <form action="#" method="post">
+            <input type="submit" value="Main Menu" name="MainMenu">
             <input type="submit" value="Logout" name="Logout">
-            <input type="submit" value="Profile" name="Profile">
         </form>
     </footer>
 </body>
@@ -87,9 +87,6 @@ if (isset($_POST["AddItem"])) {
     $Object_of_order_details->setNumbers(intval($_POST["NumberOfProduct"]));
     $Object_of_order_details->Add();
 }
-if (isset($_POST["Profile"])) {
-    header("Location:Profile.php");
-}
 if(isset($_POST["Searsh"]))
 {
     $OrderDetails = new Order_Details();
@@ -108,4 +105,8 @@ if(isset($_POST["DeleteItem"]))
     $OrderDetails->setOrderId(intval($_GET["OrderId"]));
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->Delete();
+}
+if(isset($_POST["MainMenu"]))
+{
+    header("Location:MainMenu.php");
 }

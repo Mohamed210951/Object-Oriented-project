@@ -47,8 +47,8 @@
         </div>
     </form>
     <form action="#" method="post">
+            <input type="submit" value="Main Menu" name="MainMenu">
             <input type="submit" value="Logout" name="Logout">
-            <input type="submit" value="Profile" name = "Profile">
     </form>
 </body>
 </html>
@@ -182,7 +182,7 @@ if(isset($_POST["Logout"]))
     session_destroy();
     header("Location:Login.php");
 }
-if(isset($_POST["Profile"]))
+if(isset($_POST["MainMenu"]))
 {
-    header("Location:Profile.php");
+    header("Location:MainMenu.php");
 }

@@ -47,8 +47,8 @@
 
     <footer>
         <form action="#" method="post">
+            <input type="submit" value="Main Menu" name="MainMenu">
             <input type="submit" value="Logout" name="Logout">
-            <input type="submit" value="Profile" name="Profile">
         </form>
     </footer>
 </body>
@@ -94,10 +94,10 @@ if (isset($_POST["Logout"])) {
     header("Location:Login.php");
 }
 
-if (isset($_POST["Profile"])) {
-    header("Location:Profile.php");
+if(isset($_POST["MainMenu"]))
+{
+    header("Location:MainMenu.php");
 }
-
 
 if($Flag == 0)
 {

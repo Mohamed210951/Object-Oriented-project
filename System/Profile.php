@@ -81,6 +81,7 @@
     </form>
     <footer>
         <form action="#" method="post">
+            <input type="submit" value="Main Menu" name="MainMenu">
             <input type="submit" value="Logout" name="Logout">
         </form>
     </footer>
@@ -128,4 +129,8 @@ if (isset($_POST["UpdatePassword"])) {
 if (isset($_POST["Logout"])) {
     session_destroy();
     header("Location:Login.php");
+}
+if(isset($_POST["MainMenu"]))
+{
+    header("Location:MainMenu.php");
 }
