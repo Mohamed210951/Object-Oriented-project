@@ -107,7 +107,7 @@ class order extends Person implements File {
 			$i--;
 		 }
 	 }
-	 DisplayTable($$ArrayOfOrders);
+	 return $ArrayOfOrders;
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
      if($this->getId()!=0)

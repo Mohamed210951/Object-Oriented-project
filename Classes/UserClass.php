@@ -104,6 +104,8 @@ class User extends Person implements File
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
 		// Code
+		$List = [];
+		return $List;
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{

@@ -60,12 +60,14 @@ function Getfeatures()
     $String = "";
     if($_POST["Product"] == "All")$String.="Product-All~";
     else if($_POST["Product"] == "Search") $String.= "Product-Searsh~";
+    else $String.="Product-Non";
     if($_POST["Order"] == "All")$String.="Order-All~";
     else if($_POST["Order"] == "Search") $String.= "Order-Searsh~";
     else if($_POST["Order"] == "Add") $String.= "Order-Add~";
+    else $String.="Order-Non";
     if($_POST["User"] == "All")$String.="User-All~";
     else if($_POST["User"] == "Search") $String.= "User-Searsh~";
-    $String.="\r\n";
+    else $String.="User-Non";
     return $String;
 }
 
@@ -73,8 +75,8 @@ if(isset($_POST["Add"]))
 {
     if($_POST["Name"] == "") die("Name is Unset!!");
     $Name = $_POST["Name"];
-    $IsExist = ValueIsThere("User Type",$Name,1);
-    if($IsExist) die("User Type already exists!!");
+    $IsExist = ValueIsThere("User Type.txt",$Name,1);
+    if($IsExist) die("User Type Name already exists!!");
     $String = Getfeatures();
     if($String == "") die("You must choose his features");
     $Id = GetLastId("User Type.txt") + 1;
@@ -103,12 +105,13 @@ if(isset($_POST["Search"])){
     $Name = $_POST["Name"];
     $Id = $_POST["Id"];
     $List = [];
-    $x = ["Id","Name","features"];
+    $x = ["Id","Name","Product","Order","User"];
     array_push($List,$x);
     if($Id != "")
     {
         $IsExist = ValueIsThere("User Type.txt",$Id, 0);
         $Array = explode('~', $IsExist);
+        array_pop($Array);
         $IsExist = ValueIsThere("User Type Menu.txt", $Id, 0);
         $temp = explode('~',$IsExist);
         for ($i = 1; $i < count($temp); $i++)
@@ -123,6 +126,7 @@ if(isset($_POST["Search"])){
         {
             $IsExist = ValueIsThere("User Type.txt",$Name, 1);
             $Array = explode('~', $IsExist);
+            array_pop($Array);
             $IsExist = ValueIsThere("User Type Menu.txt", $Array[0], 0);
             $temp = explode('~',$IsExist);
             for ($i = 1; $i < count($temp); $i++)
@@ -134,12 +138,13 @@ if(isset($_POST["Search"])){
         else
         {
             $Temp = [];
-            $x = ["Id","Name","features"];
+            $x = ["Id","Name","Product","Order","User"];
             array_push($Temp,$x);
             $Array = GetAllContent("User Type.txt");
             for ($i = 0; $i < count($Array);$i++)
             {
                 $Line = explode('~',$Array[$i]);
+                array_pop($Line);
                 array_push($Temp,$Line);
                 $IsExist = ValueIsThere("User Type Menu.txt", $Line[0], 0);
                 $temp = explode('~',$IsExist);
@@ -148,11 +153,11 @@ if(isset($_POST["Search"])){
                     array_push($Temp[$i + 1],$temp[$j]);
                 }
             }
-            DisplayTable($Temp);
+            DisplayTable($Temp,5);
             exit;
         }
     }
-    DisplayTable($List);
+    DisplayTable($List,5);
 }
 if(isset($_POST["Delete"]))
 {

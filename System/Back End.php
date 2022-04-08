@@ -14,14 +14,28 @@ function GetLastId(string $fileName)
 	Encrypt($fileName);
 	return $max;
 }
-function DisplayTable(array $List)
+
+/*
+* @param int Type 1,User -- 2,Product -- 3,Order -- 4,OrderDetails
+*/
+function DisplayTable(array $List, int $Type = 0)
 {
 	echo "<table border=1>";
 	for ($i = 0; $i < count($List); $i++) {
 		echo "<tr>";
-		for ($j = 0; $j < count($List[$i]); $j++) {
+		for ($j = 0; $j < ($i>0?count($List[$i])-1:count($List[$i])); $j++) {
 			echo "<th>" . $List[$i][$j] . "</th>";
 		}
+		$Id1 = $List[$i][0];
+		$Id2 = $List[$i][1];
+		if($Type!=0)
+			if($i!=0)
+				if($Type != 4)
+					echo "<th><a href='Del.php?Id1=$Id1&Id2=-1&Type=$Type'>Delete</a></th>";
+				else
+					echo "<th><a href='Del.php?Id1=$Id1&Id2=$Id2&Type=$Type'>Delete</a></th>";
+			else
+				echo "<th>Delete</th>";
 		echo "</tr>";
 	}
 	echo "</table>";

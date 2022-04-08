@@ -112,7 +112,7 @@ class Product extends Person implements File
 				}
 			}
 		}
-		DisplayTable($list);
+		return $list;
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{

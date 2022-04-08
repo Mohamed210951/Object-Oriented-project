@@ -16,36 +16,17 @@
         $Line = ValueIsThere("User.txt",$Id,0);
         $User = User::StringToUser($Line);
         $Servis = FromTypeGetServis($User->getType());
-
     ?>
     <form action="#" method="post">
-        <input type="submit" value="Product" name = "GotoProduct"
-            <?php 
-                $flag = 0;
-                for ($i=0; $i < count($Servis); $i++) { 
-                    if(str_contains($Servis[$i],"Product")) $flag = 1;
-                }
-                if($flag == 0) echo "hidden";
-            ?>
-        >
-        <input type="submit" value="Order" name = "GoToOrder"
-            <?php 
-                $flag = 0;
-                for ($i=0; $i < count($Servis); $i++) { 
-                    if(str_contains($Servis[$i],"Order")) $flag = 1;
-                }
-                if($flag == 0) echo "hidden";
-            ?>
-        >
-        <input type="submit" value="User" name="GoToUser"
-            <?php 
-                $flag = 0;
-                for ($i=0; $i < count($Servis); $i++) { 
-                    if(str_contains($Servis[$i],"User")) $flag = 1;
-                }
-                if($flag == 0) echo "hidden";
-            ?>
-        >
+        <?php if(!str_contains($Servis[0],"Product-Non")) : ?>
+            <input type="submit" value="Product" name = "GotoProduct">
+        <?php endif; ?>
+        <?php if(!str_contains($Servis[1],"Order-Non")) : ?>
+            <input type="submit" value="Order" name = "GoToOrder">
+        <?php endif; ?>
+        <?php if(!str_contains($Servis[2],"User-Non")) : ?>
+            <input type="submit" value="User" name="GoToUser">
+        <?php endif; ?>
         <?php if($User->getType() == "1") : ?>
             <input type="submit" value="Type of Users" name = "GoToType">
         <?php endif; ?>

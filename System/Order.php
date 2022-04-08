@@ -103,23 +103,30 @@ if(isset($_POST["SearchForOrder"]))
 {
     $order=new order();
     $order->setId(intval($_POST["OrderId"]));
-    $order->setId(intval($_POST["ClientId"]));
-    $order->setId(ToFormatedDate($_POST["Day"],$_POST["Month"],$_POST["Year"]));
-    $order->Searsh();
+    $order->setClientId(intval($_POST["ClientId"]));
+    $order->setDate(ToFormatedDate($_POST["Day"],$_POST["Month"],$_POST["Year"]));
+    $List = $order->Searsh();
+    if (in_array("Order-All", $Servis)) DisplayTable($List,2);
+    else DisplayTable($List);
 }
 if (isset($_POST["ViewOrderDetails"])) {
-    if ($_POST["OrderId"] == "") exit("Must Write Order Id");
+    if ($_POST["OrderId"] == "") exit("Order Id is required");
     if ($isexist = ValueIsThere("Order.txt", $_POST["OrderId"], 0)) {
         $Array = explode('~', $isexist);
         if ($Array[1] != $User->getId() && $User->getType() != "1") {
             exit("You cannot See the details of this order");
         }
-        session_start();
-        $_SESSION["OrderId"] = $_POST["OrderId"];
-        header("Location:OrderDetails.php");
+        $OrderId = $_POST["OrderId"];
+        header("Location:OrderDetails.php?OrderId=$OrderId");
     } else exit("No Order with this Id");
 }
-
+if(isset($_POST["DeleteOrder"]))
+{
+    if ($_POST["OrderId"] == "") exit("Order Id is required");
+    $order=new order();
+    $order->setId(intval($_POST["OrderId"]));
+    $order->Delete();
+}
 if (isset($_POST["Logout"])) {
     session_destroy();
     header("Location:Login.php");

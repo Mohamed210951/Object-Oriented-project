@@ -85,6 +85,8 @@ if (isset($_POST["SearshForUser"])) {
     $User->setName($_POST["UserName"]);
     $User->setType(intval($_POST["UserType"]));
     $List = $User->Searsh();
+    if (in_array("User-All", $Servis)) DisplayTable($List,1);
+    else DisplayTable($List);
 }
 if (isset($_POST["DeleteUser"])) {
     if ($_POST["UserId"] == "") die("User Id unset!!");

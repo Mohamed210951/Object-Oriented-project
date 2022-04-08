@@ -106,7 +106,7 @@ class Order_Details extends Person implements File
         {
             array_push($array,explode("~",$List[$i]));
         }
-        DisplayTable($array);
+        return $array;
     }
 
     /**

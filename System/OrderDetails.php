@@ -13,7 +13,7 @@
     <h1>Order Details</h1>
     <h2>
         <?php session_start();
-        echo "OrderId: " . $_SESSION["OrderId"]; ?>
+        echo "OrderId: " . $_GET["OrderId"]; ?>
     </h2>
     <?php
     include_once "Back End.php";
@@ -77,12 +77,12 @@ if (isset($_POST["Logout"])) {
     header("Location:Login.php");
 }
 if (isset($_POST["AddItem"])) {
-    if ($_POST["ProductId"] == "") die("Product Unset!!");
-    if ($_POST["NumberOfProduct"] == "") die("Product Number Unset!!");
+    if ($_POST["ProductId"] == "") die("Product is Required!");
+    if ($_POST["NumberOfProduct"] == "") die("Product Number is Required!!");
     $Product_Id = $_POST["ProductId"];
     $Product_Number = $_POST["NumberOfProduct"];
     $Object_of_order_details = new  Order_Details();
-    $Object_of_order_details->setOrderId(intval($_SESSION["OrderId"]));
+    $Object_of_order_details->setOrderId(intval($_GET["OrderId"]));
     $Object_of_order_details->setProduct_Id(intval($_POST["ProductId"]));
     $Object_of_order_details->setNumbers(intval($_POST["NumberOfProduct"]));
     $Object_of_order_details->Add();
@@ -93,16 +93,19 @@ if (isset($_POST["Profile"])) {
 if(isset($_POST["Searsh"]))
 {
     $OrderDetails = new Order_Details();
-    $OrderDetails->setOrderId(intval($_SESSION["OrderId"]));
+    $OrderDetails->setOrderId(intval($_GET["OrderId"]));
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->setNumbers(intval($_POST["NumberOfProduct"]));
-    $OrderDetails->Searsh();
+    $List = $OrderDetails->Searsh();
+    if (in_array("Order-All", $Servis)) DisplayTable($List,4);
+    else DisplayTable($List);
 }
 
 if(isset($_POST["DeleteItem"]))
 {
     $OrderDetails = new Order_Details();
-    $OrderDetails->setOrderId(intval($_SESSION["OrderId"]));
+    if($_POST["ProductId"] == "") exit("Product is Required");
+    $OrderDetails->setOrderId(intval($_GET["OrderId"]));
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->Delete();
 }
