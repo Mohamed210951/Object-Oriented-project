@@ -59,9 +59,9 @@ class Product extends Person implements File
 		}
 		return null;
 	}
-	static function FromStringToObject($string)
+	static function FromStringToObject($Line)
 	{
-		$Array_Of_String = explode("~", $string);
+		$Array_Of_String = explode("~", $Line);
 		$product = new Product(intval($Array_Of_String[0]), floatval($Array_Of_String[1]), $Array_Of_String[2]);
 		return $product;
 	}

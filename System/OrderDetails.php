@@ -20,7 +20,7 @@
     include_once "../Classes/UserClass.php";
     $Id = $_SESSION["UserId"];
     $Line = ValueIsThere("User.txt", $Id, 0);
-    $User = User::StringToUser($Line);
+    $User = User::FromStringToObject($Line);
     $Servis = FromTypeGetServis($User->getType());
     ?>
     <form action="#" method="post">

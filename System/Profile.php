@@ -15,7 +15,7 @@
     include_once "../Classes/UserClass.php";
     $Id = $_SESSION["UserId"];
     $Line = ValueIsThere("User.txt", $Id, 0);
-    $User = User::StringToUser($Line);
+    $User = User::FromStringToObject($Line);
     $Line = ValueIsThere("User Type.txt", $User->getType(), 0);
     $Array = explode('~', $Line);
     $Type = $Array[1];

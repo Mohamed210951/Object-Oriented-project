@@ -31,7 +31,7 @@ class User extends Person implements File
 		$Line = $this->Id . '~' . $this->TypeId . '~' . $this->Name . '~' . sha1($this->Password) . "~" . $this->DateOfBirth . "~\r\n";
 		return $Line;
 	}
-	public static function StringToUser(string $Line)
+	public static function FromStringToObject(string $Line)
 	{
 		$Array = explode('~', $Line);
 		$user = new User(intval($Array[0]), $Array[1], $Array[2], $Array[3], $Array[4]);

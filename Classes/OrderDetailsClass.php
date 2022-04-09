@@ -69,9 +69,9 @@ class Order_Details extends Person implements File
      *
      * @return mixed
      */
-    static function From_String_To_Object($x)
+    static function FromStringToObject($Line)
     {
-        $array=explode("~",$x);
+        $array=explode("~",$Line);
         $Order_Details= new Order_Details();
         $Order_Details->setOrderId(intval($array[0]));
         $Order_Details->setProduct_Id(intval($array[1]));
@@ -84,7 +84,7 @@ class Order_Details extends Person implements File
         $List=GetAllContent("Order Details.txt");
         for($i=0;$i< count($List);$i++)
         {
-            $Order_Details=Order_Details::From_String_To_Object($List[$i]) ;
+            $Order_Details=Order_Details::FromStringToObject($List[$i]) ;
             if($Order_Details->getOrderId()!=$this->OrderId)
             {
               array_splice($List,$i,1);
