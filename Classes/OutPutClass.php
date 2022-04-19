@@ -7,7 +7,7 @@ class Input
     private $Name;
     private $Type;
     private $Text;
-
+	private $Value;
     public function __construct($Name = "NULL",$Text = "NULL",$Type = "NULL") {
         if($Name == "NULL")
 		{
@@ -69,20 +69,34 @@ class Input
     {
         if($this->AllIsSet() == 0) return 0;
         ?>
-			<?php if($this->Type!="submit") {?>
-            <div>
-                <label>
-					
-                    <?php echo $this->Text?>
-                    <input type=<?php echo $this->Type?> name = <?php echo $this->Name?>>
-					
-                </label>
-            </div>
-			<?php } else {?>
+			<?php if($this->Type == "submit") {?>
 				<div class="mt-5">
                   <button type="submit" name = <?php echo $this->Name?>>
                     <?php echo $this->Text?>
                   </button>
+				</div>
+            <?php } else if($this->Type == "select") {?>
+				<div>
+				<label>
+				<?php echo $this->Name?>
+				</label>
+				<select name=<?php echo $this->Name ?>>
+					<?php 
+						for ($i=0; $i < count($this->Value); $i++) { 
+						?>
+						<option value=<?php echo $this->Value[$i]?>><?php echo $this->Text[$i] ?></option>
+						<?php
+						}
+					?>
+				</select>
+				</div>
+			<?php } else {?>
+				<div>
+                <label>
+                    <?php echo $this->Text?>
+                    <input type=<?php echo $this->Type?> name = <?php echo $this->Name?>>
+                </label>
+				</div>
 			<?php }?>
         <?php
     }
@@ -102,6 +116,23 @@ class Input
 	 */
 	function setText($Text): self {
 		$this->Text = $Text;
+		return $this;
+	}
+	/**
+	 * 
+	 * @return mixed
+	 */
+	function getValue() {
+		return $this->Value;
+	}
+	
+	/**
+	 * 
+	 * @param mixed $Value 
+	 * @return Input
+	 */
+	function setValue($Value): self {
+		$this->Value = $Value;
 		return $this;
 	}
 }
@@ -218,12 +249,10 @@ class Form
 		return $this;
 	}
 }
-class HTML
-{
+class HTML {
 	private function __construct() {
 	}
-	static public function Header($Type)
-	{
+	static public function Header($Type) {
 		$Servis = FromTypeGetServis($Type);
 		?>
 		<head>
@@ -328,8 +357,7 @@ class HTML
     </div>
 		<?php
 	}
-	static public function Footer()
-	{
+	static public function Footer() {
 		?>
 		</section>
 		<script>

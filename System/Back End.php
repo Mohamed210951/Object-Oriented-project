@@ -118,23 +118,23 @@ function FromTypeGetServis(string $IdType)
 }
 function ToFormatedDate(string $Day, string $Month, string $Year)
 {
-	$String = $Day . "/" . $Month . "/" . $Year;
+	$String = $Year . "-" . $Month . "-" . $Day;
 	return $String;
 }
 function GetDayFromString(string $String)
 {
-	$Temp = explode('/', $String);
-	return intval($Temp[0]);
+	$Temp = explode('-', $String);
+	return intval($Temp[2]);
 }
 function GetMonthFromString(string $String)
 {
-	$Temp = explode('/', $String);
+	$Temp = explode('-', $String);
 	return intval($Temp[1]);
 }
 function GetYearFromString(string $String)
 {
-	$Temp = explode('/', $String);
-	return intval($Temp[2]);
+	$Temp = explode('-', $String);
+	return intval($Temp[0]);
 }
 function Encrypt($FileName)
 {
