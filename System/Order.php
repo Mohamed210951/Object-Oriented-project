@@ -137,5 +137,5 @@ if (isset($_POST["UpdateOrder"])) {
 }
 if(isset($_POST["MainMenu"]))
 {
-    header("Location:MainMenu.php");
+    header("Location:index.php");
 }

@@ -109,5 +109,5 @@ if(isset($_POST["DeleteItem"]))
 }
 if(isset($_POST["MainMenu"]))
 {
-    header("Location:MainMenu.php");
+    header("Location:index.php");
 }

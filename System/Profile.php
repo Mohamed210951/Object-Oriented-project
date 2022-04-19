@@ -133,5 +133,5 @@ if (isset($_POST["Logout"])) {
 }
 if(isset($_POST["MainMenu"]))
 {
-    header("Location:MainMenu.php");
+    header("Location:index.php");
 }

@@ -52,7 +52,8 @@ if (isset($_POST["submit"])) {
             session_start();
         }
         $_SESSION["UserId"] = $newUser->getId();
-        header("Location:index.php");
+        echo(" <script> location.replace('index.php'); </script>");
+        exit();
     } else {
         echo "Must be the same Password!!";
     }
