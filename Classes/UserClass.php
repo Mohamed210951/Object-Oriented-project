@@ -68,15 +68,12 @@ class User extends Person implements File
 		if ($Line = ValueIsThere("User.txt", $this->Name, 2)) {
 			$Array = explode('~', $Line);
 			if ($Array[3] == sha1($this->Password)) {
-				$this->TypeId = $Array[1];
-				session_start();
-				$_SESSION["UserId"] = $Array[0];
-				header("Location:MainMenu.php");
+				return $Array[0];
 			} else {
-				echo "Wrong UserName or Password!!";
+				return false;
 			}
 		} else {
-			echo "Wrong UserName or Password!!";
+			return false;
 		}
 	}
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null)

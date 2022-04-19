@@ -1,41 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login.php</title>
-</head>
-
-<body>
-    <h1>Login.php</h1>
-    <form action="#" method="post">
-        <div class="row">
-            <label for="UserName">UserName</label>
-            <input type="text" name="UserName" required>
-        </div>
-        <div class="row">
-            <label for="Password">Password</label>
-            <input type="Password" name="Password" required>
-        </div>
-        <div class="row">
-            <input type="submit" value="Login" name="Login">
-        </div>
-    </form>
-    <form action="#" method="post">
-        <div class='row'>
-            <input type="submit" value="SignIn" name="SignUp">
-        </div>
-    </form>
-</body>
-
-</html>
-
 <?php
 include_once "Back End.php";
 include_once "../Classes/UserClass.php";
-if (isset($_POST["Login"])) {
+include_once "../Classes/OutPutClass.php";
+
+HTML::Header("non");
+
+$Inputs = [];
+array_push($Inputs,new Input("UserName","Username","text"));
+array_push($Inputs,new Input("Password","Password","password"));
+array_push($Inputs,new Input("Login","Login","submit"));
+$Form = new Form();
+$Form->setActionFile("#");
+$Form->setInputs($Inputs);
+$Form->setTitle("Login");
+$Form->DisplayForm();
+HTML::Footer();
+if ($Form->InfoIsTaken()) {
     if($_POST["UserName"] == "") die("UserName is required");
     if($_POST["Password"] == "") die("Password is required");
     $UserName = $_POST["UserName"];
@@ -43,7 +23,16 @@ if (isset($_POST["Login"])) {
     $User = new User();
     $User->setName($UserName);
     $User->setPassword($Password);
-    $User->Login();
+    if($UserId = $User->Login())
+    {
+        session_start();
+        $_SESSION["UserId"] = $UserId;
+        header("Location:index.php");
+    }
+    else
+    {
+        echo "UserName or password is wrong!!";
+    }
 }
 if (isset($_POST["SignUp"])) {
     header("Location:SignUp.php");

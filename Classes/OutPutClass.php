@@ -1,16 +1,27 @@
 <?php  
-
+if(session_id() == ''){
+    session_start();
+}
 class Input 
 {
     private $Name;
     private $Type;
     private $Text;
 
-    public function __construct() {
-        $this->Name = "NULL";
-        $this->Type = "NULL";
-        $this->Text = "NULL";
-    }
+    public function __construct($Name = "NULL",$Text = "NULL",$Type = "NULL") {
+        if($Name == "NULL")
+		{
+			$this->Name = "NULL";
+			$this->Type = "NULL";
+			$this->Text = "NULL";
+		}
+		else
+		{
+			$this->Name = $Name;
+			$this->Type = $Type;
+			$this->Text = $Text;
+		}
+	}
 	/**
 	 * 
 	 * @return mixed
@@ -58,12 +69,21 @@ class Input
     {
         if($this->AllIsSet() == 0) return 0;
         ?>
+			<?php if($this->Type!="submit") {?>
             <div>
                 <label>
-                    <?php $this->Name?>
-                    <input type=<?php $this->Type?> name = <?php $this->Name?>>
+					
+                    <?php echo $this->Text?>
+                    <input type=<?php echo $this->Type?> name = <?php echo $this->Name?>>
+					
                 </label>
             </div>
+			<?php } else {?>
+				<div class="mt-5">
+                  <button type="submit" name = <?php echo $this->Name?>>
+                    <?php echo $this->Text?>
+                  </button>
+			<?php }?>
         <?php
     }
 	
@@ -90,32 +110,33 @@ class Form
     private $Title;
     private $ActionFile;
     private $Inputs;
-    private $SubmitText;
     public function __construct() {
         $this->Title = "NULL";
         $this->ActionFile = "NULL";
         $this->Inputs = array();
-        $this->SubmitText = "NULL";
-    }
+	}
     public function AllIsSet()
     {
         if($this->Title == "NULL") return 0;
         if($this->ActionFile == "NULL") return 0;
         if(count($this->Inputs) == 0) return 0;
-        if($this->SubmitText == "NULL") return 0;
-        return 1;
+		return 1;
     }
     
     public function DisplayForm()
     {
         if($this->AllIsSet() == 0) return 0;
         ?>
+		<section class="contact_section layout_padding">
         <div class="container">
-        <h2 class="">
-            <?php $this->Title?>
-        </h2>
+			<h2 class="">
+				<?php echo $this->Title?>
+			</h2>
         </div>
-        <form action=<?php $this->ActionFile?> method="POST">
+		<div class="container">
+      	<div class="row">
+        <div class="col-md-6 ">
+        <form action=<?php echo $this->ActionFile?> method="POST">
             <div class="contact_form-container">
               <div>
         <?php
@@ -123,17 +144,28 @@ class Form
             $this->Inputs[$i]->DisplayInput();
         }
         ?>
-        <div class="mt-5">
-        <button type="submit">
-        <?php $this->SubmitText?>
-        </button>
-        </div>
         </div>
         </div>
         </form>
+		</div>
+		</div>
+		</div>
+		</section>
         <?php
     }
-
+	public function InfoIsTaken()
+	{
+		for ($i=0; $i < count($this->Inputs); $i++) { 
+			if($this->Inputs[$i]->getType() == "submit")
+			{
+				if(isset($_POST[$this->Inputs[$i]->getName()]))
+				{
+					return $this->Inputs[$i]->getName();
+				}
+			}
+		}
+		return false;
+	}
 	/**
 	 * 
 	 * @return mixed
@@ -185,30 +217,14 @@ class Form
 		$this->Inputs = $Inputs;
 		return $this;
 	}
-	/**
-	 * 
-	 * @return mixed
-	 */
-	function getSubmitText() {
-		return $this->SubmitText;
-	}
-	
-	/**
-	 * 
-	 * @param mixed $SubmitText 
-	 * @return Form
-	 */
-	function setSubmitText($SubmitText): self {
-		$this->SubmitText = $SubmitText;
-		return $this;
-	}
 }
 class HTML
 {
 	private function __construct() {
 	}
-	static public function Header()
+	static public function Header($Type)
 	{
+		$Servis = FromTypeGetServis($Type);
 		?>
 		<head>
 			<!-- Basic -->
@@ -221,7 +237,7 @@ class HTML
 			<meta name="description" content="" />
 			<meta name="author" content="" />
 
-			<title>Intot</title>
+			<title>Project</title>
 
 			<!-- slider stylesheet -->
 			<link rel="stylesheet" type="text/css"
@@ -237,12 +253,91 @@ class HTML
 			<!-- responsive style -->
 			<link href="css/responsive.css" rel="stylesheet" />
 		</head>
-		<body>
+		<body class="sub_page"> 
+		<div class="hero_area">
+      <!-- header section strats -->
+      <header class="header_section">
+        <div class="container-fluid">
+          <nav class="navbar navbar-expand-lg custom_nav-container">
+            <a class="navbar-brand" href="index.php">
+              <span>
+                Project
+              </span>
+            </a>
+
+            <div class="navbar-collapse" id="">
+              <div class="d-none d-lg-flex ml-auto flex-column flex-lg-row align-items-center">
+                <ul class="navbar-nav">
+				<?php if(isset($_SESSION["UserId"])) {?>
+					<li class="nav-item">
+                    <a class="nav-link" href="Logout.php">
+                      <img src="images/login.png" alt="" />
+                      <span>Logout</span></a>
+                  </li>
+				<?php }else{?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="Login.php">
+                      <img src="images/login.png" alt="" />
+                      <span>Login</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="SignUp.php">
+                      <img src="images/signup.png" alt="" />
+                      <span>Sign Up</span>
+                    </a>
+                  </li>
+				<?php }?>
+                </ul>
+                <form class="form-inline my-2 mb-3 mb-lg-0  mr-5">
+                </form>
+              </div>
+			  <?php if(isset($_SESSION["UserId"])) {?>
+              <div class="custom_menu-btn">
+                <button onclick="openNav()">
+                  <span class="s-1">
+                  </span>
+                  <span class="s-2">
+                  </span>
+                  <span class="s-3">
+                  </span>
+                </button>
+              </div>
+				<div id="myNav" class="overlay">
+					<div class="overlay-content">
+					<a href="index.php">HOME</a>
+					<?php if(!str_contains($Servis[0],"Product-Non")){ ?>
+					<a href="Product.php">Product</a>
+					<?php }?>
+					<?php if(!str_contains($Servis[1],"Order-Non")){ ?>
+					<a href="Order.php">Order</a>
+					<?php }?>
+					<?php if(!str_contains($Servis[2],"User-Non")){?>
+					<a href="User.php">User</a>
+					<?php }?>
+					<?php if($Type == "1"){?>
+					<a href="Type.php">Type of Users</a>
+					<?php }?>
+                </div>
+			  <?php }?>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+      <!-- end header section -->
+    </div>
 		<?php
 	}
 	static public function Footer()
 	{
 		?>
+		</section>
+		<script>
+			function openNav() {
+			document.getElementById("myNav").classList.toggle("menu_width")
+			document.querySelector(".custom_menu-btn").classList.toggle("menu_btn-style")
+			}
+		</script>
 			</body>
 		<?php
 	}
