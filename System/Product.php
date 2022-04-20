@@ -10,7 +10,6 @@
     $User = User::FromStringToObject($Line);
     $Servis = FromTypeGetServis($User->getType());
     HTML::Header($User->getType());
-
     $Inputs = [];
     array_push($Inputs,new Input("Id","Product Id","number"));
     array_push($Inputs,new Input("ProductName","Product Name","text"));
@@ -22,7 +21,6 @@
         array_push($Inputs,new Input("Delete","Delete","submit"));
     }
     array_push($Inputs,new Input("Search","Search","submit"));
-
     $Form = new Form();
     $Form->setActionFile("#");
     $Form->setInputs($Inputs);
@@ -60,18 +58,6 @@
         $Product->SetId(intval($_POST["Id"]));
         $Product->Delete();
     }
-
-    if (isset($_POST["Logout"])) {
-        session_unset();
-        session_destroy();
-        header("Location:Login.php");
-    }
-
-    if(isset($_POST["MainMenu"]))
-    {
-        header("Location:index.php");
-    }
-
     if($Flag == 0)
     {
         $Product = new Product();

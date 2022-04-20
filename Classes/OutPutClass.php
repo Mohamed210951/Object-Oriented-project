@@ -260,6 +260,7 @@ class HTML {
 	private function __construct() {
 	}
 	static public function Header($Type) {
+		include_once "Back End.php";
 		$Servis = FromTypeGetServis($Type);
 		?>
 		<head>
@@ -353,6 +354,7 @@ class HTML {
 					<?php if($Type == "1"){?>
 					<a href="Type.php">Type of Users</a>
 					<?php }?>
+					<a href="Profile.php">Profile</a>
                 </div>
 			  <?php }?>
               </div>

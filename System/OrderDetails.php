@@ -1,76 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Details</title>
-</head>
-
-<body>
-
-    <h1>Order Details</h1>
-    <h2>
-        <?php session_start();
-        echo "OrderId: " . $_GET["OrderId"]; ?>
-    </h2>
-    <?php
-    include_once "Back End.php";
-    include_once "../Classes/UserClass.php";
-    $Id = $_SESSION["UserId"];
-    $Line = ValueIsThere("User.txt", $Id, 0);
-    $User = User::FromStringToObject($Line);
-    $Servis = FromTypeGetServis($User->getType());
-    ?>
-    <form action="#" method="post">
-
-        <div class="row">
-            <label for="Product Name">Product Name</label>
-            <select name="ProductId">
-                <option value="">Null</option>
-                <?php
-                include_once "Back End.php";
-                $List = GetAllContent("Product.txt");
-                for ($i = 0; $i < count($List); $i++) {
-                    $Line = explode('~', $List[$i]);
-                    $Id = $Line[0];
-                    echo "<option value = $Id>" . $Line[2] . "</option>";
-                }
-                ?>
-            </select>
-        </div>
-        <br>
-        <div class="row">
-            <label for="Number Of Product">Number Of Product</label>
-            <input type="number" name="NumberOfProduct" step=".001">
-        </div>
-        <br>
-        <div class="row">
-            <?php if(in_array("Order-Add", $Servis)) : ?>
-                <input type="submit" value="Add Item" name="AddItem">
-            <?php endif; ?>
-            <?php if (in_array("Order-All", $Servis)) : ?>
-                <input type="submit" value="Add Item" name="AddItem">
-                <input type="submit" value="Delete Item" name="DeleteItem">
-                <input type="submit" value="Update Item" name="UpdateItem">
-            <?php endif; ?>
-            <input type="submit" value="Searsh For An item" name="Searsh">
-            <input type="submit" value="Print Order Invoice" name="PrintOrderInvoice">
-        </div>
-    </form>
-
-    <footer>
-        <form action="#" method="post">
-            <input type="submit" value="Main Menu" name="MainMenu">
-            <input type="submit" value="Logout" name="Logout">
-        </form>
-    </footer>
-</body>
-
-</html>
-
 <?php
+include_once "Back End.php";
+include_once "../Classes/UserClass.php";
+include_once "../Classes/OutPutClass.php";
+$Id = $_SESSION["UserId"];
+$Line = ValueIsThere("User.txt", $Id, 0);
+$User = User::FromStringToObject($Line);
+$Servis = FromTypeGetServis($User->getType());
+HTML::Header($User->getType());
+$Input = new Input();
+$Input->setName("ProductId");
+$Texts = [];
+$Values = [];
+array_push($Texts,"Non");
+array_push($Values,"Non");
+include_once "Back End.php";
+$List = GetAllContent("Product.txt");
+for ($i = 0; $i < count($List); $i++) {
+    $Line = explode('~', $List[$i]);
+    $Id = $Line[0];
+    array_push($Texts,$Line[2]);
+    array_push($Values,$Id);
+}
+$Input->setName("ProductId");
+$Input->setText($Texts);
+$Input->setValue($Values);
+$Input->setType("select");
+$Inputs = [];
+array_push($Inputs,$Input);
+array_push($Inputs,new Input("NumberOfProduct","Number Of Product","number"));
+if(in_array("Order-Add", $Servis))
+{
+    array_push($Inputs,new Input("AddItem","Add Item","submit"));
+}
+if (in_array("Order-All", $Servis))
+{
+    array_push($Inputs,new Input("AddItem","Add Item","submit"));
+    array_push($Inputs,new Input("DeleteItem","Delete Item","submit"));
+    array_push($Inputs,new Input("UpdateItem","Update Item","submit"));
+    array_push($Inputs,new Input("Searsh","Search For An item","submit"));
+    array_push($Inputs,new Input("PrintOrderInvoice","Print Order Invoice","submit"));
+}
+
+$Form = new Form();
+$Form->setActionFile("#");
+$Form->setInputs($Inputs);
+$Form->setTitle("Order Details for order ".$_GET["OrderId"]);
+$Form->DisplayForm();
+HTML::Footer();
 include_once "../Classes/OrderDetailsClass.php";
 if (isset($_POST["Logout"])) {
     session_unset();

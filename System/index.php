@@ -34,6 +34,7 @@ if($User->getType() == "1")
 {
     array_push($Inputs,new Input("Type","User Types","submit"));
 }
+array_push($Inputs,new Input("Profile","Profile","submit"));
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
@@ -48,6 +49,7 @@ if($Name = $Form->InfoIsTaken())
     else if($Name == "Order") echo(" <script> location.replace('Order.php'); </script>");
     else if($Name == "User") echo(" <script> location.replace('User.php'); </script>");
     else if($Name == "Type") echo(" <script> location.replace('Type.php'); </script>");
+    else if($Name == "Profile") echo(" <script> location.replace('Profile.php'); </script>");
     exit();
 }
 }

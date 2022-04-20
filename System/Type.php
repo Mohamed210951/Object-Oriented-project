@@ -1,59 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Type.php</title>
-</head>
-<body>
-    <h1>Type.php</h1>
-    <form action="#" method="post">
-        <div class ="row">
-            <label for="Id">Type Id</label>
-            <input type="number" name="Id">
-        </div>
-        <div class = "row">
-            <label for="Name">Type Name</label>
-            <input type="text" name="Name">
-        </div>
-        <div class = "row">
-            <label for="Menu">Product</label>
-            <select name="Product">
-                <option value="Non">Non</option>
-                <option value="All">All</option>
-                <option value="Add">Add</option>
-                <option value="Search">Search</option>
-            </select>
-            <label for="Menu">Order</label>
-            <select name="Order">
-                <option value="Non">Non</option>
-                <option value="All">All</option>
-                <option value="Add">Add</option>
-                <option value="Search">Search</option>
-            </select>
-            <label for="Menu">User</label>
-            <select name="User">
-                <option value="Non">Non</option>
-                <option value="All">All</option>
-                <option value="Search">Search</option>
-            </select>
-        </div>
-        <div class = "row">
-            <input type="submit" value="Add" name = "Add">
-            <input type="submit" value="Update" name = "Update">
-            <input type="submit" value="Search" name = "Search">
-            <input type="submit" value="Delete" name = "Delete">
-        </div>
-    </form>
-    <form action="#" method="post">
-            <input type="submit" value="Main Menu" name="MainMenu">
-            <input type="submit" value="Logout" name="Logout">
-    </form>
-</body>
-</html>
-
-<?php
+<?php 
+include_once "../Classes/OutPutClass.php";
+HTML::Header("1");
+$Inputs =[];
+array_push($Inputs,new Input("Id","Type Id","number"));
+array_push($Inputs,new Input("Name","Type Name","text"));
+$Input = new Input();
+$Input->setName("Product");
+$Text = ["Non","All","Add","Search"];
+$Input->setText($Text);
+$Input->setValue($Text);
+$Input->setType("select");
+array_push($Inputs,$Input);
+$Input = new Input();
+$Input->setName("Order");
+$Text = ["Non","All","Add","Search"];
+$Input->setText($Text);
+$Input->setValue($Text);
+$Input->setType("select");
+array_push($Inputs,$Input);
+$Input = new Input();
+$Input->setName("User");
+$Text = ["Non","All","Search"];
+$Input->setText($Text);
+$Input->setValue($Text);
+$Input->setType("select");
+array_push($Inputs,$Input);
+array_push($Inputs,new Input("Add","Add","submit"));
+array_push($Inputs,new Input("Update","Update","submit"));
+array_push($Inputs,new Input("Search","Search","submit"));
+array_push($Inputs,new Input("Delete","Delete","submit"));
+$Form = new Form();
+$Form->setActionFile("#");
+$Form->setInputs($Inputs);
+$Form->setTitle("Types of Users");
+$Form->DisplayForm();
+HTML::Footer();
 include_once "Back End.php";
 function Getfeatures()
 {
@@ -70,7 +51,6 @@ function Getfeatures()
     else $String.="User-Non~";
     return $String;
 }
-
 if(isset($_POST["Add"]))
 {
     if($_POST["Name"] == "") die("Name is Unset!!");
@@ -177,13 +157,4 @@ if(isset($_POST["Delete"]))
         }
     }
 }
-if(isset($_POST["Logout"]))
-{
-    session_unset();
-    session_destroy();
-    header("Location:Login.php");
-}
-if(isset($_POST["MainMenu"]))
-{
-    header("Location:index.php");
-}
+
