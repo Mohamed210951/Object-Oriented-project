@@ -171,10 +171,17 @@ class Form
             <div class="contact_form-container">
               <div>
         <?php
+		$flag = 0;
         for ($i=0; $i < count($this->Inputs); $i++) { 
+			if($this->Inputs[$i]->getType() == "submit" && $flag == 0)
+			{
+				echo "<div class='row'>";
+				$flag = 1;
+			}
             $this->Inputs[$i]->DisplayInput();
         }
         ?>
+		</div>
         </div>
         </div>
         </form>
