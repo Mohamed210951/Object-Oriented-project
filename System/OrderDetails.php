@@ -83,7 +83,11 @@ if(isset($_POST["DeleteItem"]))
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->Delete();
 }
-if(isset($_POST["MainMenu"]))
+if(isset($_POST["UpdateItem"]))
 {
-    header("Location:index.php");
+    $OrderDetails = new Order_Details();
+    $OrderDetails->setOrderId(intval($_GET["OrderId"]));
+    $OrderDetails->setProduct_Id($_POST["ProductId"]);
+    $OrderDetails->setNumbers($_POST["NumberOfProduct"]);
+    $OrderDetails->Update();
 }
