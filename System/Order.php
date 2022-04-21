@@ -43,6 +43,8 @@ if (isset($_POST["AddOrder"])) {
     }
     $Order->setDate($_POST["Date"]);
     $Order->Add();
+    $OrderId = $Order->getId();
+    echo(" <script> location.replace('OrderDetails.php?OrderId=$OrderId'); </script>");
     unset($_POST["AddOrder"]);
     unset($_POST["ClintId"]);
     unset($_POST["Date"]);

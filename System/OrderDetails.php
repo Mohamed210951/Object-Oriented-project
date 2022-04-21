@@ -28,11 +28,7 @@ $Input->setType("select");
 $Inputs = [];
 array_push($Inputs,$Input);
 array_push($Inputs,new Input("NumberOfProduct","Number Of Product","number"));
-if(in_array("Order-Add", $Servis))
-{
-    array_push($Inputs,new Input("AddItem","Add Item","submit"));
-}
-if (in_array("Order-All", $Servis))
+if(in_array("Order-Add", $Servis) ||in_array("Order-All", $Servis) )
 {
     array_push($Inputs,new Input("AddItem","Add Item","submit"));
     array_push($Inputs,new Input("DeleteItem","Delete Item","submit"));
@@ -40,7 +36,11 @@ if (in_array("Order-All", $Servis))
     array_push($Inputs,new Input("Searsh","Search For An item","submit"));
     array_push($Inputs,new Input("PrintOrderInvoice","Print Order Invoice","submit"));
 }
-
+if(in_array("Order-Search", $Servis))
+{
+    array_push($Inputs,new Input("Searsh","Search For An item","submit"));
+    array_push($Inputs,new Input("PrintOrderInvoice","Print Order Invoice","submit"));
+}
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
