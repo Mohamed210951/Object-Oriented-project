@@ -42,7 +42,7 @@ if($Type == "4")
 if($Type == "5")
 {
     include_once "Back End.php";
-    if($Id1 == "1" || $Id1 == "3") 
+    if($Id1 == "1" || $Id1 == "3")
     {
         echo(" <script> location.replace('Type.php'); </script>");
         exit();
