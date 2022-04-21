@@ -5,7 +5,7 @@ include_once "../Classes/UserClass.php";
 if(session_id() == ''){
     session_start();
 }
-if(!isset($_SESSION["UserId"])) HTML::Header("non");
+if(!isset($_SESSION["UserId"])) header("Location:Login.php");
 else {
 $Id = $_SESSION["UserId"];
 $Line = ValueIsThere("User.txt", $Id, 0);
