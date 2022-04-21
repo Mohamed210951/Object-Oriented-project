@@ -7,6 +7,16 @@ include_once "ProductClass.php";
     Product m4 hatb2a array hya oe number oe prices
 
     5od balk mn Order Id 
+
+
+
+    Lazm t3ml static function 
+
+    GetOrderDetail($Id1,$Id2)
+    $Id1 da hoa order Id;
+    $Id2 da hoa Product Id;
+    return Object feh OrderDetail mo3yn mn 2lfile!!!
+    
 */
 
 class Order_Details extends Person implements File

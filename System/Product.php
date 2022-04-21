@@ -54,7 +54,7 @@
         $Product->setName($_POST["ProductName"]);
         $Product->setCost(floatval($_POST["ProductPrice"]));
         $List = $Product->Searsh();
-        if(in_array("Product-All", $Servis)) DisplayTable($List,2);
+        if(in_array("Product-All", $Servis)) DisplayTable($List,2,"ProductUpdate.php");
         else DisplayTable($List);
         $Flag = 1;
         unset($_POST["Id"]);
@@ -76,6 +76,6 @@
         $Product->setName("");
         $Product->setCost(0);
         $List = $Product->Searsh();
-        if(in_array("Product-All", $Servis)) DisplayTable($List,2);
+        if(in_array("Product-All", $Servis)) DisplayTable($List,2,"ProductUpdate.php");
         else DisplayTable($List);
     }

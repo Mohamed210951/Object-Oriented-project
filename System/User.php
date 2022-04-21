@@ -12,6 +12,7 @@ HTML::Header($User->getType());
 $Inputs = [];
 array_push($Inputs,new Input("UserId","User Id","number"));
 array_push($Inputs,new Input("UserName","User Name","text"));
+array_push($Inputs,new Input("DateOfBirth","Date of Birth","date"));
 $Input = new Input();
 $Texts = [];
 $Values = [];
@@ -67,7 +68,7 @@ if (isset($_POST["SearshForUser"])) {
     $User->setName($_POST["UserName"]);
     $User->setType(intval($_POST["UserType"]));
     $List = $User->Searsh();
-    if (in_array("User-All", $Servis)) DisplayTable($List,1);
+    if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
     else DisplayTable($List);
 }
 if (isset($_POST["DeleteUser"])) {
@@ -83,6 +84,6 @@ if($flag == 0)
     $User->setName("");
     $User->setType(0);
     $List = $User->Searsh();
-    if (in_array("User-All", $Servis)) DisplayTable($List,1);
+    if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
     else DisplayTable($List);
 }

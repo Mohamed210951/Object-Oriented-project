@@ -18,7 +18,7 @@ function GetLastId(string $fileName)
 /*
 * @param int Type 1,User -- 2,Product -- 3,Order -- 4,OrderDetails
 */
-function DisplayTable(array $List, int $Type = 0)
+function DisplayTable(array $List, int $Type = 0,string $UpdateLink = "null")
 {
 	echo "<center>";
 	$Table = "box-shadow: 0 0 20px rgba(0,0,0,0.15); border-collapse: collapse; border-radius: 10px 10px 0 0; overflow: hidden; margin: 25px 0; font-size: 0.9em; font-family: sans-serif; min-width: 400px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);";
@@ -36,11 +36,20 @@ function DisplayTable(array $List, int $Type = 0)
 		if($Type!=0)
 			if($i!=0)
 				if($Type != 4)
+				{
+					echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1'>Update</a></th>";
 					echo "<th style='padding: 12px 15px;' ><a href='Del.php?Id1=$Id1&Id2=-1&Type=$Type'>Delete</a></th>";
+				}
 				else
+				{
+					echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1&Id2=$Id2'>Update</a></th>";
 					echo "<th style='padding: 12px 15px;' ><a href='Del.php?Id1=$Id1&Id2=$Id2&Type=$Type'>Delete</a></th>";
+				}
 			else
+			{
+				echo "<th style='padding: 12px 15px;' >Update</th>";
 				echo "<th style='padding: 12px 15px;' >Delete</th>";
+			}
 		echo "</tr>";
 	}
 	echo "</table>";

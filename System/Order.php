@@ -56,7 +56,7 @@ if(isset($_POST["SearchForOrder"]))
     $order->setClientId(intval($_POST["ClientId"]));
     $order->setDate($_POST["Date"]);
     $List = $order->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,2);
+    if (in_array("Order-All", $Servis)) DisplayTable($List,2,"OrderUpdate.php");
     else DisplayTable($List);
     unset($_POST["SearchForOrder"]);
     unset($_POST["OrderId"]);
@@ -94,6 +94,6 @@ if($flag == 0)
     $order->setClientId(0);
     $order->setDate("");
     $List = $order->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,2);
+    if (in_array("Order-All", $Servis)) DisplayTable($List,2,"OrderUpdate.php");
     else DisplayTable($List);
 }

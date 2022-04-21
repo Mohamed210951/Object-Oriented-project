@@ -8,7 +8,7 @@ class Input
     private $Type;
     private $Text;
 	private $Value;
-    public function __construct($Name = "NULL",$Text = "NULL",$Type = "NULL") {
+    public function __construct($Name = "NULL",$Text = "NULL",$Type = "NULL",$Value = null) {
         if($Name == "NULL")
 		{
 			$this->Name = "NULL";
@@ -20,6 +20,8 @@ class Input
 			$this->Name = $Name;
 			$this->Type = $Type;
 			$this->Text = $Text;
+			if($Value == null) unset($Value);
+			else $this->Value = $Value;
 		}
 	}
 	/**
@@ -94,7 +96,7 @@ class Input
 				<div>
                 <label>
                     <?php echo $this->Text?>
-                    <input type=<?php echo $this->Type?> name = <?php echo $this->Name?>>
+                    <input type=<?php echo $this->Type?> name = <?php echo $this->Name?> value = <?php if(isset($this->Value)) echo $this->Value?>>
                 </label>
 				</div>
 			<?php }?>

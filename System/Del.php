@@ -41,23 +41,9 @@ if($Type == "4")
 }
 if($Type == "5")
 {
-    include_once "Back End.php";
-    if($Id1 == "1" || $Id1 == "3")
-    {
-        echo(" <script> location.replace('Type.php'); </script>");
-        exit();
-    }
-    if($IsExist = ValueIsThere("User Type.txt", $Id1, 0))
-    {
-        $Array = explode('~',$IsExist);
-        $Id =$Array[0];
-        FileDelete("User Type.txt",$IsExist);
-        $IsExist = ValueIsThere("User Type Menu.txt",$Id, 0);
-        FileDelete("User Type Menu.txt",$IsExist);
-        while($IsExist = ValueIsThere("User.txt",$Id,1))
-        {
-            FileDelete("User.txt",$IsExist);
-        }
-    }
+    include_once "../Classes/TypeClass.php";
+    $Type = new Type();
+    $Type->setId($Id1);
+    $Type->Delete();
     echo(" <script> location.replace('Type.php'); </script>");
 }

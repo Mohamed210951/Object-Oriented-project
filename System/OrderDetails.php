@@ -76,7 +76,7 @@ if(isset($_POST["Searsh"]))
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->setNumbers(intval($_POST["NumberOfProduct"]));
     $List = $OrderDetails->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,4);
+    if (in_array("Order-All", $Servis)) DisplayTable($List,4,"OrderDetailsUpdate.php");
     else DisplayTable($List);
     unset($_POST["ProductId"]);
     unset($_POST["NumberOfProduct"]);
@@ -109,6 +109,6 @@ if($flag == 0)
     $OrderDetails->setProduct_Id(0);
     $OrderDetails->setNumbers(0);
     $List = $OrderDetails->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,4);
+    if (in_array("Order-All", $Servis)) DisplayTable($List,4,"OrderDetailsUpdate.php");
     else DisplayTable($List);
 }
