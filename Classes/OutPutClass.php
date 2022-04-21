@@ -85,9 +85,17 @@ class Input
 				<select name=<?php echo $this->Name ?>>
 					<?php 
 						for ($i=0; $i < count($this->Value); $i++) { 
-						?>
-						<option value=<?php echo $this->Value[$i]?>><?php echo $this->Text[$i] ?></option>
-						<?php
+							$Array = explode("~",$this->Text[$i]);
+							if(count($Array) == 1 ){
+							?>
+							<option value=<?php echo $this->Value[$i]?>><?php echo $this->Text[$i] ?></option>
+							<?php
+							}
+							else{
+							?>
+							<option value=<?php echo $Array[0]?> selected><?php echo $Array[0] ?></option>
+							<?php
+							}
 						}
 					?>
 				</select>

@@ -17,6 +17,10 @@ array_push($Inputs,new Input("Name","Type Name","text",$Type->getName()));
 $Input = new Input();
 $Input->setName("Product");
 $Text = ["Non","All","Add","Search"];
+if($Type->getProduct() == "Product-Non") $Text[0].="~"; // To make the selected
+if($Type->getProduct() == "Product-All") $Text[1].="~";
+if($Type->getProduct() == "Product-Add") $Text[2].="~";
+if($Type->getProduct() == "Product-Search") $Text[3].="~";
 $Input->setText($Text);
 $Input->setValue($Text);
 $Input->setType("select");
@@ -24,6 +28,10 @@ array_push($Inputs,$Input);
 $Input = new Input();
 $Input->setName("Order");
 $Text = ["Non","All","Add","Search"];
+if($Type->getOrder() == "Order-Non") $Text[0].="~"; // To make the selected
+if($Type->getOrder() == "Order-All") $Text[1].="~";
+if($Type->getOrder() == "Order-Add") $Text[2].="~";
+if($Type->getOrder() == "Order-Search") $Text[3].="~";
 $Input->setText($Text);
 $Input->setValue($Text);
 $Input->setType("select");
@@ -31,6 +39,9 @@ array_push($Inputs,$Input);
 $Input = new Input();
 $Input->setName("User");
 $Text = ["Non","All","Search"];
+if($Type->getUser() == "User-Non") $Text[0].="~"; // To make the selected
+if($Type->getUser() == "User-All") $Text[1].="~";
+if($Type->getUser() == "User-Search") $Text[2].="~";
 $Input->setText($Text);
 $Input->setValue($Text);
 $Input->setType("select");

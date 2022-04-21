@@ -105,11 +105,11 @@ class Order_Details extends Person implements File
 
         // lesa fyh hena 7abet 2akwad ;
 
+        // Tl3 product name ***M4*** product id
 
 
 
-
-        $array=[];
+        $array=[];//       xxxxxxxxxx
         $temp=["Order Id","Product_Id","Number of Product","Price"];
         array_push($array,$temp);
         for($i=0;$i< count($List);$i++)
