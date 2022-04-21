@@ -43,9 +43,14 @@ if (isset($_POST["AddOrder"])) {
     }
     $Order->setDate($_POST["Date"]);
     $Order->Add();
+    unset($_POST["AddOrder"]);
+    unset($_POST["ClintId"]);
+    unset($_POST["Date"]);
 }
+$flag = 0;
 if(isset($_POST["SearchForOrder"]))
 {
+    $flag = 1;
     $order=new order();
     $order->setId(intval($_POST["OrderId"]));
     $order->setClientId(intval($_POST["ClientId"]));
@@ -53,6 +58,10 @@ if(isset($_POST["SearchForOrder"]))
     $List = $order->Searsh();
     if (in_array("Order-All", $Servis)) DisplayTable($List,2);
     else DisplayTable($List);
+    unset($_POST["SearchForOrder"]);
+    unset($_POST["OrderId"]);
+    unset($_POST["ClintId"]);
+    unset($_POST["Date"]);
 }
 if (isset($_POST["ViewOrderDetails"])) {
     if ($_POST["OrderId"] == "") exit("Order Id is required");
@@ -71,7 +80,20 @@ if(isset($_POST["DeleteOrder"]))
     $order=new order();
     $order->setId(intval($_POST["OrderId"]));
     $order->Delete();
+    unset($_POST["OrderId"]);
+    unset($_POST["ClintId"]);
+    unset($_POST["Date"]);
 }
 
 if (isset($_POST["UpdateOrder"])) {
+}
+if($flag == 0)
+{
+    $order=new order();
+    $order->setId(0);
+    $order->setClientId(0);
+    $order->setDate("");
+    $List = $order->Searsh();
+    if (in_array("Order-All", $Servis)) DisplayTable($List,2);
+    else DisplayTable($List);
 }

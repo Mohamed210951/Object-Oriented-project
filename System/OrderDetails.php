@@ -63,9 +63,14 @@ if (isset($_POST["AddItem"])) {
     $Object_of_order_details->setProduct_Id(intval($_POST["ProductId"]));
     $Object_of_order_details->setNumbers(intval($_POST["NumberOfProduct"]));
     $Object_of_order_details->Add();
+    unset($_POST["AddItem"]);
+    unset($_POST["ProductId"]);
+    unset($_POST["NumberOfProduct"]);
 }
+$flag = 0;
 if(isset($_POST["Searsh"]))
 {
+    $flag = 1;
     $OrderDetails = new Order_Details();
     $OrderDetails->setOrderId(intval($_GET["OrderId"]));
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
@@ -73,6 +78,8 @@ if(isset($_POST["Searsh"]))
     $List = $OrderDetails->Searsh();
     if (in_array("Order-All", $Servis)) DisplayTable($List,4);
     else DisplayTable($List);
+    unset($_POST["ProductId"]);
+    unset($_POST["NumberOfProduct"]);
 }
 
 if(isset($_POST["DeleteItem"]))
@@ -82,6 +89,8 @@ if(isset($_POST["DeleteItem"]))
     $OrderDetails->setOrderId(intval($_GET["OrderId"]));
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->Delete();
+    unset($_POST["ProductId"]);
+    unset($_POST["NumberOfProduct"]);
 }
 if(isset($_POST["UpdateItem"]))
 {
@@ -90,4 +99,16 @@ if(isset($_POST["UpdateItem"]))
     $OrderDetails->setProduct_Id($_POST["ProductId"]);
     $OrderDetails->setNumbers($_POST["NumberOfProduct"]);
     $OrderDetails->Update();
+    unset($_POST["ProductId"]);
+    unset($_POST["NumberOfProduct"]);
+}
+if($flag == 0)
+{
+    $OrderDetails = new Order_Details();
+    $OrderDetails->setOrderId(intval($_GET["OrderId"]));
+    $OrderDetails->setProduct_Id(0);
+    $OrderDetails->setNumbers(0);
+    $List = $OrderDetails->Searsh();
+    if (in_array("Order-All", $Servis)) DisplayTable($List,4);
+    else DisplayTable($List);
 }

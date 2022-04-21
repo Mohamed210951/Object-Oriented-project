@@ -81,7 +81,9 @@ if(isset($_POST["Update"]))
         FileUpdate("User Type Menu.txt",$IsExist,$Id."~".$String."~\r\n");
     }
 }
+$flag = 0;
 if(isset($_POST["Search"])){
+    $flag = 1;
     $Name = $_POST["Name"];
     $Id = $_POST["Id"];
     $List = [];
@@ -158,3 +160,23 @@ if(isset($_POST["Delete"]))
     }
 }
 
+if($flag == 0)
+{
+    $Temp = [];
+    $x = ["Id","Name","Product","Order","User"];
+    array_push($Temp,$x);
+    $Array = GetAllContent("User Type.txt");
+    for ($i = 0; $i < count($Array);$i++)
+    {
+        $Line = explode('~',$Array[$i]);
+        array_pop($Line);
+        array_push($Temp,$Line);
+        $IsExist = ValueIsThere("User Type Menu.txt", $Line[0], 0);
+        $temp = explode('~',$IsExist);
+        for ($j = 1; $j < count($temp); $j++)
+        {
+            array_push($Temp[$i + 1],$temp[$j]);
+        }
+    }
+    DisplayTable($Temp,5);
+}

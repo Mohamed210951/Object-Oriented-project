@@ -20,25 +20,31 @@ function GetLastId(string $fileName)
 */
 function DisplayTable(array $List, int $Type = 0)
 {
-	echo "<table border=1>";
+	echo "<center>";
+	$Table = "box-shadow: 0 0 20px rgba(0,0,0,0.15); border-collapse: collapse; border-radius: 10px 10px 0 0; overflow: hidden; margin: 25px 0; font-size: 0.9em; font-family: sans-serif; min-width: 400px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);";
+	$TableHead = "background-color: #a0e711; color: #ffffff; text-align: left; padding: 12px 15px;";
+	echo "<table style='$Table'>";
 	for ($i = 0; $i < count($List); $i++) {
-		echo "<tr>";
+		if($i == 0) echo "<tr style='$TableHead'>";
+		else if($i == count($List) - 1) echo "<tr style='border-bottom: 2px solid #a0e711'>";
+		else echo "<tr style='border-bottom: 1px solid #dddddd'>";
 		for ($j = 0; $j < ($i>0?count($List[$i])-1:count($List[$i])); $j++) {
-			echo "<th>" . $List[$i][$j] . "</th>";
+			echo "<th style='padding: 12px 15px; '>" . $List[$i][$j] . "</th>";
 		}
 		$Id1 = $List[$i][0];
 		$Id2 = $List[$i][1];
 		if($Type!=0)
 			if($i!=0)
 				if($Type != 4)
-					echo "<th><a href='Del.php?Id1=$Id1&Id2=-1&Type=$Type'>Delete</a></th>";
+					echo "<th style='padding: 12px 15px;' ><a href='Del.php?Id1=$Id1&Id2=-1&Type=$Type'>Delete</a></th>";
 				else
-					echo "<th><a href='Del.php?Id1=$Id1&Id2=$Id2&Type=$Type'>Delete</a></th>";
+					echo "<th style='padding: 12px 15px;' ><a href='Del.php?Id1=$Id1&Id2=$Id2&Type=$Type'>Delete</a></th>";
 			else
-				echo "<th>Delete</th>";
+				echo "<th style='padding: 12px 15px;' >Delete</th>";
 		echo "</tr>";
 	}
 	echo "</table>";
+	echo "</center>";
 }
 /**
  * 

@@ -36,6 +36,8 @@
         $New_Product->setName($_POST["ProductName"]);
         $New_Product->setCost($_POST["ProductPrice"]);
         $New_Product->Add();
+        unset($_POST["ProductName"]);
+        unset($_POST["ProductPrice"]);
     } else if (isset($_POST["Update"])) {
         if ($_POST["Id"] == "") exit("Product Id required!!");
         $Product = new Product();
@@ -43,6 +45,9 @@
         $Product->setName($_POST["ProductName"]);
         $Product->setCost(floatval($_POST["ProductPrice"]));
         $Product->Update();
+        unset($_POST["Id"]);
+        unset($_POST["ProductName"]);
+        unset($_POST["ProductPrice"]);
     } else if (isset($_POST["Search"])) {
         $Product = new Product();
         $Product->SetId(intval($_POST["Id"]));
@@ -52,11 +57,17 @@
         if(in_array("Product-All", $Servis)) DisplayTable($List,2);
         else DisplayTable($List);
         $Flag = 1;
+        unset($_POST["Id"]);
+        unset($_POST["ProductName"]);
+        unset($_POST["ProductPrice"]);
     } else if (isset($_POST["Delete"])) {
         $Product = new Product();
         if($_POST["Id"] == "") exit("Id is required!!");
         $Product->SetId(intval($_POST["Id"]));
         $Product->Delete();
+        unset($_POST["Id"]);
+        unset($_POST["ProductName"]);
+        unset($_POST["ProductPrice"]);
     }
     if($Flag == 0)
     {

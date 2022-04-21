@@ -59,7 +59,9 @@ if (isset($_POST["UpdateUserType"])) {
     $User->setType(intval($_POST["UserType"]));
     $User->Update();
 }
+$flag = 0;
 if (isset($_POST["SearshForUser"])) {
+    $flag = 1;
     $User = new User();
     $User->setId(intval($_POST["UserId"]));
     $User->setName($_POST["UserName"]);
@@ -73,4 +75,14 @@ if (isset($_POST["DeleteUser"])) {
     $User = new User();
     $User->setId(intval($_POST["UserId"]));
     $User->Delete();
+}
+if($flag == 0)
+{
+    $User = new User();
+    $User->setId(0);
+    $User->setName("");
+    $User->setType(0);
+    $List = $User->Searsh();
+    if (in_array("User-All", $Servis)) DisplayTable($List,1);
+    else DisplayTable($List);
 }
