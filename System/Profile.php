@@ -11,25 +11,19 @@ $Line = ValueIsThere("User Type.txt", $User->getType(), 0);
 $Array = explode('~', $Line);
 $Type = $Array[1];
 HTML::Header($User->getType());
-?>
-<center><h1>PROFILE</h1></center>
-<h3>Id: <?php echo $User->getId() ?></h3>
-<h3>The <?php echo $Type . " " . $User->getName() ?></h3>
-<h3>Date of Birth <?php echo $User->getDateOfBirth() ?></h3><br>
-<?php 
 $Inputs = [];
-array_push($Inputs,new Input("Name","Name","text"));
+array_push($Inputs,new Input("Name","Name","text",$User->getName()));
 array_push($Inputs,new Input("Password","Password","password"));
 array_push($Inputs,new Input("NewPassword","New Password","password"));
 array_push($Inputs,new Input("ConfirmPassword","Confirm Password","password"));
-array_push($Inputs,new Input("Date","Date of Birth","date"));
+array_push($Inputs,new Input("Date","Date of Birth","date",$User->getDateOfBirth()));
 array_push($Inputs,new Input("UpdateName","Update Name","submit"));
 array_push($Inputs,new Input("UpdatePassword","Update Password","submit"));
 array_push($Inputs,new Input("UpdateDateOfBirth","Update Date Of Birth","submit"));
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
-$Form->setTitle(" ");
+$Form->setTitle("Profile Id: ".$User->getId());
 $Form->DisplayForm();
 HTML::Footer();
 include_once "Back End.php";

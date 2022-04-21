@@ -110,5 +110,6 @@ if($flag == 0)
     $OrderDetails->setNumbers(0);
     $List = $OrderDetails->Searsh();
     if (in_array("Order-All", $Servis)) DisplayTable($List,4,"OrderDetailsUpdate.php");
+    else if(in_array("Order-Add", $Servis)) DisplayTable($List,4,"OrderDetailsUpdate.php");
     else DisplayTable($List);
 }
