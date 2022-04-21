@@ -35,7 +35,7 @@ if($Type == "4")
     $OrderDetails = new Order_Details();
     $OrderDetails->setOrderId(intval($Id1));
     $Id2 = $_GET["Id2"];
-    $OrderDetails->SetId(intval($Id2));
+    $OrderDetails->setProduct_Id(intval($Id2));
     $OrderDetails->Delete();
     echo(" <script> location.replace('OrderDetails.php?OrderId=$Id1'); </script>");
 }
