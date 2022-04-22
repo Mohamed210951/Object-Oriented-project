@@ -106,6 +106,10 @@ class Type extends Person implements File
         FileUpdate("User Type.txt",ValueIsThere("User Type.txt",$this->Id,0),$this->Id."~".$this->Name."~\r\n");
     }
 	
+    static function GetTypeName($Id)
+    {
+        return explode("~",ValueIsThere("User Type.txt",$Id,0))[1];
+    }
 	/**
 	 *
 	 * @param mixed $input1
