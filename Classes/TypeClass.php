@@ -106,8 +106,7 @@ class Type extends Person implements File
         FileUpdate("User Type.txt",ValueIsThere("User Type.txt",$this->Id,0),$this->Id."~".$this->Name."~\r\n");
     }
 	
-    static function GetTypeName($Id)
-    {
+    static function GetTypeName($Id) {
         return explode("~",ValueIsThere("User Type.txt",$Id,0))[1];
     }
 	/**
@@ -119,16 +118,14 @@ class Type extends Person implements File
 	 *
 	 * @return mixed
 	 */
-    public function DisplayedString()
-    {
+    public function DisplayedString() {
         $String = $this->getId()."~".$this->getName()."~".$this->getProduct()."~".$this->getOrder()."~".$this->getUser()."~";
         return $String;
     }
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
         $DisplayList = [];
         
-        if($this->Name!="")
-        {
+        if($this->Name!="") {
             $List = ValueIsThere("User Type.txt",$this->Name,1);
             $Array = explode('~',$List);
             $Type = new Type($Array[0],$Array[1]);
@@ -140,39 +137,30 @@ class Type extends Person implements File
             $String = $Type->DisplayedString();
             array_push($DisplayList,$String);
         }
-        else
-        {
+        else {
             $List = GetAllContent("User Type Menu.txt");
             for ($i=0; $i < count($List); $i++) { 
                 $Type = Type::FromStringToObject($List[$i]);
-                if($this->Id!="0")
-                {
-                    if($this->Id != $Type->getId())
-                    {
+                if($this->Id!="0") {
+                    if($this->Id != $Type->getId()) {
                         array_splice($List,$i,1);
                         $i--;
                     }
                 }
-                if($this->Product!="Product-Non")
-                {
-                    if($this->Product != $Type->getProduct())
-                    {
+                if($this->Product!="Product-Non") {
+                    if($this->Product != $Type->getProduct()) {
                         array_splice($List,$i,1);
                         $i--;
                     }
                 }
-                if($this->Order!="Order-Non")
-                {
-                    if($this->Order != $Type->getOrder())
-                    {
+                if($this->Order!="Order-Non") {
+                    if($this->Order != $Type->getOrder()) {
                         array_splice($List,$i,1);
                         $i--;
                     }
                 }
-                if($this->User!="User-Non")
-                {
-                    if($this->User != $Type->getUser())
-                    {
+                if($this->User!="User-Non") {
+                    if($this->User != $Type->getUser()) {
                         array_splice($List,$i,1);
                         $i--;
                     }
@@ -209,20 +197,17 @@ class Type extends Person implements File
 	 */
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
         if($this->Id == "0") return;
-        if($this->Id == "1" || $this->Id == "3")
-        {
+        if($this->Id == "1" || $this->Id == "3") {
             echo("Admin and CLint Cannot be updated");
             exit();
         }
-        if($IsExist = ValueIsThere("User Type.txt", $this->Id, 0))
-        {
+        if($IsExist = ValueIsThere("User Type.txt", $this->Id, 0)) {
             $Array = explode('~',$IsExist);
             $Id =$Array[0];
             FileDelete("User Type.txt",$IsExist);
             $IsExist = ValueIsThere("User Type Menu.txt",$Id, 0);
             FileDelete("User Type Menu.txt",$IsExist);
-            while($IsExist = ValueIsThere("User.txt",$Id,1))
-            {
+            while($IsExist = ValueIsThere("User.txt",$Id,1)) {
                 FileDelete("User.txt",$IsExist);
             }
         }
