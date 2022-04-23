@@ -357,10 +357,10 @@ class HTML {
 					<div class="overlay-content">
 					<a href="index.php">HOME</a>
 					<?php if(!str_contains($Servis[0],"Product-Non")){ ?>
-					<a href="Product.php">Product</a>
+					<a href="Product.php">Activities</a>
 					<?php }?>
 					<?php if(!str_contains($Servis[1],"Order-Non")){ ?>
-					<a href="Order.php">Order</a>
+					<a href="Order.php">Daily Activities</a>
 					<?php }?>
 					<?php if(!str_contains($Servis[2],"User-Non")){?>
 					<a href="User.php">User</a>
