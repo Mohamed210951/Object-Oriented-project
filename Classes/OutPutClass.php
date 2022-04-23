@@ -146,6 +146,8 @@ class Input
 		return $this;
 	}
 }
+
+// Form aggregate array Inputs
 class Form 
 {
     private $Title;
@@ -266,6 +268,8 @@ class Form
 		return $this;
 	}
 }
+
+// Sealed class
 class HTML {
 	private function __construct() {
 	}
