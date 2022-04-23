@@ -1,12 +1,13 @@
 <?php
 
-include_once "../System/Back End.php";
+include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 class User extends Person implements File
 {
 	private $Password;
 	private $TypeId;
 	private $DateOfBirth;
+	private $FileManger;
 	public function __construct(int $Id = null, string $TypeId = null, string $Name = null, string $Password = null, string $DateOfBirth = null)
 	{
 		if ($Id != null) {
@@ -16,6 +17,7 @@ class User extends Person implements File
 			$this->setType($TypeId);
 			$this->setDateOfBirth($DateOfBirth);
 		}
+		$this->FileManger = new FileManger("User.txt");
 	}
 	public function AllIsSet(): int
 	{
@@ -53,19 +55,11 @@ class User extends Person implements File
 	}
 	function setType($Type)
 	{
-		$List = GetAllContent("User Type.txt");
-		$flag = 0;
-		for ($i = 0; $i < count($List); $i++) {
-			$Array = explode('~', $List[$i]);
-			if ($Array[0] == $Type) $flag = 1;
-		}
-		if ($flag == 0) return 0;
 		$this->TypeId = $Type;
-		return 1;
 	}
 	function Login()
 	{
-		if ($Line = ValueIsThere("User.txt", $this->Name, 2)) {
+		if ($Line = $this->FileManger->ValueIsThere($this->Name, 2)) {
 			$Array = explode('~', $Line);
 			if ($Array[3] == sha1($this->Password)) {
 				return $Array[0];
@@ -79,10 +73,10 @@ class User extends Person implements File
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
 		if ($this->AllIsSet()) {
-			if (!ValueIsThere("User.txt", $this->Name, 2)) {
-				FileAdd("User.txt", $this->ToString());
+			if (!$this->FileManger->ValueIsThere($this->Name, 2)) {
+				$this->FileManger->FileAdd($this->ToString());
 			} else {
-				echo "This UserName is alrady exists!!";
+				echo "This UserName is already exists!!";
 			}
 		} else {
 			echo "Please Try again but prevent using '~'!!";

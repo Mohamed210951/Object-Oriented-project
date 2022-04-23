@@ -2,19 +2,21 @@
 
 include_once "../Classes/OutPutClass.php";
 include_once "../Classes/UserClass.php";
+include_once "../Classes/FileMangerClass.php";
 include_once "Back End.php";
 $UserId = $_SESSION["UserId"];
-$Line = ValueIsThere("User.txt", $UserId, 0);
+$UserFile = new FileManger("User.txt");
+$Line = $UserFile->ValueIsThere( $UserId, 0);
 $UserNow = User::FromStringToObject($Line);
 HTML::Header($UserNow->getType());
-$User = User::FromStringToObject(ValueIsThere("User.txt",$_GET["Id1"],0));
+$User = User::FromStringToObject($UserFile->ValueIsThere($_GET["Id1"],0));
 array_push($Inputs,new Input("Name","User Name","text",$User->getName()));
 array_push($Inputs,new Input("Date","Date of Birth","date"));
 $Input = new Input();
 $Texts = [];
 $Values = [];
-include_once "Back End.php";
-$List = GetAllContent("User Type.txt");
+$UserTypeFile = new FileManger("User Type.txt");
+$List = $UserTypeFile->GetAllContent();
 for ($i = 0; $i < count($List); $i++) {
     $Array = explode('~', $List[$i]);
     $Type = $Array[1];

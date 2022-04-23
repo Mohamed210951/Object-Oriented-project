@@ -1,5 +1,5 @@
 <?php
-include_once "../System/Back End.php";
+include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "ProductClass.php";
 
@@ -26,6 +26,8 @@ class Order_Details extends Person implements File
     private ?int $Numbers;
     private ?float $Prices;
     private ?int $OrderId;
+    private $FileManger;
+    
     /**
      * @param int $input1 ProductId
      * @param int $input2 Number Of Product
@@ -35,12 +37,12 @@ class Order_Details extends Person implements File
     {
         if($this->OrderId>0&&$this->Product_Id>0&&$this->Numbers>0)
         {
-            $Last_Id_In_file = GetLastId("Order Details.txt");
+            $Last_Id_In_file = $this->FileManger->GetLastId();
             $Order_Details_Id = $this->setId($Last_Id_In_file + 1);
             $Product = new Product();
             $Product = $Product->Get_Info_Of_Product($this->Product_Id);
             $this->Prices = ($Product->getCost() * $this->Numbers);
-            FileAdd("Order Details.txt", $this->ToString());
+            $this->FileManger->FileAdd($this->ToString());
             return 1;
         }
         else
@@ -91,7 +93,7 @@ class Order_Details extends Person implements File
     }
     function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
-        $List=GetAllContent("Order Details.txt");
+        $List=$this->FileManger->GetAllContent();
         for($i=0;$i< count($List);$i++)
         {
             $Order_Details=Order_Details::FromStringToObject($List[$i]) ;
@@ -134,9 +136,9 @@ class Order_Details extends Person implements File
         if ($this->OrderId == 0) {
             return 0;
         }
-        if (ValueIsThere("Order Details.txt", $this->Product_Id, 0)) {
-            $h = ValueIsThere("Order Details.txt", $this->Product_Id, 0);
-            FileDelete("Order Details.txt", $h);
+        if ($this->FileManger->ValueIsThere($this->Product_Id, 0)) {
+            $h = $this->FileManger->ValueIsThere($this->Product_Id, 0);
+            $this->FileManger->FileDelete($h);
         }
     }
     /**
@@ -235,6 +237,7 @@ class Order_Details extends Person implements File
         $this->Product_Id = 0;
         $this->Numbers = 0;
         $this->Prices = 0;
+        $this->FileManger = new FileManger("Order Details.txt");
 	}
 }
 // order_id~product_id[0]~number[0]~price[0]~\r\n   -> 2esmaha to string

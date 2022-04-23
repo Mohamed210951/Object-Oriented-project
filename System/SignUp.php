@@ -2,12 +2,14 @@
 <?php
 include_once "../Classes/OutPutClass.php";
 include_once "Back End.php";
+include_once "../Classes/FileMangerClass.php";
 HTML::Header("null");
 $Inputs = [];
 array_push($Inputs,new Input("UserName","Username","text"));
 array_push($Inputs,new Input("Password","Password","password"));
 array_push($Inputs,new Input("ConPass","Confirm password","password"));
-$List = GetAllContent("User Type.txt");
+$UserTypeFile = new FileManger("User Type.txt");
+$List = $UserTypeFile->GetAllContent();
 $Text = [];
 $Value = [];
 $Input = new Input();
@@ -46,7 +48,8 @@ if (isset($_POST["submit"])) {
     $ConPass = $_POST["ConPass"];
     if ($ConPass == $Password) {
         $DateOfBirth = $Date;
-        $newUser = new User(GetLastId("User.txt") + 1, $Type, $UserName, $Password, $DateOfBirth);
+        $UserFile = new FileManger("User.txt");
+        $newUser = new User($UserFile->GetLastId() + 1, $Type, $UserName, $Password, $DateOfBirth);
         $newUser->Add();
         if(session_id() == '') {
             session_start();

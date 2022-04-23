@@ -1,11 +1,13 @@
 <?php
 include_once "PersonClass.php";
-include_once "../System/Back End.php";
+include_once "FileMangerClass.php";
 class Type extends Person implements File
 {
     private $Product;
     private $Order;
     private $User;
+    private $FileType;
+    private $FileMenu;
     public function __construct($Id = null,$Name = null,$Product=null,$Order=null,$User=null) {
         if($Id!=null) $this->setId($Id);
         else $this->Id = 0;
@@ -17,6 +19,8 @@ class Type extends Person implements File
         else $this->Order = "Order-Non";
         if($User!=null) $this->setUser($User);
         else $this->User = "User-Non";
+        $this->FileType = new FileManger("User Type.txt");
+        $this->FileMenu = new FileManger("User Type Menu.txt");
     }
 	/**
 	 * 
@@ -79,13 +83,13 @@ class Type extends Person implements File
 	 * @return mixed
 	 */
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-        $IsExist = ValueIsThere("User Type.txt",$this->Name,1);
+        $IsExist = $this->FileType->ValueIsThere($this->Name,1);
         if($IsExist) die("User Type Name already exists!!");
         if($this->Product == "Product-Non"||$this->Order == "Order-Non"||$this->User == "User-Non")
             die("You must choose his features");
-        $this->Id = GetLastId("User Type.txt") + 1;
-        FileAdd("User Type.txt",$this->Id.'~'.$this->Name."~\r\n");
-        FileAdd("User Type Menu.txt",$this->ToString());
+        $this->Id =  $this->FileType->GetLastId() + 1;
+        $this->FileType->FileAdd($this->Id.'~'.$this->Name."~\r\n");
+        $this->FileMenu->FileAdd($this->ToString());
 	}
 	
 	/**
@@ -99,15 +103,16 @@ class Type extends Person implements File
 	 */
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
         if($this->Id == "0") return;
-        $OldType = Type::FromStringToObject(ValueIsThere("User Type Menu.txt",$this->Id,0));
-        $OldType->setName(explode("~",ValueIsThere("User Type.txt",$this->Id,0))[1]);
+        $OldType = Type::FromStringToObject($this->FileMenu->ValueIsThere($this->Id,0));
+        $OldType->setName(explode("~",$this->FileType->ValueIsThere($this->Id,0))[1]);
         if($this->Name=="") $this->Name = $OldType->getName();
-        FileUpdate("User Type Menu.txt",ValueIsThere("User Type Menu.txt",$this->Id,0),$this->ToString());
-        FileUpdate("User Type.txt",ValueIsThere("User Type.txt",$this->Id,0),$this->Id."~".$this->Name."~\r\n");
+        $this->FileMenu->FileUpdate($this->FileMenu->ValueIsThere($this->Id,0),$this->ToString());
+        $this->FileType->FileUpdate($this->FileType->ValueIsThere($this->Id,0),$this->Id."~".$this->Name."~\r\n");
     }
 	
     static function GetTypeName($Id) {
-        return explode("~",ValueIsThere("User Type.txt",$Id,0))[1];
+        $FileManger = new FileManger("User Type.txt");
+        return explode("~",$FileManger->ValueIsThere($Id,0))[1];
     }
 	/**
 	 *
@@ -126,10 +131,10 @@ class Type extends Person implements File
         $DisplayList = [];
         
         if($this->Name!="") {
-            $List = ValueIsThere("User Type.txt",$this->Name,1);
+            $List = $this->FileType->ValueIsThere($this->Name,1);
             $Array = explode('~',$List);
             $Type = new Type($Array[0],$Array[1]);
-            $List = ValueIsThere("User Type Menu.txt",$Type->getId(),0);
+            $List = $this->FileMenu->ValueIsThere($Type->getId(),0);
             $Array = explode('~',$List);
             $Type->setProduct($Array[1]);
             $Type->setOrder($Array[2]);
@@ -138,7 +143,7 @@ class Type extends Person implements File
             array_push($DisplayList,$String);
         }
         else {
-            $List = GetAllContent("User Type Menu.txt");
+            $List = $this->FileMenu->GetAllContent();
             for ($i=0; $i < count($List); $i++) { 
                 $Type = Type::FromStringToObject($List[$i]);
                 if($this->Id!="0") {
@@ -168,7 +173,7 @@ class Type extends Person implements File
             }
             for ($i=0; $i < count($List); $i++) { 
                 $Type = Type::FromStringToObject($List[$i]);
-                $Line = ValueIsThere("User Type.txt",$Type->getId(),0);
+                $Line = $this->FileType->ValueIsThere($Type->getId(),0);
                 $Array = explode('~',$Line);
                 $Type->setName($Array[1]);
                 array_push($DisplayList,$Type->DisplayedString());
@@ -201,14 +206,15 @@ class Type extends Person implements File
             echo("Admin and CLint Cannot be updated");
             exit();
         }
-        if($IsExist = ValueIsThere("User Type.txt", $this->Id, 0)) {
+        if($IsExist = $this->FileType->ValueIsThere($this->Id, 0)) {
             $Array = explode('~',$IsExist);
             $Id =$Array[0];
-            FileDelete("User Type.txt",$IsExist);
-            $IsExist = ValueIsThere("User Type Menu.txt",$Id, 0);
-            FileDelete("User Type Menu.txt",$IsExist);
-            while($IsExist = ValueIsThere("User.txt",$Id,1)) {
-                FileDelete("User.txt",$IsExist);
+            $this->FileType->FileDelete($IsExist);
+            $IsExist = $this->FileMenu->ValueIsThere($Id, 0);
+            $this->FileMenu->FileDelete($IsExist);
+            $UserFile = new FileManger("User.txt");
+            while($IsExist = $UserFile->ValueIsThere($Id,1)) {
+                $UserFile->FileDelete($IsExist);
             }
         }
 	}

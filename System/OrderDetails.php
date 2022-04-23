@@ -2,8 +2,10 @@
 include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 include_once "../Classes/OutPutClass.php";
+include_once "../Classes/FileMangerClass.php";
 $Id = $_SESSION["UserId"];
-$Line = ValueIsThere("User.txt", $Id, 0);
+$UserFile = new FileManger("User.txt");
+$Line = $UserFile->ValueIsThere($Id, 0);
 $User = User::FromStringToObject($Line);
 $Servis = FromTypeGetServis($User->getType());
 HTML::Header($User->getType());
@@ -13,8 +15,8 @@ $Texts = [];
 $Values = [];
 array_push($Texts,"Non");
 array_push($Values,"Non");
-include_once "Back End.php";
-$List = GetAllContent("Product.txt");
+$ProductFile = new FileManger("Product.txt");
+$List = $ProductFile->GetAllContent();
 for ($i = 0; $i < count($List); $i++) {
     $Line = explode('~', $List[$i]);
     $Id = $Line[0];

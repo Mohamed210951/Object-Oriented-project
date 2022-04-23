@@ -1,11 +1,15 @@
 <?php
-include_once "../System/Back End.php";
+include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "OrderDetailsClass.php";
 class order extends Person implements File {
 	private ?float $total = 0;
 	private ?int $ClientId = 0;
 	private ?string $date = "";
+	private $File;
+	public function __construct() {
+		$this->File = new FileManger("Order.txt");
+	}
 	public function AllIsSet() {
 		if($this->Id==null) return 0;
 		if($this->ClientId==0) return 0;
@@ -27,15 +31,15 @@ class order extends Person implements File {
 	}
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 
-        $LastId=GetLastId("Order.txt");
+        $LastId= $this->File->GetLastId();
         $this->setId($LastId+1);
 		if($this->AllIsSet())
         {
-            $IsOrderExist=ValueIsThere("Order.txt",$this->Id,0);
+            $IsOrderExist=$this->File->ValueIsThere($this->Id,0);
             if($IsOrderExist==null)
             {
 				$this->total=0;
-                FileAdd("Order.txt",$this->ToString());
+                $this->File->FileAdd($this->ToString());
             }
             else{
                 echo"the order is exist";
@@ -56,7 +60,7 @@ class order extends Person implements File {
 	
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		$SearchId= $this->Id;
-		$isexist=ValueIsThere("Order.txt",$SearchId,0);
+		$isexist=$this->File->ValueIsThere($SearchId,0);
 		$Order=Order::FromStringToObject($isexist);
 		if($this->getId()==0)
 		{
@@ -74,10 +78,10 @@ class order extends Person implements File {
 		{
 			$this->total=$Order->getTotal();
 		}
-		FileUpdate("Order.txt",$Order->ToString(),$this->ToString());
+		$this->File->FileUpdate($Order->ToString(),$this->ToString());
 	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-     $ArrayOfLines=GetAllContent("Order.txt");
+     $ArrayOfLines=$this->File->GetAllContent();
 	 $ArrayOfOrders=[];
 	 for($i=0;$i<count($ArrayOfLines);$i++)
 	 {
@@ -112,8 +116,8 @@ class order extends Person implements File {
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
      if($this->getId()!=0)
 	 {
-		$isexist=ValueIsThere("Order.txt",$this->getId(),0);
-		FileDelete("Order.txt",$isexist);
+		$isexist=$this->File->ValueIsThere($this->getId(),0);
+		$this->File->FileDelete($isexist);
 	 }
 	}
 	

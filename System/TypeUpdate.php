@@ -3,13 +3,17 @@
 include_once "../Classes/OutPutClass.php";
 include_once "../Classes/UserClass.php";
 include_once "../Classes/TypeClass.php";
+include_once "../Classes/FileMangerClass.php";
 include_once "Back End.php";
 $UserId = $_SESSION["UserId"];
-$Line = ValueIsThere("User.txt", $UserId, 0);
+$UserFile = new FileManger("User.txt");
+$Line = $UserFile->ValueIsThere($UserId, 0);
 $User = User::FromStringToObject($Line);
 HTML::Header($User->getType());
-$Type = Type::FromStringToObject(ValueIsThere("User Type Menu.txt",$_GET["Id1"],0));
-$Type->setName(explode('~',ValueIsThere("User Type.txt",$Type->getId(),0))[1]);
+$UserTypeMenuFile = new FileManger("User Type Menu.txt");
+$Type = Type::FromStringToObject($UserTypeMenuFile->ValueIsThere($_GET["Id1"],0));
+$UserTypeFile = new FileManger("User Type.txt");
+$Type->setName(explode('~',$UserTypeFile->ValueIsThere($Type->getId(),0))[1]);
 
 
 $Inputs = [];

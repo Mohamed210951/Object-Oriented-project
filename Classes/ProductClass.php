@@ -1,11 +1,12 @@
 <?php
 
-include_once "../System/Back End.php";
+include_once "FileMangerCLass.php";
 include_once "PersonClass.php";
 
 class Product extends Person implements File
 {
 	private ?float $Cost;
+	private $FileManger;
 	function getCost(): float
 	{
 		return $this->Cost;
@@ -23,6 +24,7 @@ class Product extends Person implements File
 			$this->setName($Name);
 			$this->setCost($Cost);
 		}
+		$this->FileManger = new FileManger("Product.txt");
 	}
 	public function ToString()
 	{
@@ -40,10 +42,10 @@ class Product extends Person implements File
 	{
 		if ($this->Name == null) return 0;
 		if ($this->Cost == null) return 0;
-		$Last_Id_In_file = GetLastId("Product.txt");
+		$Last_Id_In_file = $this->FileManger->GetLastId();
 		$this->setId($Last_Id_In_file + 1);
-		$isexist = ValueIsThere("Product.txt", $this->Name, 2);
-		if ($isexist == null) FileAdd("Product.txt", $this->ToString());
+		$isexist = $this->FileManger->ValueIsThere($this->Name, 2);
+		if ($isexist == null) $this->FileManger->FileAdd($this->ToString());
 		else {
 			echo "the product is already exist";
 			return 0;
@@ -52,7 +54,7 @@ class Product extends Person implements File
 	}
 	function Get_Info_Of_Product($ID_Nom)
 	{
-		$isexist = ValueIsthere("Product.txt", $ID_Nom, 0);
+		$isexist = $this->FileManger->ValueIsthere($ID_Nom, 0);
 		if ($isexist) {
 			$product = product::FromStringToObject($isexist);
 			return $product;
@@ -68,7 +70,7 @@ class Product extends Person implements File
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
 		$Search_for_Id = $this->Id;
-		$isexist = ValueIsThere("Product.txt", $Search_for_Id, 0);
+		$isexist = $this->FileManger->ValueIsThere($Search_for_Id, 0);
 		$product = Product::FromStringToObject($isexist);
 		if ($this->getCost() == 0) {
 			$this->Cost = $product->getCost();
@@ -76,7 +78,7 @@ class Product extends Person implements File
 		if ($this->getName() == "") {
 			$this->Name = $product->getName();
 		}
-		FileUpdate("Product.txt", $product->ToString(), $this->ToString());
+		$this->FileManger->FileUpdate($product->ToString(), $this->ToString());
 	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
@@ -84,7 +86,7 @@ class Product extends Person implements File
 		$list = [];
 		$Temp = ["Id", "Price", "Name"];
 		array_push($list, $Temp);
-		$array_of_lines = GetAllContent("Product.txt");
+		$array_of_lines = $this->FileManger->GetAllContent();
 		if ($this->getCost() == 0 && $this->getName() == "" && $this->getId() == 0) {
 			for ($i = 0; $i < count($array_of_lines); $i++) {
 				$convert = explode("~", $array_of_lines[$i]);
@@ -93,7 +95,7 @@ class Product extends Person implements File
 		}
 		if ($this->getId() != 0) {
 			for ($i = 0; $i < count($array_of_lines); $i++) {
-				$isexist = ValueIsThere("Product.txt", $this->Id, 0);
+				$isexist = $this->FileManger->ValueIsThere($this->Id, 0);
 				$array = explode("~", $isexist);
 				array_push($list, $array);
 			}
@@ -117,8 +119,8 @@ class Product extends Person implements File
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
 		if ($this->getId() != 0) {
-			$isexist = ValueIsThere("Product.txt", $this->getId(), 0);
-			FileDelete("Product.txt", $isexist);
+			$isexist = $this->FileManger->ValueIsThere($this->getId(), 0);
+			$this->FileManger->FileDelete($isexist);
 		}
 	}
 }

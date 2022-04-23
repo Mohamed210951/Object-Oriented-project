@@ -3,8 +3,10 @@ include_once "Back End.php";
 session_start();
 include_once "../Classes/UserClass.php";
 include_once "../Classes/OutPutClass.php";
+include_once "../Classes/FileMangerClass.php";
 $Id = $_SESSION["UserId"];
-$Line = ValueIsThere("User.txt", $Id, 0);
+$UserFile = new FileManger("User.txt");
+$Line = $UserFile->ValueIsThere($Id, 0);
 $User = User::FromStringToObject($Line);
 $Servis = FromTypeGetServis($User->getType());
 
@@ -16,8 +18,8 @@ array_push($Inputs,new Input("DateOfBirth","Date of Birth","date"));
 $Input = new Input();
 $Texts = [];
 $Values = [];
-include_once "Back End.php";
-$List = GetAllContent("User Type.txt");
+$UserTypeFile = new FileManger("User Type.txt");
+$List = $UserTypeFile->GetAllContent();
 for ($i = 0; $i < count($List); $i++) {
     $Array = explode('~', $List[$i]);
     $Type = $Array[1];

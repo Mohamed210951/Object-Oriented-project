@@ -3,8 +3,10 @@ include_once "Back End.php";
 session_start();
 include_once "../Classes/UserClass.php";
 include_once "../Classes/OutPutClass.php";
+include_once "../Classes/FileMangerClass.php";
 $Id = $_SESSION["UserId"];
-$Line = ValueIsThere("User.txt", $Id, 0);
+$UserFile = new FileManger("User.txt");
+$Line = $UserFile->ValueIsThere($Id, 0);
 $User = User::FromStringToObject($Line);
 $Servis = FromTypeGetServis($User->getType());
 HTML::Header($User->getType());
@@ -67,7 +69,8 @@ if(isset($_POST["SearchForOrder"]))
 }
 if (isset($_POST["ViewOrderDetails"])) {
     if ($_POST["OrderId"] == "") exit("Order Id is required");
-    if ($isexist = ValueIsThere("Order.txt", $_POST["OrderId"], 0)) {
+    $OrderFile = new FileManger("Order.txt");
+    if ($isexist = $OrderFile->ValueIsThere($_POST["OrderId"], 0)) {
         $Array = explode('~', $isexist);
         if ($Array[1] != $User->getId() && $User->getType() != "1") {
             exit("You cannot See the details of this order");

@@ -1,6 +1,7 @@
 <?php
 include_once "../Classes/OutPutClass.php";
 include_once "Back End.php";
+include_once "../Classes/FileMangerClass.php";
 include_once "../Classes/UserClass.php";
 if(session_id() == ''){
     session_start();
@@ -8,7 +9,8 @@ if(session_id() == ''){
 if(!isset($_SESSION["UserId"])) header("Location:Login.php");
 else {
 $Id = $_SESSION["UserId"];
-$Line = ValueIsThere("User.txt", $Id, 0);
+$UserFile = new FileManger("User.txt");
+$Line = $UserFile->ValueIsThere($Id, 0);
 if($Line!=null) 
 {
     $User = User::FromStringToObject($Line);
