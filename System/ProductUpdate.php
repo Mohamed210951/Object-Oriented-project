@@ -19,7 +19,7 @@ array_push($Inputs,new Input("Update","Update","submit"));
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
-$Form->setTitle("Update Product ".$Product->getId());
+$Form->setTitle("Update Activity ".$Product->getId());
 $Form->DisplayForm();
 HTML::Footer();
 if($Form->InfoIsTaken())

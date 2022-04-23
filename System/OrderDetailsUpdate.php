@@ -17,7 +17,7 @@ array_push($Inputs,new Input("Set new Values"));
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
-$Form->setTitle("Update Order detail ".$OrderDetails->getProduct_Id());
+$Form->setTitle("Update Daily Activity Details ".$OrderDetails->getProduct_Id());
 
 $Form->DisplayForm();
 HTML::Footer();

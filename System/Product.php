@@ -13,9 +13,9 @@
     $Servis = FromTypeGetServis($User->getType());
     HTML::Header($User->getType());
     $Inputs = [];
-    array_push($Inputs,new Input("Id","Product Id","number"));
-    array_push($Inputs,new Input("ProductName","Product Name","text"));
-    array_push($Inputs,new Input("ProductPrice","Product Price","number"));
+    array_push($Inputs,new Input("Id","Activity Id","number"));
+    array_push($Inputs,new Input("ProductName","Activity Name","text"));
+    array_push($Inputs,new Input("ProductPrice","Activity Price","number"));
     if (in_array("Product-All", $Servis))
     {
         array_push($Inputs,new Input("Add","Add","submit"));
@@ -26,7 +26,7 @@
     $Form = new Form();
     $Form->setActionFile("#");
     $Form->setInputs($Inputs);
-    $Form->setTitle("Product");
+    $Form->setTitle("Activity");
     $Form->DisplayForm();
     HTML::Footer();
     $Flag = 0;

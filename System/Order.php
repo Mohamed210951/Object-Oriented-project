@@ -11,9 +11,9 @@ $User = User::FromStringToObject($Line);
 $Servis = FromTypeGetServis($User->getType());
 HTML::Header($User->getType());
 $Inputs = [];
-array_push($Inputs,new Input("OrderId","Order Id","number"));
+array_push($Inputs,new Input("OrderId","Daily Activity Id","number"));
 if ($User->getType() != "3") array_push($Inputs,new Input("ClintId","Clint Id","number"));
-array_push($Inputs,new Input("Date","Date of order","date"));
+array_push($Inputs,new Input("Date","Date of Daily Activity","date"));
 if (in_array("Order-All", $Servis) || in_array("Order-Add", $Servis)) 
 {   array_push($Inputs,new Input("AddOrder","Add Order","submit"));}
 if (in_array("Order-All", $Servis))
@@ -29,7 +29,7 @@ array_push($Inputs,new Input("ViewOrderDetails","See Order Details","submit"));
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
-$Form->setTitle("Orders");
+$Form->setTitle("Daily Activities");
 $Form->DisplayForm();
 HTML::Footer();
 

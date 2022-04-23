@@ -46,7 +46,7 @@ if(in_array("Order-Search", $Servis))
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
-$Form->setTitle("Order Details for order ".$_GET["OrderId"]);
+$Form->setTitle("Daily Activity Details for Daily Activity ".$_GET["OrderId"]);
 $Form->DisplayForm();
 HTML::Footer();
 include_once "../Classes/OrderDetailsClass.php";

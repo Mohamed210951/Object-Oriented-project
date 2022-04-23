@@ -85,7 +85,7 @@ class Type extends Person implements File
 	function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
         $IsExist = $this->FileType->ValueIsThere($this->Name,1);
         if($IsExist) die("User Type Name already exists!!");
-        if($this->Product == "Product-Non"||$this->Order == "Order-Non"||$this->User == "User-Non")
+        if($this->Product == "Product-Non"&&$this->Order == "Order-Non"&&$this->User == "User-Non")
             die("You must choose his features");
         $this->Id =  $this->FileType->GetLastId() + 1;
         $this->FileType->FileAdd($this->Id.'~'.$this->Name."~\r\n");

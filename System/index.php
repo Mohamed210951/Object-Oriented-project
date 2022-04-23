@@ -17,16 +17,15 @@ if($Line!=null)
     HTML::Header($User->getType());
 }
 else HTML::Header("non");
-echo "<h1>Welcome to our project</h1>";
 $Servis = FromTypeGetServis($User->getType());
 $Inputs = [];
 if(!str_contains($Servis[0],"Product-Non")) 
 {
-    array_push($Inputs,new Input("Product","Product","submit"));
+    array_push($Inputs,new Input("Product","Activity","submit"));
 }
 if(!str_contains($Servis[1],"Order-Non"))
 {
-    array_push($Inputs,new Input("Order","Order","submit"));
+    array_push($Inputs,new Input("Order","Daily Activities","submit"));
 }
 if(!str_contains($Servis[2],"User-Non"))
 {

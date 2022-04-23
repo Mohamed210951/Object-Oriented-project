@@ -22,7 +22,7 @@ array_push($Inputs,new Input("Date","Date of order","date"));
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
-$Form->setTitle("Update Order ".$Order->getId());
+$Form->setTitle("Update Daily Activity ".$Order->getId());
 
 $Form->DisplayForm();
 

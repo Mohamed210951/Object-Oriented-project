@@ -288,7 +288,7 @@ class HTML {
 			<meta name="description" content="" />
 			<meta name="author" content="" />
 
-			<title>Project</title>
+			<title>Orphanage Management System</title>
 
 			<!-- slider stylesheet -->
 			<link rel="stylesheet" type="text/css"
@@ -312,7 +312,7 @@ class HTML {
           <nav class="navbar navbar-expand-lg custom_nav-container">
             <a class="navbar-brand" href="index.php">
               <span>
-                Project
+			  	Orphanage Management System
               </span>
             </a>
 
