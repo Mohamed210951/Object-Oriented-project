@@ -1,5 +1,5 @@
 <?php
-
+include_once "../Classes/FileMangerClass.php";
 function FromTypeGetServis(string $IdType)
 {
 	$Servis = [];
