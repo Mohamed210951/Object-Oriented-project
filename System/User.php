@@ -16,8 +16,8 @@ array_push($Inputs,new Input("UserId","User Id","number"));
 array_push($Inputs,new Input("UserName","User Name","text"));
 array_push($Inputs,new Input("DateOfBirth","Date of Birth","date"));
 $Input = new Input();
-$Texts = [];
-$Values = [];
+$Texts = ["Non"];
+$Values = ["0"];
 $UserTypeFile = new FileManger("User Type.txt");
 $List = $UserTypeFile->GetAllContent();
 for ($i = 0; $i < count($List); $i++) {
@@ -39,7 +39,7 @@ if (in_array("User-All", $Servis))
     array_push($Inputs,new Input("SearshForUser","Searsh For User","submit"));
     array_push($Inputs,new Input("DeleteUser","Delete User","submit"));
 }
-else if(in_array("User-Searsh", $Servis))
+else if(in_array("User-Search", $Servis))
 {
     array_push($Inputs,new Input("SearshForUser","Searsh For User","submit"));
 }
@@ -59,7 +59,7 @@ if (isset($_POST["UpdateUserType"])) {
     if ($_POST["UserId"] == "") die("User Id is unset!!");
     if ($_POST["UserType"] == "") die("User type unset!!");
     $User->setId(intval($_POST["UserId"]));
-    $User->setType(intval($_POST["UserType"]));
+    $User->setType($_POST["UserType"]);
     $User->Update();
 }
 $flag = 0;
@@ -68,7 +68,8 @@ if (isset($_POST["SearshForUser"])) {
     $User = new User();
     $User->setId(intval($_POST["UserId"]));
     $User->setName($_POST["UserName"]);
-    $User->setType(intval($_POST["UserType"]));
+    $User->setDateOfBirth($_POST["DateOfBirth"]);
+    $User->setType($_POST["UserType"]);
     $List = $User->Searsh();
     if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
     else DisplayTable($List);
@@ -81,11 +82,24 @@ if (isset($_POST["DeleteUser"])) {
 }
 if($flag == 0)
 {
-    $User = new User();
-    $User->setId(0);
-    $User->setName("");
-    $User->setType(0);
-    $List = $User->Searsh();
-    if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
-    else DisplayTable($List);
+    if(in_array("User-All", $Servis))
+    {
+        $User = new User();
+        $User->setId(0);
+        $User->setName("");
+        $User->setType("");
+        $List = $User->Searsh();
+        if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
+        else DisplayTable($List);
+    }
+    else if(in_array("User-Search", $Servis))
+    {
+        $User = new User();
+        $User->setId(0);
+        $User->setName("");
+        $User->setType("");
+        $List = $User->Searsh();
+        if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
+        else DisplayTable($List);
+    }
 }

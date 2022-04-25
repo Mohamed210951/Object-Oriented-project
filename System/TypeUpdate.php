@@ -14,8 +14,6 @@ $UserTypeMenuFile = new FileManger("User Type Menu.txt");
 $Type = Type::FromStringToObject($UserTypeMenuFile->ValueIsThere($_GET["Id1"],0));
 $UserTypeFile = new FileManger("User Type.txt");
 $Type->setName(explode('~',$UserTypeFile->ValueIsThere($Type->getId(),0))[1]);
-
-
 $Inputs = [];
 array_push($Inputs,new Input("Name","Type Name","text",$Type->getName()));
 $Input = new Input();
@@ -26,7 +24,8 @@ if($Type->getProduct() == "Product-All") $Text[1].="~";
 if($Type->getProduct() == "Product-Add") $Text[2].="~";
 if($Type->getProduct() == "Product-Search") $Text[3].="~";
 $Input->setText($Text);
-$Input->setValue($Text);
+$Value = ["Non","All","Add","Search"];
+$Input->setValue($Value);
 $Input->setType("select");
 array_push($Inputs,$Input);
 $Input = new Input();
@@ -37,7 +36,8 @@ if($Type->getOrder() == "Order-All") $Text[1].="~";
 if($Type->getOrder() == "Order-Add") $Text[2].="~";
 if($Type->getOrder() == "Order-Search") $Text[3].="~";
 $Input->setText($Text);
-$Input->setValue($Text);
+$Value = ["Non","All","Add","Search"];
+$Input->setValue($Value);
 $Input->setType("select");
 array_push($Inputs,$Input);
 $Input = new Input();
@@ -47,7 +47,8 @@ if($Type->getUser() == "User-Non") $Text[0].="~"; // To make the selected
 if($Type->getUser() == "User-All") $Text[1].="~";
 if($Type->getUser() == "User-Search") $Text[2].="~";
 $Input->setText($Text);
-$Input->setValue($Text);
+$Value = ["Non","All","Search"];
+$Input->setValue($Value);
 $Input->setType("select");
 array_push($Inputs,$Input);
 

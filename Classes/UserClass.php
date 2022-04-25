@@ -2,6 +2,7 @@
 
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
+include_once "../System/Back End.php";
 class User extends Person implements File
 {
 	private $Password;
@@ -30,7 +31,7 @@ class User extends Person implements File
 	}
 	public function ToString(): string
 	{
-		$Line = $this->Id . '~' . $this->TypeId . '~' . $this->Name . '~' . sha1($this->Password) . "~" . $this->DateOfBirth . "~\r\n";
+		$Line = $this->Id . '~' . $this->TypeId . '~' . $this->Name . '~' . $this->Password . "~" . $this->DateOfBirth . "~\r\n";
 		return $Line;
 	}
 	public static function FromStringToObject(string $Line)
@@ -74,6 +75,7 @@ class User extends Person implements File
 	{
 		if ($this->AllIsSet()) {
 			if (!$this->FileManger->ValueIsThere($this->Name, 2)) {
+				$this->Password = sha1($this->Password);
 				$this->FileManger->FileAdd($this->ToString());
 			} else {
 				echo "This UserName is already exists!!";
@@ -90,17 +92,53 @@ class User extends Person implements File
 	 */
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
-		// Code
+		if($this->Id == 0) return 0;
+		$OldUser = User::FromStringToObject($this->FileManger->ValueIsThere($this->Id,0));
+		if($this->Name == "") $this->Name = $OldUser->getName();
+		if($this->TypeId == "") $this->TypeId = $OldUser->getType();
+		if($this->DateOfBirth == "") $this->DateOfBirth = $OldUser->getDateOfBirth();
+		if($this->Password == "") $this->Password = $OldUser->getPassword();
+		else $this->Password = sha1($this->Password);
+		$this->FileManger->FileUpdate($OldUser->ToString(),$this->ToString());
 	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
-		// Code
-		$List = [];
-		return $List;
+		$List = $this->FileManger->GetAllContent();
+		for ($i=0; $i < count($List); $i++) { 
+			$User = User::FromStringToObject($List[$i]);
+			if($this->Id!=$User->getId() && $this->Id!=0) {
+				array_splice($List,$i,1);
+                $i--;
+			}
+			if($this->Name!=$User->getName() && $this->Name!="") {
+				array_splice($List,$i,1);
+                $i--;
+			}
+			if($this->DateOfBirth!=$User->getDateOfBirth() && $this->DateOfBirth!="") {
+				array_splice($List,$i,1);
+                $i--;
+			}
+			if($this->TypeId!=$User->getType() && $this->TypeId!="0" && $this->TypeId!="") {
+				array_splice($List,$i,1);
+                $i--;
+			}
+		}
+		$DisplayedList = [];
+		include_once "TypeClass.php";
+		$x = ["User Id","Type Name","User Name","Date of Birth"];
+		array_push($DisplayedList,$x);
+		for ($i=0; $i < count($List); $i++) { 
+			$User = User::FromStringToObject($List[$i]);
+			$Type = Type::GetTypeName($User->getType());
+			$Array = [$User->getId(),$Type,$User->getName(),$User->getDateOfBirth(),""];
+			array_push($DisplayedList,$Array);
+		}
+		return $DisplayedList;
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
-		// Code
+		if($this->Id == 0) return 0;
+		$this->FileManger->FileDelete($this->FileManger->ValueIsThere($this->Id,0));
 	}
 	/**
 	 * 

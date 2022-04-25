@@ -21,7 +21,7 @@ if (in_array("Order-All", $Servis))
     array_push($Inputs,new Input("UpdateOrder","Update Order","submit"));
     array_push($Inputs,new Input("DeleteOrder","Delete Order","submit"));
 }
-if (in_array("Order-All", $Servis) || in_array("Order-Searsh", $Servis))
+if (in_array("Order-All", $Servis) || in_array("Order-Search", $Servis))
 {
     array_push($Inputs,new Input("SearchForOrder","Search for Order","submit"));
 }
@@ -72,8 +72,10 @@ if (isset($_POST["ViewOrderDetails"])) {
     $OrderFile = new FileManger("Order.txt");
     if ($isexist = $OrderFile->ValueIsThere($_POST["OrderId"], 0)) {
         $Array = explode('~', $isexist);
-        if ($Array[1] != $User->getId() && $User->getType() != "1") {
-            exit("You cannot See the details of this order");
+        if ($Array[1] != $User->getId()) {
+            if(!in_array("Order-All", $Servis) && !in_array("Order-Search", $Servis)) {
+                exit("You cannot See the details of this order");
+            }
         }
         $OrderId = $_POST["OrderId"];
         echo(" <script> location.replace('OrderDetails.php?OrderId=$OrderId'); </script>");

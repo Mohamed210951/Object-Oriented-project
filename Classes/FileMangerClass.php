@@ -27,9 +27,12 @@ class FileManger
 		$File = fopen("../Files/" . $this->FileName, 'r');
 		while ($Line = fgets($File)) {
 			$Array = explode('~', $Line);
-			if ($Array[$Index] == $Value) {
-				Encrypt($this->FileName);
-				return $Line;
+			if($Array[1]!="Deleted")
+			{
+				if ($Array[$Index] == $Value) {
+					Encrypt($this->FileName);
+					return $Line;
+				}
 			}
 		}
 		Encrypt($this->FileName);
@@ -41,7 +44,11 @@ class FileManger
 		$File = fopen("../Files/" . $this->FileName, 'r');
 		$List = [];
 		while ($Line = fgets($File)) {
-			array_push($List, $Line);
+			$Array = explode("~",$Line);
+			if($Array[1]!="Deleted")
+			{
+				array_push($List, $Line);
+			}
 		}
 		Encrypt($this->FileName);
 		return $List;
@@ -70,11 +77,13 @@ class FileManger
 	}
 	function FileDelete(string $Data)
 	{
-		Decrypt($this->FileName);
-		$contents = file_get_contents("../Files/" . $this->FileName);
-		$contents = str_replace($Data, "", $contents);
-		file_put_contents("../Files/" . $this->FileName, $contents);
-		Encrypt($this->FileName);
+		$Array = explode("~",$Data);
+		$DeletedData = "".$Array[0]."~";
+		for ($i=1; $i < count($Array)-1; $i++) { 
+			$DeletedData.="Deleted~";
+		}
+		$DeletedData.="\r\n";
+		$this->FileUpdate($Data,$DeletedData);
 	}
 	/**
 	 * 

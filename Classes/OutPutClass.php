@@ -93,7 +93,7 @@ class Input
 							}
 							else{
 							?>
-							<option value=<?php echo $Array[0]?> selected><?php echo $Array[0] ?></option>
+							<option value=<?php echo $this->Value[$i]?> selected><?php echo $Array[0] ?></option>
 							<?php
 							}
 						}
