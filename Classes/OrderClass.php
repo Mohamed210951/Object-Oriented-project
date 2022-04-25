@@ -2,6 +2,7 @@
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "OrderDetailsClass.php";
+include_once "../System/Back End.php";
 class order extends Person implements File {
 	private ?float $total = 0;
 	private ?int $ClientId = 0;
@@ -54,71 +55,76 @@ class order extends Person implements File {
     static function FromStringToObject($string)
 	{
        $Array_Of_String=explode("~",$string);
-	   $Order=new order(intval($Array_Of_String[0]),intval($Array_Of_String[1]),($Array_Of_String[2]));
+	   $Order=new order();
+	   $Order->setId(intval($Array_Of_String[0]));
+	   $Order->setClientId(intval($Array_Of_String[1]));
+	   $Order->setDate($Array_Of_String[2]);
+	   $Order->setTotal($Array_Of_String[3]);
 	   return $Order;
 	}
 	
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-		$SearchId= $this->Id;
-		$isexist=$this->File->ValueIsThere($SearchId,0);
-		$Order=Order::FromStringToObject($isexist);
-		if($this->getId()==0)
-		{
-			$this->Id=$Order->getId();
-		}
-		if($this->getClientId()==0)
-		{
-		   $this->ClientId=$Order->getClientId();
-		}
-		if($this->getDate()=="")
-		{
-			$this->date=$Order->getDate();
-		}
-		if($this->gettotal()=="")
-		{
-			$this->total=$Order->getTotal();
-		}
-		$this->File->FileUpdate($Order->ToString(),$this->ToString());
+		if($this->Id == 0) return 0;
+		$OldOrder = order::FromStringToObject($this->File->ValueIsThere($this->Id,0));
+		if($this->ClientId == 0) $this->ClientId = $OldOrder->getClientId();
+		if($this->date == "") $this->date = $OldOrder->getDate();
+		if($this->total == 0) $this->total = $OldOrder->getTotal();
+		$this->File->FileUpdate($OldOrder->ToString(),$this->ToString());
 	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-     $ArrayOfLines=$this->File->GetAllContent();
-	 $ArrayOfOrders=[];
-	 for($i=0;$i<count($ArrayOfLines);$i++)
-	 {
-		$Order=order::FromStringToObject($ArrayOfLines[$i]);
-        array_push($ArrayOfOrders[$i],$Order);
-	 }
-	 for($i=0;$i<count($ArrayOfOrders);$i++)
-	 {
-		 if($ArrayOfOrders[$i]->getDate()!=$this->getDate())
-		 {
-			array_splice($ArrayOfOrders,$i,1);
-			$i--;
-		 }
-		 if($ArrayOfOrders[$i]->getId()!=$this->getId())
-		 {
-			array_splice($ArrayOfOrders,$i,1);
-			$i--;
-		 }
-		 if($ArrayOfOrders[$i]->getTotal()!=$this->getTotal())
-		 {
-			array_splice($ArrayOfOrders,$i,1);
-			$i--;
-		 }
-		 if($ArrayOfOrders[$i]->getClientId()!=$this->getClientId())
-		 {
-			array_splice($ArrayOfOrders,$i,1);
-			$i--;
-		 }
-	 }
-	 return $ArrayOfOrders;
+		$List = $this->File->GetAllContent();
+		for ($i=0; $i < count($List); $i++) { 
+			$Order = order::FromStringToObject($List[$i]);
+			if($this->Id != 0)
+			{
+				if($this->Id!=$Order->getId())
+				{
+					array_splice($List,$i,1);
+                    $i--;
+				}
+			}
+			if($this->date != "")
+			{
+				if($this->date!=$Order->getDate())
+				{
+					array_splice($List,$i,1);
+                    $i--;
+				}
+			}
+			if($this->ClientId!=0)
+			{
+				if($this->ClientId!=$Order->getClientId())
+				{
+					array_splice($List,$i,1);
+                    $i--;
+				}
+			}
+			if($this->total!=0)
+			{
+				if($this->total!=$Order->getTotal())
+				{
+					array_splice($List,$i,1);
+                    $i--;
+				}
+			}
+		}
+		$DisplayedList = [];
+		$x = ["Order Id","Clint Id","Date","Total"];
+		array_push($DisplayedList,$x);
+		for ($i=0; $i < count($List); $i++) { 
+			$Order = order::FromStringToObject($List[$i]);
+			$Array = [$Order->getId(),$Order->getClientId(),$Order->getDate(),$Order->getTotal(),""];
+			array_push($DisplayedList,$Array);
+		}
+		return $DisplayedList;
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-     if($this->getId()!=0)
-	 {
-		$isexist=$this->File->ValueIsThere($this->getId(),0);
-		$this->File->FileDelete($isexist);
-	 }
+		if($this->Id == 0) return 0;
+		$this->File->FileDelete($this->File->ValueIsThere($this->Id,0));
+		$OrderDetails = new Order_Details();
+		$OrderDetails->setId($this->Id);
+		//$OrderDetails->DeleteAll();
+		return 1;
 	}
 	
 	function getDate(): string {

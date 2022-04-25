@@ -16,6 +16,13 @@ include_once "ProductClass.php";
     $Id1 da hoa order Id;
     $Id2 da hoa Product Id;
     return Object feh OrderDetail mo3yn mn 2lfile!!!
+
+
+
+    Lazm t3ml function 2smha
+
+    DeleteAll()
+    hat4yl kol 2lorder details bnfs 2lId
     
 */
 

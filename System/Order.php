@@ -14,6 +14,7 @@ $Inputs = [];
 array_push($Inputs,new Input("OrderId","Daily Activity Id","number"));
 if ($User->getType() != "3") array_push($Inputs,new Input("ClintId","Clint Id","number"));
 array_push($Inputs,new Input("Date","Date of Daily Activity","date"));
+array_push($Inputs,new Input("Total","Total","number"));
 if (in_array("Order-All", $Servis) || in_array("Order-Add", $Servis)) 
 {   array_push($Inputs,new Input("AddOrder","Add Order","submit"));}
 if (in_array("Order-All", $Servis))
@@ -57,8 +58,9 @@ if(isset($_POST["SearchForOrder"]))
     $flag = 1;
     $order=new order();
     $order->setId(intval($_POST["OrderId"]));
-    $order->setClientId(intval($_POST["ClientId"]));
+    $order->setClientId(intval($_POST["ClintId"]));
     $order->setDate($_POST["Date"]);
+    $order->setTotal(intval($_POST["Total"]));
     $List = $order->Searsh();
     if (in_array("Order-All", $Servis)) DisplayTable($List,2,"OrderUpdate.php");
     else DisplayTable($List);
@@ -101,6 +103,6 @@ if($flag == 0)
     $order->setClientId(0);
     $order->setDate("");
     $List = $order->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,2,"OrderUpdate.php");
+    if (in_array("Order-All", $Servis)) DisplayTable($List,3,"OrderUpdate.php");
     else DisplayTable($List);
 }
