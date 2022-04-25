@@ -2,7 +2,7 @@
     include_once "../Classes/OutPutClass.php";
     include_once "Back End.php";
     include_once "../Classes/FileMangerClass.php";
-    if(session_id() == ''){
+    if(session_id() == '') {
         session_start();
     }
     include_once "../Classes/UserClass.php";
