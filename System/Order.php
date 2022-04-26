@@ -1,5 +1,4 @@
 <?php
-include_once "Back End.php";
 session_start();
 include_once "../Classes/UserClass.php";
 include_once "../Classes/OutPutClass.php";
@@ -8,7 +7,7 @@ $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);
 $User = User::FromStringToObject($Line);
-$Servis = FromTypeGetServis($User->getType());
+$Servis = $User->GetServices();
 HTML::Header($User->getType());
 $Inputs = [];
 array_push($Inputs,new Input("OrderId","Daily Activity Id","number"));
@@ -35,7 +34,6 @@ $Form->DisplayForm();
 HTML::Footer();
 
 include_once "../Classes/OrderClass.php";
-include_once "Back End.php";
 if (isset($_POST["AddOrder"])) {
 
     $Order = new Order();
@@ -62,8 +60,8 @@ if(isset($_POST["SearchForOrder"]))
     $order->setDate($_POST["Date"]);
     $order->setTotal(intval($_POST["Total"]));
     $List = $order->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,2,"OrderUpdate.php");
-    else DisplayTable($List);
+    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,2,"OrderUpdate.php","OrderDel.php");
+    else HTML::DisplayTable($List);
     unset($_POST["SearchForOrder"]);
     unset($_POST["OrderId"]);
     unset($_POST["ClintId"]);
@@ -103,6 +101,6 @@ if($flag == 0)
     $order->setClientId(0);
     $order->setDate("");
     $List = $order->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,3,"OrderUpdate.php");
-    else DisplayTable($List);
+    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,2,"OrderUpdate.php","OrderDel.php");
+    else HTML::DisplayTable($List);
 }

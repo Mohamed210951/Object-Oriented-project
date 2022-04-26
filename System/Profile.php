@@ -1,7 +1,6 @@
 
 <?php
 session_start();
-include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 include_once "../Classes/OutPutClass.php";
 include_once "../Classes/TypeClass.php";
@@ -30,7 +29,6 @@ $Form->setInputs($Inputs);
 $Form->setTitle("Profile Id: ".$User->getId()."<br> The ".Type::GetTypeName($User->getType())." ".$User->getName() );
 $Form->DisplayForm();
 HTML::Footer();
-include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 if (isset($_POST["UpdateName"])) {
     if ($_POST["Password"] == "") die("You Must write your Password");

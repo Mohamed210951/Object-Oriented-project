@@ -29,7 +29,20 @@ class Type extends Person implements File
 	function getProduct() {
 		return $this->Product;
 	}
-	
+	static function FromTypeGetServis(string $IdType) {
+        $Servis = [];
+        $File = new FileManger("User Type Menu.txt");
+        $List = $File->GetAllContent();
+        for ($i = 0; $i < count($List); $i++) {
+            $array = explode('~', $List[$i]);
+            if ($array[0] == $IdType) {
+                for ($j = 1; $j < count($array); $j++) {
+                    array_push($Servis, $array[$j]);
+                }
+            }
+        }
+        return $Servis;
+    }
 	/**
 	 * 
 	 * @param mixed $Product 
@@ -223,10 +236,13 @@ class Type extends Person implements File
         $String = $this->Id."~".$this->Product."~".$this->Order."~".$this->User."~\r\n";
         return $String;
 	}
+    
     static public function FromStringToObject(String $Line) {
         $Array = explode('~',$Line);
         $Product = explode('-',$Array[1])[1];
-        $Type = new Type($Array[0],null,explode('-',$Array[1])[1],explode('-',$Array[2])[1],explode('-',$Array[3])[1]);
+        $Order = explode('-',$Array[2])[1];
+        $User = explode('-',$Array[3])[1];
+        $Type = new Type($Array[0],null,$Product,$Order,$User);
         return $Type;
     }
 }

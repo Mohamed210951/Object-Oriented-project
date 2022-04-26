@@ -1,5 +1,4 @@
 <?php
-include_once "Back End.php";
 session_start();
 include_once "../Classes/UserClass.php";
 include_once "../Classes/OutPutClass.php";
@@ -8,7 +7,7 @@ $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);
 $User = User::FromStringToObject($Line);
-$Servis = FromTypeGetServis($User->getType());
+$Servis = $User->GetServices();
 
 HTML::Header($User->getType());
 $Inputs = [];
@@ -49,7 +48,6 @@ $Form->setInputs($Inputs);
 $Form->setTitle("Users");
 $Form->DisplayForm();
 HTML::Footer();
-include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 if (isset($_POST["AddUser"])) {
     echo(" <script> location.replace('SignUp.php'); </script>");
@@ -71,8 +69,8 @@ if (isset($_POST["SearshForUser"])) {
     $User->setDateOfBirth($_POST["DateOfBirth"]);
     $User->setType($_POST["UserType"]);
     $List = $User->Searsh();
-    if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
-    else DisplayTable($List);
+    if (in_array("User-All", $Servis)) HTML::DisplayTable($List,1,"UserUpdate.php","UserDel.php");
+    else HTML::DisplayTable($List);
 }
 if (isset($_POST["DeleteUser"])) {
     if ($_POST["UserId"] == "") die("User Id unset!!");
@@ -89,8 +87,8 @@ if($flag == 0)
         $User->setName("");
         $User->setType("");
         $List = $User->Searsh();
-        if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
-        else DisplayTable($List);
+        if (in_array("User-All", $Servis)) HTML::DisplayTable($List,1,"UserUpdate.php","UserDel.php");
+        else HTML::DisplayTable($List);
     }
     else if(in_array("User-Search", $Servis))
     {
@@ -99,7 +97,7 @@ if($flag == 0)
         $User->setName("");
         $User->setType("");
         $List = $User->Searsh();
-        if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
-        else DisplayTable($List);
+        if (in_array("User-All", $Servis)) HTML::DisplayTable($List,1,"UserUpdate.php","UserDel.php");
+        else HTML::DisplayTable($List);
     }
 }

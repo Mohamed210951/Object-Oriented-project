@@ -2,7 +2,7 @@
 
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
-include_once "../System/Back End.php";
+include_once "TypeClass.php";
 class User extends Person implements File
 {
 	private $Password;
@@ -33,6 +33,10 @@ class User extends Person implements File
 	{
 		$Line = $this->Id . '~' . $this->TypeId . '~' . $this->Name . '~' . $this->Password . "~" . $this->DateOfBirth . "~\r\n";
 		return $Line;
+	}
+	public function GetServices()
+	{
+		return Type::FromTypeGetServis($this->getType());
 	}
 	public static function FromStringToObject(string $Line)
 	{

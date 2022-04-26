@@ -1,6 +1,5 @@
 <?php
     include_once "../Classes/OutPutClass.php";
-    include_once "Back End.php";
     include_once "../Classes/FileMangerClass.php";
     if(session_id() == '') {
         session_start();
@@ -10,7 +9,7 @@
     $UserFile = new FileManger("User.txt");
     $Line = $UserFile->ValueIsThere($Id, 0);
     $User = User::FromStringToObject($Line);
-    $Servis = FromTypeGetServis($User->getType());
+    $Servis = $User->GetServices();
     HTML::Header($User->getType());
     $Inputs = [];
     array_push($Inputs,new Input("Id","Activity Id","number"));
@@ -56,8 +55,8 @@
         $Product->setName($_POST["ProductName"]);
         $Product->setCost(floatval($_POST["ProductPrice"]));
         $List = $Product->Searsh();
-        if(in_array("Product-All", $Servis)) DisplayTable($List,2,"ProductUpdate.php");
-        else DisplayTable($List);
+        if(in_array("Product-All", $Servis)) HTML::DisplayTable($List,2,"ProductUpdate.php","ProductDel.php");
+        else HTML::DisplayTable($List);
         $Flag = 1;
         unset($_POST["Id"]);
         unset($_POST["ProductName"]);
@@ -78,6 +77,6 @@
         $Product->setName("");
         $Product->setCost(0);
         $List = $Product->Searsh();
-        if(in_array("Product-All", $Servis)) DisplayTable($List,2,"ProductUpdate.php");
-        else DisplayTable($List);
+        if(in_array("Product-All", $Servis)) HTML::DisplayTable($List,2,"ProductUpdate.php","ProductDel.php");
+        else HTML::DisplayTable($List);
     }

@@ -2,7 +2,6 @@
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "OrderDetailsClass.php";
-include_once "../System/Back End.php";
 class order extends Person implements File {
 	private ?float $total = 0;
 	private ?int $ClientId = 0;
@@ -131,7 +130,7 @@ class order extends Person implements File {
 		$this->File->FileDelete($this->File->ValueIsThere($this->Id,0));
 		$OrderDetails = new Order_Details();
 		$OrderDetails->setId($this->Id);
-		$OrderDetails->DeleteAll();
+		//$OrderDetails->DeleteAll();
 		return 1;
 	}
 	

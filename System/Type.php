@@ -1,7 +1,6 @@
 <?php 
 include_once "../Classes/OutPutClass.php";
 include_once "../Classes/TypeClass.php";
-include_once "Back End.php";
 HTML::Header("1");
 $Inputs =[];
 array_push($Inputs,new Input("Id","Type Id","number"));
@@ -37,7 +36,6 @@ $Form->setInputs($Inputs);
 $Form->setTitle("Types of Users");
 $Form->DisplayForm();
 HTML::Footer();
-include_once "Back End.php";
 if(isset($_POST["Add"]))
 {
     if($_POST["Name"] == "") die("Name is Unset!!");
@@ -65,7 +63,7 @@ if(isset($_POST["Search"])) {
     $User = $_POST["User"];
     $Type = new Type($Id,$Name,$Product,$Order,$User);
     $Display = $Type->Searsh();
-    DisplayTable($Display,5,"TypeUpdate.php");
+    HTML::DisplayTable($Display,5,"TypeUpdate.php","TypeDel.php");
 }
 if(isset($_POST["Delete"]))
 {
@@ -79,5 +77,5 @@ if($flag == 0)
 {
     $Type = new Type("0","","Non","Non","Non");
     $Display = $Type->Searsh();
-    DisplayTable($Display,5,"TypeUpdate.php");
+    HTML::DisplayTable($Display,5,"TypeUpdate.php","TypeDel.php");
 }

@@ -1,5 +1,4 @@
 <?php
-include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 include_once "../Classes/OutPutClass.php";
 include_once "../Classes/FileMangerClass.php";
@@ -7,7 +6,7 @@ $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);
 $User = User::FromStringToObject($Line);
-$Servis = FromTypeGetServis($User->getType());
+$Servis = $User->GetServices();
 HTML::Header($User->getType());
 $Input = new Input();
 $Input->setName("ProductId");
@@ -78,8 +77,8 @@ if(isset($_POST["Searsh"]))
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->setNumbers(intval($_POST["NumberOfProduct"]));
     $List = $OrderDetails->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,4,"OrderDetailsUpdate.php");
-    else DisplayTable($List);
+    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,4,"OrderDetailsUpdate.php","OrderDetailsDel.php");
+    else HTML::DisplayTable($List);
     unset($_POST["ProductId"]);
     unset($_POST["NumberOfProduct"]);
 }
@@ -111,7 +110,7 @@ if($flag == 0)
     $OrderDetails->setProduct_Id(0);
     $OrderDetails->setNumbers(0);
     $List = $OrderDetails->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,4,"OrderDetailsUpdate.php");
-    else if(in_array("Order-Add", $Servis)) DisplayTable($List,4,"OrderDetailsUpdate.php");
-    else DisplayTable($List);
+    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,4,"OrderDetailsUpdate.php","OrderDetailsDel.php");
+    else if(in_array("Order-Add", $Servis)) HTML::DisplayTable($List,4,"OrderDetailsUpdate.php","OrderDetailsDel.php");
+    else HTML::DisplayTable($List);
 }

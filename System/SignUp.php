@@ -1,9 +1,21 @@
 
 <?php
 include_once "../Classes/OutPutClass.php";
-include_once "Back End.php";
+include_once "../Classes/UserClass.php";
 include_once "../Classes/FileMangerClass.php";
-HTML::Header("null");
+if(isset($_SESSION["UserId"]))
+{
+    $Id = $_SESSION["UserId"];
+    $UserFile = new FileManger("User.txt");
+    $Line = $UserFile->ValueIsThere($Id, 0);
+    $User = User::FromStringToObject($Line);
+    $Servis = $User->GetServices();
+    HTML::Header($User->getType());
+}
+else
+{
+    HTML::Header("null");
+}
 $Inputs = [];
 array_push($Inputs,new Input("UserName","Username","text"));
 array_push($Inputs,new Input("Password","Password","password"));
@@ -35,8 +47,6 @@ $Form->setInputs($Inputs);
 $Form->setTitle("Sign Up");
 $Form->DisplayForm();
 HTML::Footer();
-include_once "Back End.php";
-include_once "../Classes/UserClass.php";
 if (isset($_POST["submit"])) {
     if ($_POST["UserName"] == "") die("Name is Unset");
     $UserName = $_POST["UserName"];
@@ -51,12 +61,20 @@ if (isset($_POST["submit"])) {
         $UserFile = new FileManger("User.txt");
         $newUser = new User($UserFile->GetLastId() + 1, $Type, $UserName, $Password, $DateOfBirth);
         $newUser->Add();
-        if(session_id() == '') {
-            session_start();
+        if(isset($_SESSION["UserId"]))
+        {
+            echo(" <script> location.replace('User.php'); </script>");
         }
-        $_SESSION["UserId"] = $newUser->getId();
-        echo(" <script> location.replace('index.php'); </script>");
-        exit();
+        else
+        {
+            if(session_id() == '') {
+                session_start();
+            }
+            $_SESSION["UserId"] = $newUser->getId();
+            echo(" <script> location.replace('index.php'); </script>");
+            exit();
+        }
+        
     } else {
         echo "Must be the same Password!!";
     }
