@@ -40,12 +40,12 @@ if(in_array("Order-Add", $Servis) ||in_array("Order-All", $Servis) )
 if(in_array("Order-Search", $Servis))
 {
     array_push($Inputs,new Input("Searsh","Search For An item","submit"));
-    array_push($Inputs,new Input("PrintOrderInvoice","Print Order Invoice","submit"));
 }
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
-$Form->setTitle("Daily Activity Details for Daily Activity ".$_GET["OrderId"]);
+$Header = "<a href='Order.php'>Daily Activity</a>";
+$Form->setTitle("Daily Activity Details for ".$Header." ".$_GET["OrderId"]);
 $Form->DisplayForm();
 HTML::Footer();
 include_once "../Classes/OrderDetailsClass.php";

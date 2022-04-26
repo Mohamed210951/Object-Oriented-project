@@ -78,6 +78,14 @@ class order extends Person implements File {
 		if($this->total == 0) $this->total = $OldOrder->getTotal();
 		$this->File->FileUpdate($OldOrder->ToString(),$this->ToString());
 	}
+	public function UpdateTotal()
+	{
+		if($this->Id == 0) return 0;
+		$OldOrder = order::FromStringToObject($this->File->ValueIsThere($this->Id,0));
+		$this->ClientId = $OldOrder->getClientId();
+		$this->date = $OldOrder->getDate();
+		$this->File->FileUpdate($OldOrder->ToString(),$this->ToString());
+	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		$List = $this->File->GetAllContent();
 		for ($i=0; $i < count($List); $i++) { 

@@ -419,13 +419,21 @@ class HTML {
 					   echo "<th style='padding: 12px 15px;' ><a href='$DeleteLink?Id1=$Id1&Id2=$Id2'>Delete</a></th>";
 				   }
 				   else{
-					   if($Type == 3) echo "<th style='padding: 12px 15px;'><a href='OrderDetails.php?OrderId=$Id1'>Order Details</a></th>";
+					   if($Type == 3) 
+					   {
+						   echo "<th style='padding: 12px 15px;'><a href='PrintInvoice.php?OrderId=$Id1'>Print</a></th>";
+						   echo "<th style='padding: 12px 15px;'><a href='OrderDetails.php?OrderId=$Id1'>Order Details</a></th>";
+					   }
 					   echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1'>Update</a></th>";
 					   echo "<th style='padding: 12px 15px;' ><a href='$DeleteLink?Id1=$Id1'>Delete</a></th>";
 				   }
 			   else
 			   {
-				   if($Type == 3) echo "<th style='padding: 12px 15px;' >Order Details</th>";
+				   if($Type == 3) 
+				   {
+					   echo "<th style='padding: 12px 15px;' >Print</th>";
+					   echo "<th style='padding: 12px 15px;' >Order Details</th>";
+				   }
 				   echo "<th style='padding: 12px 15px;' >Update</th>";
 				   echo "<th style='padding: 12px 15px;' >Delete</th>";
 			   }

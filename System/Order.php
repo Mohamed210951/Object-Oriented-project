@@ -26,6 +26,7 @@ if (in_array("Order-All", $Servis) || in_array("Order-Search", $Servis))
     array_push($Inputs,new Input("SearchForOrder","Search for Order","submit"));
 }
 array_push($Inputs,new Input("ViewOrderDetails","See Order Details","submit"));
+array_push($Inputs,new Input("PrintOrderInvoice","Print Order Invoice","submit"));
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
@@ -60,7 +61,7 @@ if(isset($_POST["SearchForOrder"]))
     $order->setDate($_POST["Date"]);
     $order->setTotal(intval($_POST["Total"]));
     $List = $order->Searsh();
-    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,2,"OrderUpdate.php","OrderDel.php");
+    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,3,"OrderUpdate.php","OrderDel.php");
     else HTML::DisplayTable($List);
     unset($_POST["SearchForOrder"]);
     unset($_POST["OrderId"]);
@@ -91,8 +92,22 @@ if(isset($_POST["DeleteOrder"]))
     unset($_POST["ClintId"]);
     unset($_POST["Date"]);
 }
-
+if(isset($_POST["PrintOrderInvoice"]))
+{
+    if($_POST["OrderId"] == "") exit("Order Id is required");
+    $Id = $_POST["OrderId"];
+    echo(" <script> location.replace('PrintInvoice.php?OrderId=$Id'); </script>");
+}
 if (isset($_POST["UpdateOrder"])) {
+    if($_POST["OrderId"] == "") exit("Order Id is required");
+    $Order = new order();
+    $Order->setId(intval($_POST["OrderId"]));
+    if ($User->getType() == "3") $Order->setClientId($User->getId());
+    else {
+        $Order->setClientId(intval($_POST["ClintId"]));
+    }
+    $Order->setDate($_POST["Date"]);
+    $Order->Update();
 }
 if($flag == 0)
 {
@@ -101,6 +116,6 @@ if($flag == 0)
     $order->setClientId(0);
     $order->setDate("");
     $List = $order->Searsh();
-    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,2,"OrderUpdate.php","OrderDel.php");
+    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,3,"OrderUpdate.php","OrderDel.php");
     else HTML::DisplayTable($List);
 }
