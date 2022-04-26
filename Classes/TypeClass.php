@@ -128,63 +128,60 @@ class Type extends Person implements File
         return $String;
     }
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-        $DisplayList = [];
-        
-        if($this->Name!="") {
-            $List = $this->FileType->ValueIsThere($this->Name,1);
-            $Array = explode('~',$List);
-            $Type = new Type($Array[0],$Array[1]);
-            $List = $this->FileMenu->ValueIsThere($Type->getId(),0);
-            $Array = explode('~',$List);
-            $Type->setProduct($Array[1]);
-            $Type->setOrder($Array[2]);
-            $Type->setUser($Array[3]);
-            $String = $Type->DisplayedString();
-            array_push($DisplayList,$String);
-        }
-        else {
-            $List = $this->FileMenu->GetAllContent();
-            for ($i=0; $i < count($List); $i++) { 
-                $Type = Type::FromStringToObject($List[$i]);
-                if($this->Id!="0") {
-                    if($this->Id != $Type->getId()) {
-                        array_splice($List,$i,1);
-                        $i--;
-                    }
-                }
-                if($this->Product!="Product-Non") {
-                    if($this->Product != $Type->getProduct()) {
-                        array_splice($List,$i,1);
-                        $i--;
-                    }
-                }
-                if($this->Order!="Order-Non") {
-                    if($this->Order != $Type->getOrder()) {
-                        array_splice($List,$i,1);
-                        $i--;
-                    }
-                }
-                if($this->User!="User-Non") {
-                    if($this->User != $Type->getUser()) {
-                        array_splice($List,$i,1);
-                        $i--;
-                    }
-                }
-            }
-            for ($i=0; $i < count($List); $i++) { 
-                $Type = Type::FromStringToObject($List[$i]);
-                $Line = $this->FileType->ValueIsThere($Type->getId(),0);
-                $Array = explode('~',$Line);
-                $Type->setName($Array[1]);
-                array_push($DisplayList,$Type->DisplayedString());
-            }
+        $List = $this->FileMenu->GetAllContent();
 
+        for ($i=0; $i < count($List); $i++) { 
+            $Type = Type::FromStringToObject($List[$i]);
+            $Type->setName(Type::GetTypeName($Type->getId()));
+            if($this->Id != 0)
+            {
+                if($this->Id!=$Type->getId())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->Name != "")
+            {
+                if($this->Name!=$Type->getName())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->Product != "Product-Non")
+            {
+                if($this->Product!=$Type->getProduct())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->Order != "Order-Non")
+            {
+                if($this->Order!=$Type->getOrder())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->User != "User-Non")
+            {
+                if($this->User!=$Type->getUser())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
         }
+
         $Temp = ["Type Id","Name","Product Mode","Order Mode","User Mode"];
         $Display = [];
         array_push($Display,$Temp);
-        for ($i=0; $i < count($DisplayList); $i++) {
-            $Array = explode("~",$DisplayList[$i]);
+        for ($i=0; $i < count($List); $i++) {
+            $Type = Type::FromStringToObject($List[$i]);
+            $Type->setName(Type::GetTypeName($Type->getId()));
+            $Array = [$Type->getId(),$Type->getName(),$Type->getProduct(),$Type->getOrder(),$Type->getUser(),""];
             array_push($Display,$Array);
         }
 
