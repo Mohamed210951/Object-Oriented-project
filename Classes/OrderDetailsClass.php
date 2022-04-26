@@ -18,17 +18,27 @@ include_once "OrderClass.php";
     $Id2 da hoa Product Id;
     return Object feh OrderDetail mo3yn mn 2lfile!!!
 
-
-
     Lazm t3ml function 2smha
 
     DeleteAll()
     hat4yl kol 2lorder details bnfs 2lId
     
 */
-
 class Order_Details extends Person implements File
 {
+ static public function GetOrderDetail($OId,$PId)
+    { $FileManger=new FileManger("Order Details.txt");
+       $list=$FileManger->GetAllContent();
+       for($i=0;$i<count($list);$i++)
+       {
+           $order_details=Order_Details::FromStringToObject($list[$i]);
+           if($order_details->getOrderId()==$OId&&$order_details->getProduct_Id()==$PId)
+           {
+               return $order_details;
+           }
+       }
+
+    }
 
     private ?int  $Product_Id;
     private ?int $Numbers;
@@ -48,6 +58,7 @@ class Order_Details extends Person implements File
         $Order->SetInfoFromId($this->OrderId);
         $Order->setTotal($Order->getTotal() + $this->Prices);
         $Order->Update();
+
     }
     function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
@@ -87,6 +98,23 @@ class Order_Details extends Person implements File
      */
     function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
+        if($this->OrderId==0||$this->Product_Id==0)
+        {
+            return 0;
+        }
+        else
+        {
+            $order_Details=Order_Details::GetOrderDetail($this->OrderId,$this->Product_Id);
+            if($this->Numbers==0)
+            {
+               return 0;
+            }
+            $product=Product::Get_Info_Of_Product($this->Product_Id);
+            $this->Prices=($this->Numbers*$product->getCost());
+            $this->FileManger->FileUpdate($order_Details->ToString(),$this->ToString());
+            $diference=$this->Prices-$order_Details->getPrices();
+            $this->UpdateTotalForOrder($diference);
+        }
     }
 
     /**
