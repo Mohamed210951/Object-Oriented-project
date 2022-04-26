@@ -73,18 +73,19 @@ function DisplayTable(array $List, int $Type = 0,string $UpdateLink = "null")
 		$Id2 = $List[$i][1];
 		if($Type!=0)
 			if($i!=0)
-				if($Type != 4)
-				{
-					echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1'>Update</a></th>";
-					echo "<th style='padding: 12px 15px;' ><a href='Del.php?Id1=$Id1&Id2=-1&Type=$Type'>Delete</a></th>";
-				}
-				else
+				if($Type == 4)
 				{
 					echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1&Id2=$Id2'>Update</a></th>";
 					echo "<th style='padding: 12px 15px;' ><a href='Del.php?Id1=$Id1&Id2=$Id2&Type=$Type'>Delete</a></th>";
 				}
+				else{
+					if($Type == 3) echo "<th style='padding: 12px 15px;'><a href='OrderDetails.php?OrderId=$Id1'>Order Details</a></th>";
+					echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1'>Update</a></th>";
+					echo "<th style='padding: 12px 15px;' ><a href='Del.php?Id1=$Id1&Id2=-1&Type=$Type'>Delete</a></th>";
+				}
 			else
 			{
+				if($Type == 3) echo "<th style='padding: 12px 15px;' >Order Details</th>";
 				echo "<th style='padding: 12px 15px;' >Update</th>";
 				echo "<th style='padding: 12px 15px;' >Delete</th>";
 			}

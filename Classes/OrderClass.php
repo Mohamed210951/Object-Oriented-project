@@ -62,7 +62,15 @@ class order extends Person implements File {
 	   $Order->setTotal($Array_Of_String[3]);
 	   return $Order;
 	}
-	
+	public function SetInfoFromId($Id)
+	{
+		$Order = order::FromStringToObject($this->File->ValueIsThere($Id,0));
+		$this->setId($Order->getId());
+		$this->setClientId($Order->getClientId());
+		$this->setDate($Order->getDate());
+		$this->setTotal($Order->getTotal());
+		$this->setName($Order->getName());
+	}
 	function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		if($this->Id == 0) return 0;
 		$OldOrder = order::FromStringToObject($this->File->ValueIsThere($this->Id,0));
@@ -123,7 +131,7 @@ class order extends Person implements File {
 		$this->File->FileDelete($this->File->ValueIsThere($this->Id,0));
 		$OrderDetails = new Order_Details();
 		$OrderDetails->setId($this->Id);
-		//$OrderDetails->DeleteAll();
+		$OrderDetails->DeleteAll();
 		return 1;
 	}
 	

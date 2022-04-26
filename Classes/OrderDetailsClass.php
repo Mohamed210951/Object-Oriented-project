@@ -2,6 +2,7 @@
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "ProductClass.php";
+include_once "OrderClass.php";
 
 /*
     Product m4 hatb2a array hya oe number oe prices
@@ -40,6 +41,14 @@ class Order_Details extends Person implements File
      * @param int $input2 Number Of Product
      * @return mixed
      */
+
+    function UpdateTotalForOrder($Price)
+    {
+        $Order = new order();
+        $Order->SetInfoFromId($this->OrderId);
+        $Order->setTotal($Order->getTotal() + $this->Prices);
+        $Order->Update();
+    }
     function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
         if($this->OrderId>0&&$this->Product_Id>0&&$this->Numbers>0)
@@ -49,6 +58,7 @@ class Order_Details extends Person implements File
             $Product = new Product();
             $Product = $Product->Get_Info_Of_Product($this->Product_Id);
             $this->Prices = ($Product->getCost() * $this->Numbers);
+            $this->UpdateTotalForOrder($this->Prices);
             $this->FileManger->FileAdd($this->ToString());
             return 1;
         }
