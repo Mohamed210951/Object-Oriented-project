@@ -1,5 +1,4 @@
 <?php
-include_once "../System/Back End.php";
 
 class Person
 {

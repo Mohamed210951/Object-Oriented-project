@@ -1,5 +1,4 @@
 <?php
-include_once "Back End.php";
 session_start();
 include_once "../Classes/UserClass.php";
 include_once "../Classes/OutPutClass.php";
@@ -8,7 +7,7 @@ $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);
 $User = User::FromStringToObject($Line);
-$Servis = FromTypeGetServis($User->getType());
+$Servis = $User->GetServices();
 
 HTML::Header($User->getType());
 $Inputs = [];
@@ -16,8 +15,8 @@ array_push($Inputs,new Input("UserId","User Id","number"));
 array_push($Inputs,new Input("UserName","User Name","text"));
 array_push($Inputs,new Input("DateOfBirth","Date of Birth","date"));
 $Input = new Input();
-$Texts = [];
-$Values = [];
+$Texts = ["Non"];
+$Values = ["0"];
 $UserTypeFile = new FileManger("User Type.txt");
 $List = $UserTypeFile->GetAllContent();
 for ($i = 0; $i < count($List); $i++) {
@@ -39,7 +38,7 @@ if (in_array("User-All", $Servis))
     array_push($Inputs,new Input("SearshForUser","Searsh For User","submit"));
     array_push($Inputs,new Input("DeleteUser","Delete User","submit"));
 }
-else if(in_array("User-Searsh", $Servis))
+else if(in_array("User-Search", $Servis))
 {
     array_push($Inputs,new Input("SearshForUser","Searsh For User","submit"));
 }
@@ -49,7 +48,6 @@ $Form->setInputs($Inputs);
 $Form->setTitle("Users");
 $Form->DisplayForm();
 HTML::Footer();
-include_once "Back End.php";
 include_once "../Classes/UserClass.php";
 if (isset($_POST["AddUser"])) {
     echo(" <script> location.replace('SignUp.php'); </script>");
@@ -59,7 +57,7 @@ if (isset($_POST["UpdateUserType"])) {
     if ($_POST["UserId"] == "") die("User Id is unset!!");
     if ($_POST["UserType"] == "") die("User type unset!!");
     $User->setId(intval($_POST["UserId"]));
-    $User->setType(intval($_POST["UserType"]));
+    $User->setType($_POST["UserType"]);
     $User->Update();
 }
 $flag = 0;
@@ -68,10 +66,11 @@ if (isset($_POST["SearshForUser"])) {
     $User = new User();
     $User->setId(intval($_POST["UserId"]));
     $User->setName($_POST["UserName"]);
-    $User->setType(intval($_POST["UserType"]));
+    $User->setDateOfBirth($_POST["DateOfBirth"]);
+    $User->setType($_POST["UserType"]);
     $List = $User->Searsh();
-    if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
-    else DisplayTable($List);
+    if (in_array("User-All", $Servis)) HTML::DisplayTable($List,1,"UserUpdate.php","UserDel.php");
+    else HTML::DisplayTable($List);
 }
 if (isset($_POST["DeleteUser"])) {
     if ($_POST["UserId"] == "") die("User Id unset!!");
@@ -81,11 +80,24 @@ if (isset($_POST["DeleteUser"])) {
 }
 if($flag == 0)
 {
-    $User = new User();
-    $User->setId(0);
-    $User->setName("");
-    $User->setType(0);
-    $List = $User->Searsh();
-    if (in_array("User-All", $Servis)) DisplayTable($List,1,"UserUpdate.php");
-    else DisplayTable($List);
+    if(in_array("User-All", $Servis))
+    {
+        $User = new User();
+        $User->setId(0);
+        $User->setName("");
+        $User->setType("");
+        $List = $User->Searsh();
+        if (in_array("User-All", $Servis)) HTML::DisplayTable($List,1,"UserUpdate.php","UserDel.php");
+        else HTML::DisplayTable($List);
+    }
+    else if(in_array("User-Search", $Servis))
+    {
+        $User = new User();
+        $User->setId(0);
+        $User->setName("");
+        $User->setType("");
+        $List = $User->Searsh();
+        if (in_array("User-All", $Servis)) HTML::DisplayTable($List,1,"UserUpdate.php","UserDel.php");
+        else HTML::DisplayTable($List);
+    }
 }

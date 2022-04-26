@@ -1,9 +1,8 @@
 <?php
 include_once "../Classes/OutPutClass.php";
-include_once "Back End.php";
 include_once "../Classes/FileMangerClass.php";
 include_once "../Classes/UserClass.php";
-if(session_id() == ''){
+if(session_id() == '') {
     session_start();
 }
 if(!isset($_SESSION["UserId"])) header("Location:Login.php");
@@ -17,7 +16,7 @@ if($Line!=null)
     HTML::Header($User->getType());
 }
 else HTML::Header("non");
-$Servis = FromTypeGetServis($User->getType());
+$Servis = $User->GetServices();
 $Inputs = [];
 if(!str_contains($Servis[0],"Product-Non")) 
 {

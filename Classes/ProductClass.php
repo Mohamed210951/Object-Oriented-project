@@ -52,9 +52,10 @@ class Product extends Person implements File
 		}
 		return 1;
 	}
-	function Get_Info_Of_Product($ID_Nom)
+	static public function Get_Info_Of_Product($ID_Nom)
 	{
-		$isexist = $this->FileManger->ValueIsthere($ID_Nom, 0);
+		$FileManger=new FileManger("Product.txt");
+		$isexist =$FileManger->ValueIsthere($ID_Nom, 0);
 		if ($isexist) {
 			$product = product::FromStringToObject($isexist);
 			return $product;

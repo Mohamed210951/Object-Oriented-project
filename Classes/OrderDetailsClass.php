@@ -2,6 +2,7 @@
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "ProductClass.php";
+include_once "OrderClass.php";
 
 /*
     Product m4 hatb2a array hya oe number oe prices
@@ -16,11 +17,28 @@ include_once "ProductClass.php";
     $Id1 da hoa order Id;
     $Id2 da hoa Product Id;
     return Object feh OrderDetail mo3yn mn 2lfile!!!
+
+    Lazm t3ml function 2smha
+
+    DeleteAll()
+    hat4yl kol 2lorder details bnfs 2lId
     
 */
-
 class Order_Details extends Person implements File
 {
+    static public function GetOrderDetail($OId,$PId)
+    { 
+        $FileManger=new FileManger("Order Details.txt");
+        $list=$FileManger->GetAllContent();
+        for($i=0;$i<count($list);$i++)
+        {
+            $order_details=Order_Details::FromStringToObject($list[$i]);
+            if($order_details->getOrderId()==$OId&&$order_details->getProduct_Id()==$PId)
+            {
+                return $order_details;
+            }
+        }
+    }
 
     private ?int  $Product_Id;
     private ?int $Numbers;
@@ -33,6 +51,14 @@ class Order_Details extends Person implements File
      * @param int $input2 Number Of Product
      * @return mixed
      */
+
+    function UpdateTotalForOrder($Price)
+    {
+        $Order = new order();
+        $Order->SetInfoFromId($this->OrderId);
+        $Order->setTotal($Order->getTotal() + $Price);
+        $Order->UpdateTotal();
+    }
     function Add($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
         if($this->OrderId>0&&$this->Product_Id>0&&$this->Numbers>0)
@@ -42,6 +68,7 @@ class Order_Details extends Person implements File
             $Product = new Product();
             $Product = $Product->Get_Info_Of_Product($this->Product_Id);
             $this->Prices = ($Product->getCost() * $this->Numbers);
+            $this->UpdateTotalForOrder($this->Prices);
             $this->FileManger->FileAdd($this->ToString());
             return 1;
         }
@@ -70,6 +97,23 @@ class Order_Details extends Person implements File
      */
     function Update($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
+        if($this->OrderId==0||$this->Product_Id==0)
+        {
+            return 0;
+        }
+        else
+        {
+            $order_Details=Order_Details::GetOrderDetail($this->OrderId,$this->Product_Id);
+            if($this->Numbers==0)
+            {
+               return 0;
+            }
+            $product=Product::Get_Info_Of_Product($this->Product_Id);
+            $this->Prices=($this->Numbers*$product->getCost());
+            $this->FileManger->FileUpdate($order_Details->ToString(),$this->ToString());
+            $diference=$this->Prices-$order_Details->getPrices();
+            $this->UpdateTotalForOrder($diference);
+        }
     }
 
     /**
@@ -94,31 +138,52 @@ class Order_Details extends Person implements File
     function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
         $List=$this->FileManger->GetAllContent();
-        for($i=0;$i< count($List);$i++)
-        {
-            $Order_Details=Order_Details::FromStringToObject($List[$i]) ;
-            if($Order_Details->getOrderId()!=$this->OrderId)
+        for ($i=0; $i < count($List); $i++) {   
+            $OrderDetails = Order_Details::FromStringToObject($List[$i]);
+            if($this->OrderId != 0)
             {
-              array_splice($List,$i,1);
-              $i--;
+                if($this->OrderId!=$OrderDetails->getOrderId())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->Product_Id != 0)
+            {
+                if($this->Product_Id!=$OrderDetails->getProduct_Id())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->Prices!=0)
+            {
+                if($this->Prices!=$OrderDetails->getPrices())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->Numbers!=0)
+            {
+                if($this->Numbers!=$OrderDetails->getNumbers())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
             }
         }
-        
-
-        // lesa fyh hena 7abet 2akwad ;
-
-        // Tl3 product name ***M4*** product id
-
-
-
-        $array=[];//       xxxxxxxxxx
-        $temp=["Order Id","Product_Id","Number of Product","Price"];
-        array_push($array,$temp);
-        for($i=0;$i< count($List);$i++)
-        {
-            array_push($array,explode("~",$List[$i]));
+        $DisplayedList = [];
+        $x = ["Order Id","Product Name","Number","Cost"];
+        array_push($DisplayedList,$x);
+        include_once "ProductClass.php";
+        for ($i=0; $i < count($List); $i++) { 
+            $OrderDetails = Order_Details::FromStringToObject($List[$i]);
+            $Product = Product::Get_Info_Of_Product($OrderDetails->getProduct_Id());
+            $Array = [$OrderDetails->getOrderId(),$Product->getName(),$OrderDetails->getNumbers(),$OrderDetails->getPrices(),""];
+            array_push($DisplayedList,$Array);
         }
-        return $array;
+        return $DisplayedList;
     }
 
     /**
@@ -133,12 +198,21 @@ class Order_Details extends Person implements File
      // 8lt m7tag t3dyl
     function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null)
     {
-        if ($this->OrderId == 0) {
+        if ($this->OrderId == 0 || $this->Product_Id == 0) {
             return 0;
         }
-        if ($this->FileManger->ValueIsThere($this->Product_Id, 0)) {
-            $h = $this->FileManger->ValueIsThere($this->Product_Id, 0);
-            $this->FileManger->FileDelete($h);
+        $OrderDetails = Order_Details::GetOrderDetail($this->OrderId,$this->Product_Id);
+        $this->FileManger->FileDelete($OrderDetails->ToString());
+        $Diff = $OrderDetails->getPrices()*-1;
+        $this->UpdateTotalForOrder($Diff);
+    }
+    public function DeleteAll() 
+    {
+        if($this->OrderId == 0) return 0;
+        while($Line = $this->FileManger->ValueIsThere($this->OrderId,0))
+        {
+            if($Line == null) break;
+            $this->FileManger->FileDelete($Line);
         }
     }
     /**

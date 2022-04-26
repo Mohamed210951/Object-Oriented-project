@@ -1,5 +1,4 @@
 <?php
-include_once "Back End.php";
 session_start();
 include_once "../Classes/UserClass.php";
 include_once "../Classes/OutPutClass.php";
@@ -8,12 +7,13 @@ $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);
 $User = User::FromStringToObject($Line);
-$Servis = FromTypeGetServis($User->getType());
+$Servis = $User->GetServices();
 HTML::Header($User->getType());
 $Inputs = [];
 array_push($Inputs,new Input("OrderId","Daily Activity Id","number"));
 if ($User->getType() != "3") array_push($Inputs,new Input("ClintId","Clint Id","number"));
 array_push($Inputs,new Input("Date","Date of Daily Activity","date"));
+array_push($Inputs,new Input("Total","Total","number"));
 if (in_array("Order-All", $Servis) || in_array("Order-Add", $Servis)) 
 {   array_push($Inputs,new Input("AddOrder","Add Order","submit"));}
 if (in_array("Order-All", $Servis))
@@ -21,11 +21,12 @@ if (in_array("Order-All", $Servis))
     array_push($Inputs,new Input("UpdateOrder","Update Order","submit"));
     array_push($Inputs,new Input("DeleteOrder","Delete Order","submit"));
 }
-if (in_array("Order-All", $Servis) || in_array("Order-Searsh", $Servis))
+if (in_array("Order-All", $Servis) || in_array("Order-Search", $Servis))
 {
     array_push($Inputs,new Input("SearchForOrder","Search for Order","submit"));
 }
 array_push($Inputs,new Input("ViewOrderDetails","See Order Details","submit"));
+array_push($Inputs,new Input("PrintOrderInvoice","Print Order Invoice","submit"));
 $Form = new Form();
 $Form->setActionFile("#");
 $Form->setInputs($Inputs);
@@ -34,7 +35,6 @@ $Form->DisplayForm();
 HTML::Footer();
 
 include_once "../Classes/OrderClass.php";
-include_once "Back End.php";
 if (isset($_POST["AddOrder"])) {
 
     $Order = new Order();
@@ -57,11 +57,12 @@ if(isset($_POST["SearchForOrder"]))
     $flag = 1;
     $order=new order();
     $order->setId(intval($_POST["OrderId"]));
-    $order->setClientId(intval($_POST["ClientId"]));
+    $order->setClientId(intval($_POST["ClintId"]));
     $order->setDate($_POST["Date"]);
+    $order->setTotal(intval($_POST["Total"]));
     $List = $order->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,2,"OrderUpdate.php");
-    else DisplayTable($List);
+    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,3,"OrderUpdate.php","OrderDel.php");
+    else HTML::DisplayTable($List);
     unset($_POST["SearchForOrder"]);
     unset($_POST["OrderId"]);
     unset($_POST["ClintId"]);
@@ -72,8 +73,10 @@ if (isset($_POST["ViewOrderDetails"])) {
     $OrderFile = new FileManger("Order.txt");
     if ($isexist = $OrderFile->ValueIsThere($_POST["OrderId"], 0)) {
         $Array = explode('~', $isexist);
-        if ($Array[1] != $User->getId() && $User->getType() != "1") {
-            exit("You cannot See the details of this order");
+        if ($Array[1] != $User->getId()) {
+            if(!in_array("Order-All", $Servis) && !in_array("Order-Search", $Servis)) {
+                exit("You cannot See the details of this order");
+            }
         }
         $OrderId = $_POST["OrderId"];
         echo(" <script> location.replace('OrderDetails.php?OrderId=$OrderId'); </script>");
@@ -89,8 +92,22 @@ if(isset($_POST["DeleteOrder"]))
     unset($_POST["ClintId"]);
     unset($_POST["Date"]);
 }
-
+if(isset($_POST["PrintOrderInvoice"]))
+{
+    if($_POST["OrderId"] == "") exit("Order Id is required");
+    $Id = $_POST["OrderId"];
+    echo(" <script> location.replace('PrintInvoice.php?OrderId=$Id'); </script>");
+}
 if (isset($_POST["UpdateOrder"])) {
+    if($_POST["OrderId"] == "") exit("Order Id is required");
+    $Order = new order();
+    $Order->setId(intval($_POST["OrderId"]));
+    if ($User->getType() == "3") $Order->setClientId($User->getId());
+    else {
+        $Order->setClientId(intval($_POST["ClintId"]));
+    }
+    $Order->setDate($_POST["Date"]);
+    $Order->Update();
 }
 if($flag == 0)
 {
@@ -99,6 +116,6 @@ if($flag == 0)
     $order->setClientId(0);
     $order->setDate("");
     $List = $order->Searsh();
-    if (in_array("Order-All", $Servis)) DisplayTable($List,2,"OrderUpdate.php");
-    else DisplayTable($List);
+    if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,3,"OrderUpdate.php","OrderDel.php");
+    else HTML::DisplayTable($List);
 }

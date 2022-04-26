@@ -3,7 +3,6 @@ include_once "../Classes/OutPutClass.php";
 include_once "../Classes/ProductClass.php";
 include_once "../Classes/UserClass.php";
 include_once "../Classes/FileMangerClass.php";
-include_once "Back End.php";
 $UserId = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($UserId, 0);

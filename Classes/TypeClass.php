@@ -29,7 +29,20 @@ class Type extends Person implements File
 	function getProduct() {
 		return $this->Product;
 	}
-	
+	static function FromTypeGetServis(string $IdType) {
+        $Servis = [];
+        $File = new FileManger("User Type Menu.txt");
+        $List = $File->GetAllContent();
+        for ($i = 0; $i < count($List); $i++) {
+            $array = explode('~', $List[$i]);
+            if ($array[0] == $IdType) {
+                for ($j = 1; $j < count($array); $j++) {
+                    array_push($Servis, $array[$j]);
+                }
+            }
+        }
+        return $Servis;
+    }
 	/**
 	 * 
 	 * @param mixed $Product 
@@ -128,63 +141,60 @@ class Type extends Person implements File
         return $String;
     }
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
-        $DisplayList = [];
-        
-        if($this->Name!="") {
-            $List = $this->FileType->ValueIsThere($this->Name,1);
-            $Array = explode('~',$List);
-            $Type = new Type($Array[0],$Array[1]);
-            $List = $this->FileMenu->ValueIsThere($Type->getId(),0);
-            $Array = explode('~',$List);
-            $Type->setProduct($Array[1]);
-            $Type->setOrder($Array[2]);
-            $Type->setUser($Array[3]);
-            $String = $Type->DisplayedString();
-            array_push($DisplayList,$String);
-        }
-        else {
-            $List = $this->FileMenu->GetAllContent();
-            for ($i=0; $i < count($List); $i++) { 
-                $Type = Type::FromStringToObject($List[$i]);
-                if($this->Id!="0") {
-                    if($this->Id != $Type->getId()) {
-                        array_splice($List,$i,1);
-                        $i--;
-                    }
-                }
-                if($this->Product!="Product-Non") {
-                    if($this->Product != $Type->getProduct()) {
-                        array_splice($List,$i,1);
-                        $i--;
-                    }
-                }
-                if($this->Order!="Order-Non") {
-                    if($this->Order != $Type->getOrder()) {
-                        array_splice($List,$i,1);
-                        $i--;
-                    }
-                }
-                if($this->User!="User-Non") {
-                    if($this->User != $Type->getUser()) {
-                        array_splice($List,$i,1);
-                        $i--;
-                    }
-                }
-            }
-            for ($i=0; $i < count($List); $i++) { 
-                $Type = Type::FromStringToObject($List[$i]);
-                $Line = $this->FileType->ValueIsThere($Type->getId(),0);
-                $Array = explode('~',$Line);
-                $Type->setName($Array[1]);
-                array_push($DisplayList,$Type->DisplayedString());
-            }
+        $List = $this->FileMenu->GetAllContent();
 
+        for ($i=0; $i < count($List); $i++) { 
+            $Type = Type::FromStringToObject($List[$i]);
+            $Type->setName(Type::GetTypeName($Type->getId()));
+            if($this->Id != 0)
+            {
+                if($this->Id!=$Type->getId())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->Name != "")
+            {
+                if($this->Name!=$Type->getName())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->Product != "Product-Non")
+            {
+                if($this->Product!=$Type->getProduct())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->Order != "Order-Non")
+            {
+                if($this->Order!=$Type->getOrder())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
+            if($this->User != "User-Non")
+            {
+                if($this->User!=$Type->getUser())
+                {
+                    array_splice($List,$i,1);
+                    $i--;
+                }
+            }
         }
+
         $Temp = ["Type Id","Name","Product Mode","Order Mode","User Mode"];
         $Display = [];
         array_push($Display,$Temp);
-        for ($i=0; $i < count($DisplayList); $i++) {
-            $Array = explode("~",$DisplayList[$i]);
+        for ($i=0; $i < count($List); $i++) {
+            $Type = Type::FromStringToObject($List[$i]);
+            $Type->setName(Type::GetTypeName($Type->getId()));
+            $Array = [$Type->getId(),$Type->getName(),$Type->getProduct(),$Type->getOrder(),$Type->getUser(),""];
             array_push($Display,$Array);
         }
 
@@ -226,10 +236,13 @@ class Type extends Person implements File
         $String = $this->Id."~".$this->Product."~".$this->Order."~".$this->User."~\r\n";
         return $String;
 	}
+    
     static public function FromStringToObject(String $Line) {
         $Array = explode('~',$Line);
         $Product = explode('-',$Array[1])[1];
-        $Type = new Type($Array[0],null,explode('-',$Array[1])[1],explode('-',$Array[2])[1],explode('-',$Array[3])[1]);
+        $Order = explode('-',$Array[2])[1];
+        $User = explode('-',$Array[3])[1];
+        $Type = new Type($Array[0],null,$Product,$Order,$User);
         return $Type;
     }
 }
