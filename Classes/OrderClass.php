@@ -130,7 +130,7 @@ class order extends Person implements File {
 		$this->File->FileDelete($this->File->ValueIsThere($this->Id,0));
 		$OrderDetails = new Order_Details();
 		$OrderDetails->setId($this->Id);
-		//$OrderDetails->DeleteAll();
+		$OrderDetails->DeleteAll();
 		return 1;
 	}
 	
