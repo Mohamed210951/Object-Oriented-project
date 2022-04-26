@@ -411,31 +411,35 @@ class HTML {
 		   }
 		   $Id1 = $List[$i][0];
 		   $Id2 = $List[$i][1];
+		   if($Type == 3)
+		   {
+				if($i != 0)
+				{
+
+					echo "<th style='padding: 12px 15px;'><a href='PrintInvoice.php?OrderId=$Id1'>Print</a></th>";
+					echo "<th style='padding: 12px 15px;'><a href='OrderDetails.php?OrderId=$Id1'>Order Details</a></th>";
+				}
+				else
+				{
+					echo "<th style='padding: 12px 15px;' >Print</th>";
+					echo "<th style='padding: 12px 15px;' >Order Details</th>";
+				}
+		   }
 		   if($Type!=0)
 			   if($i!=0)
 				   if($Type == 4)
 				   {
-					   echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1&Id2=$Id2'>Update</a></th>";
-					   echo "<th style='padding: 12px 15px;' ><a href='$DeleteLink?Id1=$Id1&Id2=$Id2'>Delete</a></th>";
+					   if($UpdateLink!="null") echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1&Id2=$Id2'>Update</a></th>";
+					   if($DeleteLink!="null") echo "<th style='padding: 12px 15px;' ><a href='$DeleteLink?Id1=$Id1&Id2=$Id2'>Delete</a></th>";
 				   }
 				   else{
-					   if($Type == 3) 
-					   {
-						   echo "<th style='padding: 12px 15px;'><a href='PrintInvoice.php?OrderId=$Id1'>Print</a></th>";
-						   echo "<th style='padding: 12px 15px;'><a href='OrderDetails.php?OrderId=$Id1'>Order Details</a></th>";
-					   }
-					   echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1'>Update</a></th>";
-					   echo "<th style='padding: 12px 15px;' ><a href='$DeleteLink?Id1=$Id1'>Delete</a></th>";
+					   if($UpdateLink!="null") echo "<th style='padding: 12px 15px;' ><a href='$UpdateLink?Id1=$Id1'>Update</a></th>";
+					   if($DeleteLink!="null") echo "<th style='padding: 12px 15px;' ><a href='$DeleteLink?Id1=$Id1'>Delete</a></th>";
 				   }
 			   else
 			   {
-				   if($Type == 3) 
-				   {
-					   echo "<th style='padding: 12px 15px;' >Print</th>";
-					   echo "<th style='padding: 12px 15px;' >Order Details</th>";
-				   }
-				   echo "<th style='padding: 12px 15px;' >Update</th>";
-				   echo "<th style='padding: 12px 15px;' >Delete</th>";
+				if($UpdateLink!="null") echo "<th style='padding: 12px 15px;' >Update</th>";
+				if($DeleteLink!="null")  echo "<th style='padding: 12px 15px;' >Delete</th>";
 			   }
 		   echo "</tr>";
 	   }
