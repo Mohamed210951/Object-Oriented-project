@@ -55,7 +55,7 @@ if (isset($_POST["Logout"])) {
     header("Location:Login.php");
 }
 if (isset($_POST["AddItem"])) {
-    if ($_POST["ProductId"] == "") die("Product is Required!");
+    if ($_POST["ProductId"] == "Non") die("Product is Required!");
     if ($_POST["NumberOfProduct"] == "") die("Product Number is Required!!");
     $Product_Id = $_POST["ProductId"];
     $Product_Number = $_POST["NumberOfProduct"];
@@ -86,7 +86,7 @@ if(isset($_POST["Searsh"]))
 if(isset($_POST["DeleteItem"]))
 {
     $OrderDetails = new Order_Details();
-    if($_POST["ProductId"] == "") exit("Product is Required");
+    if($_POST["ProductId"] == "Non") exit("Product is Required");
     $OrderDetails->setOrderId(intval($_GET["OrderId"]));
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->Delete();
