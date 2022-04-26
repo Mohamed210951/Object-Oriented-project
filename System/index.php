@@ -2,7 +2,7 @@
 include_once "../Classes/OutPutClass.php";
 include_once "../Classes/FileMangerClass.php";
 include_once "../Classes/UserClass.php";
-if(session_id() == ''){
+if(session_id() == '') {
     session_start();
 }
 if(!isset($_SESSION["UserId"])) header("Location:Login.php");
